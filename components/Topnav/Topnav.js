@@ -13,9 +13,9 @@ const Topnav= () => {
     return  (
         <View style={styles.container}>
               <ImageBackground
-        source={BackgroundImage}
-        style={styles.backgroundImage}
-        >
+              source={BackgroundImage}
+              style={styles.backgroundImage}
+              >
          <View style={styles.topnav}>
             <View style={styles.topnavLeft}>
                 <Image source={Logo} style={styles.image} />
@@ -46,12 +46,11 @@ const styles = StyleSheet.create({
         resizeMode: 'cover', // or 'stretch' if you want to stretch the image
       },
       container: {
-        height:'30%', 
+        height:'10%', 
        },
        topnav: {
-        borderWidth:5,
        // backgroundColor:'red',
-        marginTop: "8%",
+        marginTop: "10%",
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
