@@ -37,8 +37,8 @@ const Topnav= () => {
 }
 const styles = StyleSheet.create({
     image: {
-      width: "30%",
-      height: "30%",
+      width: "40%",
+      height: "40%",
       resizeMode: 'contain',
     },
     backgroundImage: {
@@ -46,20 +46,21 @@ const styles = StyleSheet.create({
         resizeMode: 'cover', // or 'stretch' if you want to stretch the image
       },
       container: {
-        height:'40%', 
+        height:'30%', 
        },
        topnav: {
+        borderWidth:5,
+       // backgroundColor:'red',
+        marginTop: "8%",
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 16,
-        height: 60,
+ 
+        
+        
 
       },
-      topnavLeft: {
-        flexDirection: 'row',
-        alignItems: 'center',
-      },
+ 
       topnavRight: {},
       image: {
         width: 80,
