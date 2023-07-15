@@ -4,14 +4,16 @@ import BackgroundImage from "../assets/background.png"
 import Logo from "../assets/logo.png"
 import InputFeild from "../components/inputFeilds/InputFeilds"
 import { LinearGradient } from 'expo-linear-gradient';
+import Topnav from '../components/Topnav/Topnav';
 
 
 const Home= () => {
 
     return  (
-        <>
-        <Text> Hello world</Text>
-        </>
+       <View>
+            
+              <Topnav/>
+       </View>
     )
 
 }

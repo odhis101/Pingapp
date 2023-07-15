@@ -1,16 +1,72 @@
 
 import React from 'react';
 import { StyleSheet, Text,ImageBackground, View,Image,TouchableOpacity } from 'react-native';
-import BackgroundImage from "../assets/background.png"
-import Logo from "../assets/logo.png"
-import InputFeild from "../components/inputFeilds/InputFeilds"
+import BackgroundImage from "../../assets/background.png"
+import Logo from "../../assets/logo.png"
 import { LinearGradient } from 'expo-linear-gradient'; 
+import Icon from 'react-native-vector-icons/Feather';
+
+
 
 const Topnav= () => {
 
     return  (
+        <View style={styles.container}>
+              <ImageBackground
+        source={BackgroundImage}
+        style={styles.backgroundImage}
+        >
+         <View style={styles.topnav}>
+            <View style={styles.topnavLeft}>
+                <Image source={Logo} style={styles.image} />
+            </View>
+            <View style={styles.topnavRight}>
+                <Icon name="message-circle" size={30} color="#000000" />
+            </View>
+        </View>
 
-        
+
+            </ImageBackground>
+
+
+        </View>
+
+
     )
 
 }
+const styles = StyleSheet.create({
+    image: {
+      width: "30%",
+      height: "30%",
+      resizeMode: 'contain',
+    },
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover', // or 'stretch' if you want to stretch the image
+      },
+      container: {
+        height:'40%', 
+       },
+       topnav: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 16,
+        height: 60,
+
+      },
+      topnavLeft: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
+      topnavRight: {},
+      image: {
+        width: 80,
+        height: 30,
+        resizeMode: 'contain',
+      },
+
+
+})
+export default Topnav;
