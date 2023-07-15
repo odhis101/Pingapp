@@ -57,14 +57,18 @@ const Login= () => {
 }
 
 const styles = StyleSheet.create({
+  image: {
+    width: "30%",
+    height: "30%",
+    resizeMode: 'contain',
+  },
     backgroundImage: {
       flex: 1,
       resizeMode: 'cover', // or 'stretch' if you want to stretch the image
     },
     container: {
     height:'100%', 
-    borderColor: "red",
-    borderWidth: 2,
+
     
    },
    credentials:{
