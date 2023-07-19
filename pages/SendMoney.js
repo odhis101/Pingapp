@@ -7,7 +7,7 @@ import Mycards from '../components/Mycards/Mycards';
 import Profile from '../assets/profile.png'
 import RecentTransactions from '../components/RecentTransactions/RecentTransactions';
 
-const Home= () => {
+const Sendmoney= () => {
 
     return  (
        <View style ={{height:"100%"}}>
@@ -26,13 +26,15 @@ const Home= () => {
                 <Text style={styles.recentTransactions}>+ £ 790</Text>
                 </View>
                 <View style={styles.moneyButtons}>
-      <SendMoney name ={'Send money'} />
-      <SendMoney name ={'Request money'} />
       </View>
+      <Text style={styles.title}>SendMoney</Text>
+
       <View style={styles.Mycards}>
         <Text style={styles.heading}>My Cards</Text>
-        <Mycards />
-        <Mycards />
+        <Mycards title={"Send to contact"} iconImage={'user'} />
+        <Mycards title={'Send to Phone Number '}iconImage={'smartphone'}/>
+        <Mycards title={'Send To Bank '}iconImage={'dollar-sign'} />
+
 
       </View>       
       <View style={styles.MyTransactions}>
@@ -79,6 +81,8 @@ const styles = StyleSheet.create({
         paddingBottom: 24,
       },
     title: {
+        marginRight:'auto',
+        marginLeft:'auto',
         fontSize: 24,
         fontWeight: 'bold',
         color: '#FFFFFF',
@@ -171,4 +175,4 @@ const styles = StyleSheet.create({
       
 
 })
-export default Home;
+export default Sendmoney;

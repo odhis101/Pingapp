@@ -3,15 +3,15 @@ import { StyleSheet, Text,ImageBackground, View,Image,TouchableOpacity } from 'r
 import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/Feather';
 
-const Mycards = () => {
+const Mycards = ({title,iconImage}) => {
 
 return(
 
     <View style={styles.Mycard}>
       <View style={styles.cardIcon}>
-        <Icon name="cc-visa" size={20} color="#FFFFFF" />
+        <Icon name={iconImage} size={20} color="#FFFFFF" />
       </View>
-      <Text style={styles.cardText}>Travel Card</Text>
+      <Text style={styles.cardText}>{title}</Text>
     </View>
 
 
@@ -20,14 +20,14 @@ return(
 }
 const styles = StyleSheet.create({
       Mycard: {
-        height: 60,
+        height: 70,
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 8,
+        marginBottom: 16,
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
       },
       cardIcon: {
-        backgroundColor: '#000000',
+
         borderRadius: 20,
         padding: 8,
         marginRight: 8,
