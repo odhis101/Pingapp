@@ -11,7 +11,7 @@ export default function App() {
     <View style={styles.container}>
       <ScrollView>
     <StatusBar style="auto" />
-    <Contacts/>
+    <Dailpass/>
     </ScrollView>
     </View>
   );
@@ -19,6 +19,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    height:"100%",
     flex: 1,
     
   },

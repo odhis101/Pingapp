@@ -9,6 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 const Login= () => {
 
     return(
+      <View style ={styles.container}>
         <ImageBackground
         source={BackgroundImage}
         style={styles.backgroundImage}
@@ -49,6 +50,8 @@ const Login= () => {
 
             </View>
             </ImageBackground>
+            </View>
+
 
 
     )
@@ -65,9 +68,12 @@ const styles = StyleSheet.create({
     backgroundImage: {
       flex: 1,
       resizeMode: 'cover', // or 'stretch' if you want to stretch the image
+      height:"100%", 
     },
     container: {
-    height:'100%', 
+      borderColor:'red',
+      borderWidth:2,
+    height:800, 
 
     
    },
