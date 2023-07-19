@@ -5,17 +5,18 @@ import Topnav from '../components/Topnav/Topnav';
 import SendMoney from '../components/SendMoney/SendMoney';
 import Mycards from '../components/Mycards/Mycards';
 import Profile from '../assets/profile.png'
-import RecentTransactions from '../components/recentTransactions/recentTransactions';
+import RecentTransactions from '../components/RecentTransactions/RecentTransactions';
+
 const Home= () => {
 
     return  (
-       <View style ={{height:"100%"}}>
-                     <Topnav />     
+       <View style ={{height:"100%" , borderColor:'red', borderWidth:5 }}>
               <View style={styles.currencyContainer}>
               <ImageBackground
               source={BackgroundImage}
               style={styles.backgroundImage}
               >
+                     <Topnav />     
                     <View style={styles.infoContainer}>
             <Text style={styles.title}>Balance</Text>
                 <View style={styles.currentBalance}>
@@ -25,7 +26,7 @@ const Home= () => {
                 <Text style={styles.recentTransactions}>+ £ 790</Text>
                 </View>
                 <View style={styles.moneyButtons}>
-      <SendMoney name ={'Send money'} />
+      <SendMoney name ={'Send   money'} />
       <SendMoney name ={'Request money'} />
       </View>
       <View style={styles.Mycards}>

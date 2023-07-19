@@ -108,7 +108,7 @@ const PinInput = ({ maxDigits }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.rowContainer}>
-        <View style={styles.pinButton} />
+       
         <TouchableOpacity
           style={styles.pinButton}
           onPress={() => handlePinChange('0')}
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
+    height: '100%',
   },
   rowContainer: {
     flexDirection: 'row',

@@ -6,15 +6,21 @@ import InputFeild from "../components/inputFeilds/InputFeilds"
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 import PinInput from '../components/PinInput/PinInput';
+import {Dimension} from 'react-native';
+
+//q: get dimesnsion of screen and set the height of the container to 100% of the screen
+//q: how to make the pin input box responsive to the screen size
 
 
 
 const Dailpass= () => {
-
+//console.log("this is the screen height",Dimension.get('screen').height)
     
 
 
     return (
+      <View style ={{height:"100%", borderColor:'red', borderWidth:5 }}>
+
         <ImageBackground
         source={BackgroundImage}
         style={styles.backgroundImage}
@@ -33,6 +39,7 @@ const Dailpass= () => {
         
 
         </ImageBackground>
+        </View>
         
         
         
@@ -44,6 +51,8 @@ const styles = StyleSheet.create({
       backgroundImage: {
         flex: 1,
         resizeMode: 'cover', // or 'stretch' if you want to stretch the image
+        height:"100%",
+
       },
       image: {
         width: "30%",
@@ -69,7 +78,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
       },
         container: {
-            height: '100%',
+            height: "100%",
             borderColor: 'red',
             borderWidth: 4,
         },

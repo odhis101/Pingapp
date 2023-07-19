@@ -12,8 +12,7 @@ const Topnav= () => {
 
     return  (
         <View style={styles.container}>
-              <ImageBackground
-              source={BackgroundImage}
+              <View
               style={styles.backgroundImage}
               >
          <View style={styles.topnav}>
@@ -26,7 +25,7 @@ const Topnav= () => {
         </View>
 
 
-            </ImageBackground>
+            </View>
 
 
         </View>
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
         resizeMode: 'cover', // or 'stretch' if you want to stretch the image
       },
       container: {
-        height:'10%', 
+        height:'5%', 
        },
        topnav: {
        // backgroundColor:'red',
