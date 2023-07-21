@@ -7,20 +7,42 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Profile from "../../assets/profile.png";
+import React, { useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
 
-const RecentTransactions = () => {
+const RecentTransactions = ({ name, date, onPress }) => {
+  const [isSelected, setIsSelected] = useState(false);
+
+  const handleRadioPress = () => {
+    setIsSelected(!isSelected);
+  };
+
   return (
     <View style={styles.TransactionDetails}>
       <Image source={Profile} style={styles.image} />
       <View style={styles.textContainer}>
-        <Text style={styles.Username}>Dan Bilzerian</Text>
-        <Text style={styles.Date}>14/04/23</Text>
+        <Text style={styles.Username}>{name}</Text>
+        <Text style={styles.Date}>{date}</Text>
       </View>
-      <Text style={styles.TransactionAmt}>£ 20000</Text>
+      <View style={styles.radioButtonContainer}>
+        <TouchableOpacity onPress={handleRadioPress}>
+          <View
+            style={[
+              styles.radioButton,
+              isSelected && styles.radioButtonSelected,
+            ]}
+          >
+            {isSelected && <AntDesign name="check" size={20} color="white" />}
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
+  radioButtonContainer: {
+    marginLeft: "auto",
+  },
   MyTransactions: {
     backgroundColor: "#FFFFFF",
     paddingTop: 16,
@@ -54,27 +76,29 @@ const styles = StyleSheet.create({
     // ... styles for recents button ...
   },
   TransactionDetails: {
+    marginLeft: 10,
+    marginRight: 10,
     flexDirection: "row",
     alignItems: "center",
     marginTop: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "grey",
   },
   image: {
     // ... styles for image ...
   },
-  textContainer: {
-    marginLeft: 8,
+
+  radioButton: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  Username: {
-    // ... styles for Username ...
-  },
-  Date: {
-    // ... styles for Date ...
-  },
-  TransactionAmt: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#00FF00",
-    marginLeft: "auto",
+  radioButtonSelected: {
+    backgroundColor: "green",
   },
 });
 export default RecentTransactions;
