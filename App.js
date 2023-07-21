@@ -7,13 +7,15 @@ import SendMoney from "./pages/SendMoney";
 import Contacts from "./pages/Contacts";
 import PhoneNumber from "./pages/PhoneNumber";
 import SendToBank from "./pages/SendToBank";
+import AmountToSend from "./pages/AmountToSend";
+
 
 export default function App() {
   return (
    
       <ScrollView>
         <StatusBar style="auto" />
-        <SendToBank />
+        <AmountToSend />
       </ScrollView>
     
   );

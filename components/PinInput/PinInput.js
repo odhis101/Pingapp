@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,10 +6,16 @@ import {
   Text,
   Vibration,
 } from "react-native";
+import { Dimensions } from "react-native";
 
 const PinInput = ({ maxDigits }) => {
   console.log("this is max digits", maxDigits);
   const [pin, setPin] = useState("");
+  const [imageHeight, setImageHeight] = useState(0);
+  useEffect(() => {
+    const window = Dimensions.get("window");
+    setImageHeight(window.height);
+  }, []);
 
   const handlePinChange = (digit) => {
     if (pin.length < maxDigits) {
@@ -126,7 +132,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    height: "100%",
+
   },
   rowContainer: {
     flexDirection: "row",
@@ -140,10 +146,19 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 30,
-    backgroundColor: "#E0E0E0",
+    backgroundColor: "white",
     marginHorizontal: "2.5%",
     justifyContent: "center",
     alignItems: "center",
+    // Add shadow properties
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 3.84,
+    elevation: 5, // This is for Android shadow
   },
   dotsContainer: {
     flexDirection: "row",
