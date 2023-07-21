@@ -8,6 +8,7 @@ import Contacts from "./pages/Contacts";
 import PhoneNumber from "./pages/PhoneNumber";
 import SendToBank from "./pages/SendToBank";
 import AmountToSend from "./pages/AmountToSend";
+import ConfirmPayment from "./pages/ConfirmPayment";
 
 
 export default function App() {
@@ -15,7 +16,7 @@ export default function App() {
    
       <ScrollView>
         <StatusBar style="auto" />
-        <AmountToSend />
+        <ConfirmPayment />
       </ScrollView>
     
   );
