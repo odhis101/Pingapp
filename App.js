@@ -9,15 +9,20 @@ import PhoneNumber from "./pages/PhoneNumber";
 import SendToBank from "./pages/SendToBank";
 import AmountToSend from "./pages/AmountToSend";
 import ConfirmPayment from "./pages/ConfirmPayment";
-
+import Navigation from "././Navigation/Navigation";
+import { Provider } from "react-redux";
+import store from "./store";
 
 export default function App() {
   return (
    
-      <ScrollView>
+      <>
+          <Provider store={store}>
         <StatusBar style="auto" />
-        <ConfirmPayment />
-      </ScrollView>
+        <Navigation />
+        </Provider>
+
+      </>
     
   );
 }

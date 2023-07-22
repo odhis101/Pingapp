@@ -9,10 +9,19 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Icon from "react-native-vector-icons/Feather";
+import {useNavigation} from '@react-navigation/native';
 
-const SendMoney = ({ name }) => {
+const SendMoney = ({ name, onPress}) => {
+  const navigation = useNavigation();
+  const handleSendMoney = () => {
+    navigation.navigate(onPress);
+  };
+
   return (
-    <TouchableOpacity style={styles.sendButton}>
+    <TouchableOpacity 
+    style={styles.sendButton}
+    onPress={handleSendMoney}
+    >
       <View style={styles.gradientBackground}>
         <Icon name="credit-card" size={24} color="#FFFFFF" />
         <Text style={styles.buttonText}>{name}</Text>

@@ -12,10 +12,12 @@ import PinInput from '../components/PinInput/PinInput';
 import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome5 } from "@expo/vector-icons";
-
+import {useNavigation} from '@react-navigation/native';
 const AmountToSend = (maxDigits) => {
     const [imageHeight, setImageHeight] = useState(0);
     const [balance, setBalance] = useState('');
+    const navigation = useNavigation();
+
 
     // Calculate the imageHeight dynamically once the component is mounted
     useEffect(() => {
@@ -149,7 +151,10 @@ const AmountToSend = (maxDigits) => {
           style={styles.gradientButton}
         >
           <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity 
+          style={styles.button}
+          onPress={() => navigation.navigate('ConfirmPayment')}
+          >
             <Text style={styles.buttonText}>Send </Text>
           </TouchableOpacity>
         </LinearGradient>
@@ -160,7 +165,9 @@ const AmountToSend = (maxDigits) => {
           style={styles.gradientButton}
         >
           <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity 
+          onPress={() => navigation.navigate('ConfirmPayment')}
+          style={styles.button}>
             <Text style={styles.buttonText}>Request</Text>
           </TouchableOpacity>
         </LinearGradient>

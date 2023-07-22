@@ -6,6 +6,7 @@ import {
   View,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import BackgroundImage from "../assets/background.png";
 import Topnav from "../components/Topnav/Topnav";
@@ -16,7 +17,7 @@ import RecentTransactions from "../components/RecentTransactions/RecentTransacti
 
 const Home = () => {
   return (
-    <View style={{ height: "100%" }}>
+    < ScrollView style={{ height: "100%" }}>
       <View style={styles.currencyContainer}>
         <ImageBackground
           source={BackgroundImage}
@@ -32,13 +33,15 @@ const Home = () => {
             <Text style={styles.recentTransactions}>+ £ 790</Text>
           </View>
           <View style={styles.moneyButtons}>
-            <SendMoney name={"Send   money"} />
-            <SendMoney name={"Request money"} />
+            
+            <SendMoney name={"Send money"} onPress={"SendMoney"}/>
+            <SendMoney name={"Request money"} onPress={"SendMoney"} />
           </View>
           <View style={styles.Mycards}>
             <Text style={styles.heading}>My Cards</Text>
-            <Mycards />
-            <Mycards />
+            <Mycards title ={"Travel Cards "} iconImage="credit-card"/>
+
+            <Mycards title={"Investments Card"}  iconImage="trending-up"/>
           </View>
           <View style={styles.MyTransactions}>
             <Text style={styles.Transactiontitle}>Transactions</Text>
@@ -54,7 +57,7 @@ const Home = () => {
           </View>
         </ImageBackground>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({

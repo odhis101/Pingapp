@@ -5,11 +5,18 @@ import {
   TouchableOpacity,
   Text,
   Vibration,
+  Animated 
 } from "react-native";
 import { Dimensions } from "react-native";
-
+// import usenavigation from "react-navigation-hooks";
+import { useNavigation } from "@react-navigation/native";
 const PinInput = ({ maxDigits }) => {
-  console.log("this is max digits", maxDigits);
+  const [pinAnimation] = useState(new Animated.Value(0)); // Initialize the animation value
+  const [isPasscodeCorrect, setIsPasscodeCorrect] = useState(false);
+  const [incorrectPasscodeEntered, setIncorrectPasscodeEntered] = useState(false);
+
+  const navigate = useNavigation();
+
   const [pin, setPin] = useState("");
   const [imageHeight, setImageHeight] = useState(0);
   useEffect(() => {
@@ -22,13 +29,67 @@ const PinInput = ({ maxDigits }) => {
       setPin(pin + digit);
     }
     if (pin.length === maxDigits - 1 && pin + digit !== "1234") {
-      // Vibrate the phone and turn the pins red
-      console.log("should be vibrating");
+
+      setIncorrectPasscodeEntered(true); // Set the state to true for incorrect passcode
+
 
       Vibration.vibrate();
+      //setPin(""); // Clear the pin state
+      // Start the animation
+
+      Animated.sequence([
+        Animated.timing(pinAnimation, {
+          toValue: 1, // This value depends on how much you want to move the pins up
+          duration: 300, // Animation duration
+          useNativeDriver: false,
+        }),
+        Animated.delay(500), // Add a delay before resetting the animation
+        Animated.timing(pinAnimation, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: false,
+        }),
+      ]).start(); // Start the animation sequence
+       setTimeout(() => {
+      setIncorrectPasscodeEntered(false); // Reset the state after a delay
+    }, 1000); // Adjust the delay time as needed
       setPin(""); // Clear the pin state
-      // Add code to update pin color or apply error styling
+      //setIncorrectPasscodeEntered(false); // Set the state to false for incorrect passcode
+
     }
+    else if (pin.length === maxDigits - 1 && pin + digit === "1234") {
+      setIsPasscodeCorrect(true); // Set the state to false for incorrect passcode
+      //navigate.navigate("Home");
+      Vibration.vibrate();
+
+      Animated.sequence([
+        Animated.timing(pinAnimation, {
+          toValue: 1, // This value depends on how much you want to move the pins up
+          duration: 300, // Animation duration
+          useNativeDriver: false,
+        }),
+        Animated.delay(500), // Add a delay before resetting the animation
+        Animated.timing(pinAnimation, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: false,
+        }),
+      ]).start();
+      setTimeout(() => {
+      navigate.navigate("Home");
+    }, 1000);
+    
+    }
+  };
+  const animatedContainerStyle = {
+    transform: [
+      {
+        translateY: pinAnimation.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, -40], // Adjust this value as needed to move the pins up
+        }),
+      },
+    ],
   };
 
   const handleClearPin = () => {
@@ -44,6 +105,9 @@ const PinInput = ({ maxDigits }) => {
           style={[
             styles.dot,
             i < pin.length ? styles.dotFilled : styles.dotEmpty,
+            incorrectPasscodeEntered ? styles.dotWrong : null,
+            isPasscodeCorrect ? styles.dotCorrect : null,
+
           ]}
         />
       );
@@ -54,7 +118,11 @@ const PinInput = ({ maxDigits }) => {
 
   return (
     <View style={styles.container}>
+       <Animated.View style={[styles.container, animatedContainerStyle]}>
       {renderDots()}
+
+      {/* ... rest of your code ... */}
+    </Animated.View>
 
       <View style={styles.rowContainer}>
         <TouchableOpacity
@@ -184,6 +252,14 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
     backgroundColor: "#000000",
   },
+  dotWrong: {
+    backgroundColor: "red",
+  },
+  dotCorrect: {
+    backgroundColor: "green",
+  },
+  
+
 });
 
 export default PinInput;

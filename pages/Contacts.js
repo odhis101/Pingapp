@@ -18,8 +18,13 @@ import Profile from "../assets/profile.png";
 import RecentTransactions from "../components/RecentTransactions/RecentTransactions";
 import TransactionsRadio from "../components/TransactionsRadio/TransactionsRadio";
 import { AntDesign } from "@expo/vector-icons";
-
+import {useNavigation} from '@react-navigation/native';
 const Contacts = () => {
+  const navigation = useNavigation();
+  const handlePress = () => {
+    navigation.navigate('AmountToSend');
+    
+  }
   const contactsData = [
     { name: "John Doe", date: "15/04/23", isSelected: false },
     { name: "John Doe", date: "15/04/23", isSelected: false },
@@ -68,7 +73,10 @@ const Contacts = () => {
           <View style={styles.contactFlex}>
             <Text style={styles.contactText}>Contact</Text>
 
-            <TouchableOpacity style={styles.doneButton}>
+            <TouchableOpacity 
+            style={styles.doneButton}
+            onPress={handlePress}
+            >
               <Text style={styles.doneButtonText}>Done</Text>
             </TouchableOpacity>
           </View>

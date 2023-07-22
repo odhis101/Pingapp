@@ -11,8 +11,14 @@ import BackgroundImage from "../assets/background.png";
 import Logo from "../assets/logo.png";
 import InputFeild from "../components/inputFeilds/InputFeilds";
 import { LinearGradient } from "expo-linear-gradient";
+// use navigation 
+import { useNavigation } from "@react-navigation/native";
 
 const Login = () => {
+  const navigation = useNavigation();
+  const handleLogin = () => {
+    navigation.navigate("Dailpass");
+  };
   return (
     <View style={styles.container}>
       <ImageBackground source={BackgroundImage} style={styles.backgroundImage}>
@@ -25,7 +31,10 @@ const Login = () => {
             <InputFeild title="Username" />
             <InputFeild title="Password" />
             <View style={styles.signInContainer}>
-              <TouchableOpacity style={styles.signInButton}>
+              <TouchableOpacity
+               style={styles.signInButton}
+                onPress={handleLogin}
+              >
                 <LinearGradient
                   colors={["#41CFD6", "#5A54D2"]}
                   start={{ x: 1, y: 0 }}
@@ -58,8 +67,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   container: {
-    borderColor: "red",
-    borderWidth: 2,
+    flex: 1,
     height: 800,
   },
   credentials: {
