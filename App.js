@@ -12,14 +12,14 @@ import ConfirmPayment from "./pages/ConfirmPayment";
 import Navigation from "././Navigation/Navigation";
 import { Provider } from "react-redux";
 import store from "./store";
-
+import BluetoothTest from "./pages/BluetoothTest";
 export default function App() {
   return (
    
       <>
           <Provider store={store}>
         <StatusBar style="auto" />
-        <Navigation />
+        <BluetoothTest />
         </Provider>
 
       </>
