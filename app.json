@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "pingApp",
-    "slug": "pingApp",
+    "name": "Ping",
+    "slug": "ping",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,11 +12,13 @@
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": ["**/*"],
-    "plugins": ["@config-plugins/react-native-ble-plx"], // Add this line
+    "plugins": ["@config-plugins/react-native-ble-plx"], // Add this line for the plugin
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ping" // Set the Bundle Identifier here for iOS
     },
     "android": {
+      "package": "com.ping", // Set the package name here for Android
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
