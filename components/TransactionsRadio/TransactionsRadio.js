@@ -9,6 +9,7 @@ import {
 import Profile from "../../assets/profile.png";
 import React, { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
+import Icon from 'react-native-vector-icons/Ionicons'; // If you're using react-native-vector-icons
 
 const RecentTransactions = ({ name, date, onPress }) => {
   const [isSelected, setIsSelected] = useState(false);

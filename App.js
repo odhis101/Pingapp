@@ -13,13 +13,15 @@ import Navigation from "././Navigation/Navigation";
 import { Provider } from "react-redux";
 import store from "./store";
 import BluetoothTest from "./pages/BluetoothTest";
+import Chatmessages from './pages/Chatmessages'
+import Messages from "./pages/Messages";
 export default function App() {
   return (
    
       <>
           <Provider store={store}>
         <StatusBar style="auto" />
-        <BluetoothTest />
+        <Messages />
         </Provider>
 
       </>
