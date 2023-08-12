@@ -27,11 +27,11 @@ const messages = () => {
 
       const contactsData = [
         { name: "John Doe", date: "15/04/23", lastMessage:"joshua",isSelected: false },
-        { name: "John Doe", date: "ping 400$", isSelected: false },
-        { name: "Alice Johnson", date: "14/04/23", isSelected: true },
-        { name: "Alice Johnson", date: "14/04/23", isSelected: true },
-        { name: "Bob Smith", date: "13/04/23", isSelected: false },
-        { name: "Chris Evans", date: "12/04/23", isSelected: true },
+        { name: "John Doe", date: "ping 400$", time:"9:30", isSelected: false },
+        { name: "Alice Johnson", date: "14/04/23",time:"9:30", isSelected: true },
+        { name: "Alice Johnson", date: "14/04/23",time:"9:30", isSelected: true },
+        { name: "Bob Smith", date: "13/04/23",time:"9:30", isSelected: false },
+        { name: "Chris Evans", date: "12/04/23",time:"9:30", isSelected: true },
         // Add more data items as needed...
       ];
       const sortContactsByName = (contacts) => {
@@ -103,6 +103,7 @@ const messages = () => {
                   date={contact.date}
                   lastMessage={contact.lastMessage}
                   isSelected={contact.isSelected}
+                  time={contact.time}
                 />
               ))}
             </View>
