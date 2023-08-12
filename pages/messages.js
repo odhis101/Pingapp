@@ -26,8 +26,8 @@ const messages = () => {
 
 
       const contactsData = [
-        { name: "John Doe", date: "15/04/23", isSelected: false },
-        { name: "John Doe", date: "15/04/23", isSelected: false },
+        { name: "John Doe", date: "15/04/23", lastMessage:"joshua",isSelected: false },
+        { name: "John Doe", date: "ping 400$", isSelected: false },
         { name: "Alice Johnson", date: "14/04/23", isSelected: true },
         { name: "Alice Johnson", date: "14/04/23", isSelected: true },
         { name: "Bob Smith", date: "13/04/23", isSelected: false },
@@ -60,7 +60,7 @@ const messages = () => {
         }));
       };
     
-      const sortedContactData = sortContactsByName(contactsData); // Call the sorting function
+      const sortedContactData = sortContactsByName(contactsData); 
   return (
     <View style={styles.container}>
         <View style={styles.contactContainer}>
@@ -68,12 +68,13 @@ const messages = () => {
           source={BackgroundImage}
           style={styles.backgroundImage}
         >         
-         <View style={styles.contactFlex}>
-         <Image source={Logo} style={styles.image} />
-         <TouchableOpacity >
-      <Icon name="ios-create" size={30} color="white" />
-    </TouchableOpacity>
-          </View>
+        <View style={styles.headerContainer}>
+          <Image source={Logo} style={styles.logoImage} />
+          <Text style={styles.messagesHeaderText}>Messagess</Text>
+          <TouchableOpacity onPress={handlePress}>
+            <Icon name="ios-create" size={30} color="white" />
+          </TouchableOpacity>
+        </View>
           <View style={styles.searchContainer}>
             <TextInput
               style={styles.searchInput}
@@ -100,6 +101,7 @@ const messages = () => {
                   key={contact.name}
                   name={contact.name}
                   date={contact.date}
+                  lastMessage={contact.lastMessage}
                   isSelected={contact.isSelected}
                 />
               ))}
@@ -119,20 +121,42 @@ const styles = StyleSheet.create({
     container: {
       height: 800,
     },
-    image: {
-        height:40,
-        resizeMode: "contain",
-      },
+
     backgroundImage: {
       flex: 1,
       resizeMode: "cover", // or 'stretch' if you want to stretch the image
     },
+    headerContainer: {
+
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        
+        paddingHorizontal: 20,
+      },
+      logoImage: {
+        height: 40,
+        width: 40,
+        resizeMode:'contain',
+      },
+      messagesHeaderText: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "bold",
+        marginLeft: 10,
+      },
     contactContainer: {
       height: "20%",
-
-      borderBottomLeftRadius: 10,
-      borderBottomRightRadius: 10,
+      borderBottomLeftRadius: 30,
+      borderBottomRightRadius: 30,
       overflow: "hidden", // This ensures the content inside is clipped to the rounded shape
+    },
+    headerContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 20,
+      paddingTop: 40, // Adjust this value to move the header down
     },
     contactFlex: {
       marginTop: "10%",
@@ -157,15 +181,15 @@ const styles = StyleSheet.create({
   
   
     searchContainer: {
-      height: 50,
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: "rgba(0, 0, 0, 0.2)",
-      paddingHorizontal: 10,
-      marginLeft: 20,
-      marginRight: 20,
-    },
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.2)",
+        paddingHorizontal: 10,
+        marginHorizontal: 20,
+        marginTop: 10,
+        borderRadius: 10,
+      },
     searchInput: {
       flex: 1,
       color: "white",
@@ -179,5 +203,5 @@ const styles = StyleSheet.create({
       fontSize: 20,
       marginLeft: "5%",
       color: "#5087D3",
-    },
-  });
+    },
+  });

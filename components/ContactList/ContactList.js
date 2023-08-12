@@ -11,7 +11,7 @@ import {
   import { AntDesign } from "@expo/vector-icons";
   import Icon from 'react-native-vector-icons/Ionicons'; // If you're using react-native-vector-icons
   
-  const ContactList = ({ name, date, onPress }) => {
+  const ContactList = ({ name, date, lastMessage, onPress,time }) => {
     const [isSelected, setIsSelected] = useState(false);
   
     const handleRadioPress = () => {
@@ -20,17 +20,16 @@ import {
   
     return (
       <View style={styles.TransactionDetails}>
-        <Image source={Profile} style={styles.image} />
-        <View style={styles.textContainer}>
+      <Image source={Profile} style={styles.image} />
+      <View style={styles.infoContainer}>
+        <View style={styles.nameDateContainer}>
           <Text style={styles.Username}>{name}</Text>
-
+        <Text style={styles.time}>{time}</Text>
         </View>
-        <View style={styles.dateContainer}>
-    <Text style={styles.Date}>{date}</Text>
-  </View>
-
+          <Text style={styles.lastMessage}>{lastMessage}</Text>
 
       </View>
+    </View>
     );
   };
   const styles = StyleSheet.create({
@@ -40,39 +39,32 @@ import {
     dateContainer:{
       marginLeft: "100%",
     },
+    image: {
+      width: 70,
+      height: 70,
+      resizeMode:'contain',
 
-    MyTransactions: {
-      backgroundColor: "#FFFFFF",
-      paddingTop: 16,
-      paddingHorizontal: 16,
-      borderRadius: 20,
-      marginBottom: 16,
-      shadowColor: "#000000",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 4,
-      elevation: 2,
     },
-    Transactiontitle: {
-      fontSize: 24,
-      fontWeight: "bold",
-      textAlign: "center",
-      marginBottom: 8,
-      marginTop: 8,
+    infoContainer: {
+      flex: 1,
+
     },
-    TransactionsContainer: {
-      backgroundColor: "#FFFFFF",
-      borderRadius: 8,
-      padding: 16,
-      shadowColor: "#000000",
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 4,
-      elevation: 2,
+    nameDateContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
     },
-    recents: {
-      // ... styles for recents button ...
+    lastMessage: {
+      color: "grey",
+      marginTop: 4,
     },
+    time: {
+      color: "blue",
+      textAlign: "right",
+      marginTop: 4,
+      fontSize: 16,
+    },
+
     TransactionDetails: {
       marginBottom:10,
       marginLeft: 10,
@@ -83,22 +75,8 @@ import {
       borderBottomWidth: 1,
       borderBottomColor: "grey",
     },
-    image: {
-      // ... styles for image ...
-    },
   
-    radioButton: {
-      width: 20,
-      height: 20,
-      borderRadius: 10,
-      borderWidth: 2,
-      borderColor: "black",
-      justifyContent:"space-between",
-      alignItems: "center",
-    },
-    radioButtonSelected: {
-      backgroundColor: "green",
-    },
+
   });
   export default ContactList;
   

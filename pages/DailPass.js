@@ -23,11 +23,11 @@ const Dailpass = () => {
   const [imageHeight, setImageHeight] = useState(0);
   useEffect(() => {
     const window = Dimensions.get("window");
-    setImageHeight(window.height);
+    setImageHeight(window.height +10);
   }, []);
   return (
     <View style={{ height: imageHeight }}>
-      <ImageBackground source={BackgroundImage} style={styles.backgroundImage}>
+      <ImageBackground source={BackgroundImage} style={styles.backgroundImage} >
         <View style={styles.container}>
           <View style={styles.credentials}>
             <Image source={Logo} style={styles.image} />
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover", // or 'stretch' if you want to stretch the image
     height: "100%",
+    
   },
   image: {
     width: "30%",
