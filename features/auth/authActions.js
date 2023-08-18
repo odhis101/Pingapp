@@ -7,6 +7,7 @@ export const login = (username, password) => (dispatch) => {
   // For example, you can call an API to validate the user's credentials
   if (username === "user123" && password === "password123") {
     const user = { username: "user123" }; // Simulated user data
+    
     dispatch(loginSuccess(user));
   } else {
     // Handle login failure here

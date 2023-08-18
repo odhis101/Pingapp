@@ -11,8 +11,10 @@ import {
   TextInput,
 } from "react-native";
 
-const inputFeilds = (props) => {
-  title = props.title;
+const inputFeilds = ({title,textValue,textOnchange}) => {
+
+  const [hidePassword, setHidePassword] = useState(true);
+
 
   return (
     <View style={styles.inputContainer}>
@@ -21,6 +23,9 @@ const inputFeilds = (props) => {
         placeholder={title}
         placeholderTextColor="#A9A9A9"
         textAlignVertical="center"
+        value={textValue}
+        onChangeText={textOnchange}
+        secureTextEntry={title === 'Password' ? hidePassword : false}
       />
     </View>
   );

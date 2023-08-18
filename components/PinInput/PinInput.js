@@ -10,6 +10,7 @@ import {
 import { Dimensions } from "react-native";
 // import usenavigation from "react-navigation-hooks";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios"
 const PinInput = ({ maxDigits }) => {
   const [pinAnimation] = useState(new Animated.Value(0)); // Initialize the animation value
   const [isPasscodeCorrect, setIsPasscodeCorrect] = useState(false);
@@ -22,65 +23,87 @@ const PinInput = ({ maxDigits }) => {
   useEffect(() => {
     const window = Dimensions.get("window");
     setImageHeight(window.height);
+    console.log(pin.length)
   }, []);
 
-  const handlePinChange = (digit) => {
-    if (pin.length < maxDigits) {
+  const handlePinChange = async (digit) => {
+    console.log("testing .... ")
+    console.log(pin, 4)
+    if (pin.length < 4) {
       setPin(pin + digit);
     }
-    if (pin.length === maxDigits - 1 && pin + digit !== "1234") {
+    if(pin.length === 4){
+    try{
+      console.log(pin)
+      const data = await axios.post("https://daa8-102-213-209-1.ngrok-free.app/api/v1/auth/check_pin",
+      {
+        pin:pin
+      },{withCredentials:true}
+      
+      )
+      if(data){
+        console.log("success")
+        navigate.navigate("Home");
+        /*
+        setIsPasscodeCorrect(true); // Set the state to false for incorrect passcode
+        Vibration.vibrate();
+  
+        Animated.sequence([
+          Animated.timing(pinAnimation, {
+            toValue: 1, // This value depends on how much you want to move the pins up
+            duration: 300, // Animation duration
+            useNativeDriver: false,
+          }),
+          Animated.delay(500), // Add a delay before resetting the animation
+          Animated.timing(pinAnimation, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: false,
+          }),
+        ]).start();
+        setTimeout(() => {
+        navigate.navigate("Home");
+      }, 1000);
+      */
+      
+      }
+      else{
+        /*
+        setIncorrectPasscodeEntered(true); // Set the state to true for incorrect passcode
 
-      setIncorrectPasscodeEntered(true); // Set the state to true for incorrect passcode
 
-
-      Vibration.vibrate();
-      //setPin(""); // Clear the pin state
-      // Start the animation
-
-      Animated.sequence([
-        Animated.timing(pinAnimation, {
-          toValue: 1, // This value depends on how much you want to move the pins up
-          duration: 300, // Animation duration
-          useNativeDriver: false,
-        }),
-        Animated.delay(500), // Add a delay before resetting the animation
-        Animated.timing(pinAnimation, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: false,
-        }),
-      ]).start(); // Start the animation sequence
-       setTimeout(() => {
-      setIncorrectPasscodeEntered(false); // Reset the state after a delay
-    }, 1000); // Adjust the delay time as needed
-      setPin(""); // Clear the pin state
-      //setIncorrectPasscodeEntered(false); // Set the state to false for incorrect passcode
-
+        Vibration.vibrate();
+        //setPin(""); // Clear the pin state
+        // Start the animation
+  
+        Animated.sequence([
+          Animated.timing(pinAnimation, {
+            toValue: 1, // This value depends on how much you want to move the pins up
+            duration: 300, // Animation duration
+            useNativeDriver: false,
+          }),
+          Animated.delay(500), // Add a delay before resetting the animation
+          Animated.timing(pinAnimation, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: false,
+          }),
+        ]).start(); // Start the animation sequence
+         setTimeout(() => {
+        setIncorrectPasscodeEntered(false); // Reset the state after a delay
+      }, 1000); // Adjust the delay time as needed
+        setPin(""); // Clear the pin state
+        //setIncorrectPasscodeEntered(false); // Set the state to false for incorrect passcode
+      
+    */
+   }
     }
-    else if (pin.length === maxDigits - 1 && pin + digit === "1234") {
-      setIsPasscodeCorrect(true); // Set the state to false for incorrect passcode
-      //navigate.navigate("Home");
-      Vibration.vibrate();
-
-      Animated.sequence([
-        Animated.timing(pinAnimation, {
-          toValue: 1, // This value depends on how much you want to move the pins up
-          duration: 300, // Animation duration
-          useNativeDriver: false,
-        }),
-        Animated.delay(500), // Add a delay before resetting the animation
-        Animated.timing(pinAnimation, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: false,
-        }),
-      ]).start();
-      setTimeout(() => {
-      navigate.navigate("Home");
-    }, 1000);
-    
+    catch(error){
+      console.log(error)
     }
-  };
+  }
+  }
+
   const animatedContainerStyle = {
     transform: [
       {
@@ -115,6 +138,7 @@ const PinInput = ({ maxDigits }) => {
 
     return <View style={styles.dotsContainer}>{dots}</View>;
   };
+  
 
   return (
     <View style={styles.container}>
