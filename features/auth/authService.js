@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://daa8-102-213-209-1.ngrok-free.app/api/v1/auth';
+const API_URL = 'https://bfcc-196-207-134-81.ngrok-free.app/api/v1/auth';
 
 const authService = {
   login: async (email, password, navigation) => {

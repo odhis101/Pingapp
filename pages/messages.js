@@ -16,13 +16,18 @@ import {
   import Logo from "../assets/logo.png";
   import Icon from 'react-native-vector-icons/Ionicons'; // Import the appropriate icon set
   import TransactionsRadio from "../components/ContactList/ContactList";
+  import { useState, useEffect,useRef } from 'react';
+
 
 const messages = () => {
+    //const navigate = useNavigation();
 
     const handlePress = () => {
         navigation.navigate('AmountToSend');
         
       }
+      const [searchQuery, setSearchQuery] = useState("");
+
 
 
       const contactsData = [
@@ -43,7 +48,8 @@ const messages = () => {
           if (nameA > nameB) return 1;
           return 0;
         });
-    
+   
+
         // Grouping contacts by first letter
         const sortedContactsByLetter = sortedContacts.reduce((acc, contact) => {
           const firstLetter = contact.name.charAt(0).toUpperCase();
@@ -59,8 +65,19 @@ const messages = () => {
           contacts,
         }));
       };
+      
+      
+      
     
-      const sortedContactData = sortContactsByName(contactsData); 
+      const sortedContactData = sortContactsByName(contactsData);
+      
+      const filteredSortedContactData = sortedContactData.map(({ letter, contacts }) => ({
+        letter,
+        contacts: contacts.filter(contact =>
+          contact.name.toLowerCase().includes(searchQuery.toLowerCase())
+        ),
+      }));
+    
   return (
     <View style={styles.container}>
         <View style={styles.contactContainer}>
@@ -80,6 +97,8 @@ const messages = () => {
               style={styles.searchInput}
               placeholder="Search"
               placeholderTextColor="white"
+              onChangeText={text => setSearchQuery(text)}
+
             />
             <AntDesign
               name="search1"
@@ -92,11 +111,15 @@ const messages = () => {
         </View>
         <View style={styles.container}>
         <FlatList
-          data={sortedContactData}
+          data={filteredSortedContactData}
           keyExtractor={(item) => item.letter}
           renderItem={({ item }) => (
             <View>
               {item.contacts.map((contact) => (
+                  <TouchableOpacity
+                  key={contact.name}
+                  onPress={() => navigation.navigate("NextPageScreen")} // Replace with your actual screen name
+                >
                 <TransactionsRadio
                   key={contact.name}
                   name={contact.name}
@@ -105,6 +128,7 @@ const messages = () => {
                   isSelected={contact.isSelected}
                   time={contact.time}
                 />
+            </TouchableOpacity>
               ))}
             </View>
           )}

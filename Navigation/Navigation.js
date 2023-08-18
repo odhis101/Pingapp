@@ -13,6 +13,7 @@ import AmountToSend from "../pages/AmountToSend";
 import ConfirmPayment from "../pages/ConfirmPayment";
 import Login from "../pages/Login";
 import Dailpass from "../pages/DailPass";
+import messages from "../pages/Messages";
 const Stack = createStackNavigator();
 
 const Navigation = () => {
