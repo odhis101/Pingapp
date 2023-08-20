@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text,ImageBackground, View,Image,TouchableOpacity,TextInput,FlatList,ScrollView,Picker  } from 'react-native';
+import React, { useEffect, useState,useRef  } from "react";
+import { StyleSheet, Text,ImageBackground, View,Image,Modal,TouchableOpacity,TextInput,FlatList,ScrollView  } from 'react-native';
 import BackgroundImage from "../assets/background.png"
 import Topnav from '../components/Topnav/Topnav';
 import SendMoney from '../components/SendMoney/SendMoney';
@@ -14,7 +14,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome5 } from "@expo/vector-icons";
 import {useNavigation} from '@react-navigation/native';
 import { useRoute } from "@react-navigation/native";
-
+import { Picker } from "@react-native-picker/picker"; // Import Picker from the new package
+import axios from "axios";
+import { useSelector } from "react-redux";
 const AmountToSend = (maxDigits) => {
     const [imageHeight, setImageHeight] = useState(0);
     const [balance, setBalance] = useState('');
@@ -22,8 +24,27 @@ const AmountToSend = (maxDigits) => {
     const route = useRoute();
     const phoneNumber = route.params?.phoneNumber || ""; // Use optional chaining and provide a default value
     const deposit = route.params?.deposit || false;
+    const selectedContacts = route.params?.selectedContacts || [];
+    console.log(selectedContacts)
+    const sendMoney = route.params?.sendMoney || false;
     const [selectedCurrency, setSelectedCurrency] = useState("GBP"); // Default currency
+    const [selectedLanguage, setSelectedLanguage] = useState();
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+    const dropdownRef = useRef(null); // Ref to the triggering element
+    const authState = useSelector((state) => state.auth);
 
+    const renderCurrencyOption = ({ item }) => (
+      <TouchableOpacity
+        style={styles.optionItem}
+        onPress={() => {
+          setSelectedCurrency(item);
+          setIsDropdownVisible(false);
+        }}
+      >
+        <Text>{item}</Text>
+      </TouchableOpacity>
+    );
+    console.log(selectedContacts);
 
     // Calculate the imageHeight dynamically once the component is mounted
     useEffect(() => {
@@ -57,17 +78,41 @@ const AmountToSend = (maxDigits) => {
     
         return balanceStr;
       };
-
-      const depositAmt =() => {
-        console.log("testin")
+      const sendCash = async () => {
+        // we navigate to the pin screen with the balance 
+        navigation.navigate("Dailpass", { balance: balance, selectedContacts: selectedContacts,sendCash: true }); 
       }
 
-      const currencyOptions = [
-        { label: "GBP", value: "GBP" },
-        { label: "USD", value: "USD" },
-        { label: "EUR", value: "EUR" },
-        // Add more currency options here
-      ];
+      const depositAmt = async () => {
+        try {
+          const response = await axios.post(
+            "https://15c0-196-207-134-81.ngrok-free.app/api/v1/transaction/deposit_money",
+            {
+              receiver: authState.email, // Use the email from your Redux state
+              currency: selectedCurrency.toLowerCase(),
+              amount: balance, // Use the amount from your state
+            }
+          );
+          console.log(response.data);
+    
+          if (response.data.status == "ok"){
+            navigation.navigate("Home");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      };
+
+      const currencyOptions = ["GBP", "USD", "EUR"]; // Add more currency options here
+      const calculateDropdownPosition = () => {
+        if (dropdownRef.current) {
+          dropdownRef.current.measureInWindow((x, y, width) => {
+            setIsDropdownVisible(true);
+          });
+        }
+      };
+      
+    
     return (
      
        <ImageBackground
@@ -81,17 +126,50 @@ const AmountToSend = (maxDigits) => {
         <Text  style={styles.DepositText}>Deposit to Your Account</Text>
       ) : (
         <>
-          <Image source={Profile} style={styles.image} />
-          <Text style={styles.name}>Dan Bilzerian</Text>
-        </>
+ {selectedContacts.length <= 1 ? (
+    <Image source={Profile} style={styles.image} />
+  ) : null}
+<FlatList
+  data={selectedContacts}
+  keyExtractor={(contact) => contact.name}
+  renderItem={({ item: contact }) => (
+    <View style={styles.contactItem}>
+      <Text style={styles.name}>{contact.name}</Text>
+      {/* Add more text components for other properties */}
+    </View>
+  )}
+/>
+
+     
+</>
       )}
             <View style={styles.currentBalance}>
             <Text style={styles.currency}>{selectedCurrency}</Text>
 
               <Text style={styles.balance}>{formatBalance(balance)}</Text>
+
             </View>
-            <Text style={styles.recentTransactions}> GBP </Text>
-          </View>
+            
+
+    
+            <TouchableOpacity
+        style={styles.dropdownTrigger}
+        onPress={() => setIsDropdownVisible(!isDropdownVisible)}
+      >
+        <Text style={styles.recentTransactions}>{selectedCurrency}</Text>
+      </TouchableOpacity>
+            {isDropdownVisible && (
+        <View style={styles.currencyDropdown}>
+          <FlatList
+            data={currencyOptions}
+            renderItem={renderCurrencyOption}
+            keyExtractor={(item) => item}
+          />
+        </View>
+      )}
+
+ 
+                </View>
           <View style={styles.moneyButtons}>
           <View style={styles.container}>
       <View style={styles.rowContainer}>
@@ -195,7 +273,7 @@ const AmountToSend = (maxDigits) => {
             <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate('ConfirmPayment')}
+              onPress={sendCash}
             >
               <Text style={styles.buttonText}>Send</Text>
             </TouchableOpacity>

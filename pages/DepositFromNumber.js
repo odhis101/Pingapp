@@ -26,6 +26,7 @@ const PhoneNumber = () => {
     const handleProceed = () => {
         navigate.navigate("AmountToSend", { phoneNumber, deposit: true }); // Pass phoneNumber as prop
       };
+      
 
 return(
     <View style={styles.container}>

@@ -14,6 +14,9 @@ import InputFeild from "../components/inputFeilds/InputFeilds";
 import { LinearGradient } from "expo-linear-gradient";
 import PinInput from "../components/PinInput/PinInput";
 import { Dimensions } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { useRoute } from "@react-navigation/native";
 
 //q: get dimesnsion of screen and set the height of the container to 100% of the screen
 //q: how to make the pin input box responsive to the screen size
@@ -21,6 +24,9 @@ import { Dimensions } from "react-native";
 const Dailpass = () => {
   //console.log("this is the screen height",Dimension.get('screen').height)
   const [imageHeight, setImageHeight] = useState(0);
+  const route = useRoute();
+  const navigation = useNavigation();
+
   useEffect(() => {
     const window = Dimensions.get("window");
     setImageHeight(window.height +10);
@@ -31,7 +37,7 @@ const Dailpass = () => {
         <View style={styles.container}>
           <View style={styles.credentials}>
             <Image source={Logo} style={styles.image} />
-            <PinInput maxDigits={4} />
+            <PinInput maxDigits={4} route = {route} />
           </View>
         </View>
       </ImageBackground>

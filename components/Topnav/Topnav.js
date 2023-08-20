@@ -10,9 +10,15 @@ import {
 import BackgroundImage from "../../assets/background.png";
 import Logo from "../../assets/logo.png";
 import { LinearGradient } from "expo-linear-gradient";
-import Icon from "react-native-vector-icons/Feather";
-
+//import Icon from "react-native-vector-icons/Feather";
+import Icon from 'react-native-vector-icons/Ionicons'; // Import the appropriate icon set
+import { useNavigation } from "@react-navigation/native";
 const Topnav = () => {
+  const navigation = useNavigation();
+  const handlePress = () => {
+    navigation.navigate("messages");
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImage}>
@@ -20,9 +26,9 @@ const Topnav = () => {
           <View style={styles.topnavLeft}>
             <Image source={Logo} style={styles.image} />
           </View>
-          <View style={styles.topnavRight}>
-            <Icon name="message-circle" size={40} color="#000000" />
-          </View>
+          <TouchableOpacity onPress={handlePress}>
+            <Icon name="ios-create" size={30} color="white" />
+          </TouchableOpacity>
         </View>
       </View>
     </View>

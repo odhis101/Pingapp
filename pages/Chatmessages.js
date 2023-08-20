@@ -3,9 +3,13 @@ import {Image, StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoi
 import React from 'react';
 import Profile from "../assets/profile.png";
 import Icon from 'react-native-vector-icons/Ionicons'; // If you're using react-native-vector-icons
-
+import { useRoute } from '@react-navigation/native';
 
 const messages = () => {
+  const route = useRoute();
+  const { contact,id } = route.params;
+
+  console.log(id)
     const keyboardVerticalOffset = Platform.OS === 'ios' ? 10 : 0; // Adjust the offset as needed
 
     const handleBackButtonPress = () => {
@@ -83,7 +87,7 @@ const messages = () => {
   </TouchableOpacity>
               {/* Replace the comments with your image and name */}
               <Image source={Profile} style={styles.image} />
-              <Text>Dan Blez</Text>
+              <Text>{contact.name}</Text>
             </View>
             <ScrollView contentContainerStyle={styles.scrollContent}>
               <View style={[styles.messageContainer, { flexGrow: 1 }]}>

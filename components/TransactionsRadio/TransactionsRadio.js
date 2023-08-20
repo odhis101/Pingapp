@@ -11,13 +11,13 @@ import React, { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import Icon from 'react-native-vector-icons/Ionicons'; // If you're using react-native-vector-icons
 
-const RecentTransactions = ({ name, date, onPress }) => {
+const RecentTransactions = ({ name, date,onPress,contactDetails}) => {
   const [isSelected, setIsSelected] = useState(false);
-
+console.log(contactDetails)
   const handleRadioPress = () => {
     setIsSelected(!isSelected);
+    onPress(name, !isSelected,contactDetails); 
   };
-
   return (
     <View style={styles.TransactionDetails}>
       <Image source={Profile} style={styles.image} />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState,useRef  } from "react";
 import {
   StyleSheet,
   Text,
@@ -14,8 +14,46 @@ import SendMoney from "../components/SendMoney/SendMoney";
 import Mycards from "../components/Mycards/Mycards";
 import Profile from "../assets/profile.png";
 import RecentTransactions from "../components/RecentTransactions/RecentTransactions";
-
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 const Home = () => {
+  const navigation = useNavigation();
+  const [balance, setBalance] = useState(0);
+  const [currency, setCurrency] = useState("GBP");
+
+  const authState = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    // Fetch balance and currency data here
+    fetchBalanceAndCurrency();
+    console.log("this is auth state", authState);
+  },  []);
+// use effect to see changes if balance changes
+  React.useEffect(() => {
+    console.log("Balance: ", balance);
+  }, [balance]);
+
+  const fetchBalanceAndCurrency = async () => {
+    try {
+      const response = await axios.get(
+        "https://15c0-196-207-134-81.ngrok-free.app/api/v1/user/wallet",
+      );
+
+      
+      console.log("Response: ", response.data.data.wallet.balance);
+
+    
+      setBalance(response.data.data.wallet.balance);
+      setCurrency(currency);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  // ... (rest of the component)
+ 
+  
   return (
     < ScrollView style={{ height: "100%" }}>
       <View style={styles.currencyContainer}>
@@ -23,12 +61,12 @@ const Home = () => {
           source={BackgroundImage}
           style={styles.backgroundImage}
         >
-          <Topnav />
+          <Topnav  />
           <View style={styles.infoContainer}>
             <Text style={styles.title}>Balance</Text>
             <View style={styles.currentBalance}>
               <Text style={styles.currency}>£</Text>
-              <Text style={styles.balance}>10,000.00</Text>
+              <Text style={styles.balance}>{balance}</Text>
             </View>
             <Text style={styles.recentTransactions}>+ £ 790</Text>
           </View>

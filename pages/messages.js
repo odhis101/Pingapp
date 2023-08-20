@@ -17,26 +17,51 @@ import {
   import Icon from 'react-native-vector-icons/Ionicons'; // Import the appropriate icon set
   import TransactionsRadio from "../components/ContactList/ContactList";
   import { useState, useEffect,useRef } from 'react';
-
+  import axios from "axios";
 
 const messages = () => {
-    //const navigate = useNavigation();
+    const navigation = useNavigation();
+  // an endpoint that gets and returns contactId 
+const getContactId = async () => {
+  try {
+    const response = await axios.get('https://15c0-196-207-134-81.ngrok-free.app/api/v1/contacts/get_contact');
+    const { data } = response;
+    console.log(data)
 
-    const handlePress = () => {
-        navigation.navigate('AmountToSend');
+    if (data.status === 'ok') {
+      return data.data.contactItems; // Return the list of contact IDs
+    } else {
+      console.error('Failed to fetch contact IDs:', data.message);
+      return [];
+    }
+  } catch (error) {
+    console.error('An error occurred while fetching contact IDs:', error);
+    return [];
+  }
+};
+
+
+
+    const contactPress = (contact) => {
+      console.log(contact)
+      navigation.navigate('Chatmessages',{contact:contact, id:getContactId});
         
+      }
+      const handlePress = () => {
+        console.log("joshua ")
       }
       const [searchQuery, setSearchQuery] = useState("");
 
 
 
       const contactsData = [
-        { name: "John Doe", date: "15/04/23", lastMessage:"joshua",isSelected: false },
+        { name: "John Doe", date: "15/04/23", isSelected: false, email:"joshodhiambo5@gmail.com", phoneNumber:"0703757369",id:getContactId },
         { name: "John Doe", date: "ping 400$", time:"9:30", isSelected: false },
         { name: "Alice Johnson", date: "14/04/23",time:"9:30", isSelected: true },
         { name: "Alice Johnson", date: "14/04/23",time:"9:30", isSelected: true },
         { name: "Bob Smith", date: "13/04/23",time:"9:30", isSelected: false },
         { name: "Chris Evans", date: "12/04/23",time:"9:30", isSelected: true },
+
         // Add more data items as needed...
       ];
       const sortContactsByName = (contacts) => {
@@ -118,7 +143,8 @@ const messages = () => {
               {item.contacts.map((contact) => (
                   <TouchableOpacity
                   key={contact.name}
-                  onPress={() => navigation.navigate("NextPageScreen")} // Replace with your actual screen name
+                  onPress={() => contactPress(contact)}
+                 
                 >
                 <TransactionsRadio
                   key={contact.name}

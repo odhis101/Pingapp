@@ -13,15 +13,44 @@ import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useRoute, useNavigation } from "@react-navigation/native";
-
+import axios from "axios";
 const ConfirmPayment = () => {
   const [imageHeight, setImageHeight] = useState(0);
   const navigation = useNavigation();
   const route = useRoute();
-  const phoneNumber = route.params?.phoneNumber || ""; // Use optional chaining and provide a default value
+  const selectedContacts = route.params?.selectedContacts || ""; // Use optional chaining and provide a default value
   const deposit = route.params?.deposit || false;
   const  balance = route.params.balance|| {}; // Use default object if route.params is undefined
+// lets use a useffect to check for balance 
+console.log(selectedContacts[0].email)
 
+const sendCash = async () => {
+  const apiUrl = 'https://15c0-196-207-134-81.ngrok-free.app/api/v1/transaction/send_money';
+
+  const data = {
+    receiver: selectedContacts[0].email, // Replace with your actual global variable
+    currency: "Euro", // Replace with your actual global variable
+    amount: balance,     // Replace with your actual global variable
+  };
+
+  try {
+    const response = await axios.post(apiUrl, data);
+
+    // Handle the response here (e.g., show a success message)
+    console.log('Response:', response.data);
+  } catch (error) {
+    // Handle errors here (e.g., show an error message)
+    console.error('Error:', error);
+  }
+};
+
+// Usage example:
+
+
+
+  useEffect(() => {
+  console.log("this the balance", selectedContacts)
+  }, [selectedContacts]);
  
   useEffect(() => {
     const window = Dimensions.get("window");
@@ -36,16 +65,30 @@ const ConfirmPayment = () => {
     >
       <View style={styles.container}>
         <Text style={styles.whiteText}> Amount </Text>
-        <Text style={styles.amountText}> £ 17,890 </Text>
+        <Text style={styles.amountText}> £ {balance} </Text>
         <Text style={styles.whiteText}> to </Text>
         <View style={styles.nameContainer}>
           <Image source={Profile} style={styles.profileImage} />
-          <Text style={styles.nameText}> John Doe </Text>
+          
+          <FlatList
+  data={selectedContacts}
+  keyExtractor={(contact) => contact.name}
+  renderItem={({ item: contact }) => (
+    <View style={styles.contactItem}>
+      <Text style={styles.nameText}> {contact.name}</Text>
+
+      {/* Add more text components for other properties */}
+    </View>
+  )}
+/>
         </View>
         <View style={styles.phoneInputContainer}>
           <TextInput style={styles.input} placeholder="for lunch"  />
         </View>
-        <TouchableOpacity style={styles.sendButton}>
+        <TouchableOpacity 
+        style={styles.sendButton}
+        onPress={sendCash}
+        >
           <FontAwesome5 name="check" size={20} color="white" />
         </TouchableOpacity>
       </View>

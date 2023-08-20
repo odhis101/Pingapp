@@ -11,7 +11,9 @@ import { Dimensions } from "react-native";
 // import usenavigation from "react-navigation-hooks";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios"
-const PinInput = ({ maxDigits }) => {
+const PinInput = ({ maxDigits, route}) => {
+
+
   const [pinAnimation] = useState(new Animated.Value(0)); // Initialize the animation value
   const [isPasscodeCorrect, setIsPasscodeCorrect] = useState(false);
   const [incorrectPasscodeEntered, setIncorrectPasscodeEntered] = useState(false);
@@ -20,6 +22,11 @@ const PinInput = ({ maxDigits }) => {
 
   const [pin, setPin] = useState("");
   const [imageHeight, setImageHeight] = useState(0);
+  const sendCash = route.params?.sendCash || false;
+  const balance = route.params?.balance || {};
+  const selectedContacts = route.params?.selectedContacts || "";
+  console.log(sendCash)
+
   useEffect(() => {
     const window = Dimensions.get("window");
     setImageHeight(window.height);
@@ -45,8 +52,17 @@ const PinInput = ({ maxDigits }) => {
       
       )
       if(data){
-        console.log("success")
-        navigate.navigate("Home");
+        if(sendCash){
+          console.log("joshuiaasd")
+          navigate.navigate("ConfirmPayment",{balance:balance,selectedContacts:selectedContacts})
+        }
+        else{
+          console.log("success")
+          setPin(""); // Clear the pin state
+          navigate.navigate("Home");
+        }
+
+        
         /*
         setIsPasscodeCorrect(true); // Set the state to false for incorrect passcode
         Vibration.vibrate();

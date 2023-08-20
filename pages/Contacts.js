@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -19,21 +19,46 @@ import RecentTransactions from "../components/RecentTransactions/RecentTransacti
 import TransactionsRadio from "../components/TransactionsRadio/TransactionsRadio";
 import { AntDesign } from "@expo/vector-icons";
 import {useNavigation} from '@react-navigation/native';
+import { useRoute } from "@react-navigation/native";
 const Contacts = () => {
   const navigation = useNavigation();
+  const [selectedContacts, setSelectedContacts] = useState([]);
+  const route = useRoute();
+  let sendMoney = route.params.sendMoney;
+  console.log("this is sendMoney", sendMoney);
+
   const handlePress = () => {
-    navigation.navigate('AmountToSend');
-    
-  }
+    navigation.navigate('AmountToSend', {
+      selectedContacts: selectedContacts,
+      sendMoney: sendMoney,
+
+    });
+  };
+  
   const contactsData = [
-    { name: "John Doe", date: "15/04/23", isSelected: false },
-    { name: "John Doe", date: "15/04/23", isSelected: false },
-    { name: "Alice Johnson", date: "14/04/23", isSelected: true },
-    { name: "Alice Johnson", date: "14/04/23", isSelected: true },
-    { name: "Bob Smith", date: "13/04/23", isSelected: false },
-    { name: "Chris Evans", date: "12/04/23", isSelected: true },
+    { name: "John Doe", date: "15/04/23", isSelected: false, email:"joshodhiambo5@gmail.com", phoneNumber:"0703757369" },
+    { name: "asds Doe", date: "15/04/23", isSelected: false,email:"joshodh5@gmail.com", phoneNumber:"0703757368" },
+    { name: "Chris Evans", date: "12/04/23", isSelected: true ,email:"josh12@gmail.com", phoneNumber:"0703757367" },
     // Add more data items as needed...
   ];
+  const handleContactPress = (contactName, isSelected,contact) => {
+    //useffect to test contact
+
+    if (isSelected) {
+      setSelectedContacts((prevSelectedContacts) =>
+        [...prevSelectedContacts,contact]
+      );
+    } else {
+      setSelectedContacts((prevSelectedContacts) =>
+        prevSelectedContacts.filter((name) => name !== contactName)
+      );
+    }
+  };
+  // useffect to see changes if selected contact changes 
+  React.useEffect(() => {
+    console.log("Selected contacts: ", selectedContacts);
+  }, [selectedContacts]);
+  
   const sortContactsByName = (contacts) => {
     // Sorting contacts by name
     const sortedContacts = contacts.sort((a, b) => {
@@ -95,11 +120,7 @@ const Contacts = () => {
           </View>
         </ImageBackground>
       </View>
-      <View style={styles.contactList}>
-        <Text style={styles.sectionHeader}> Favs </Text>
-        <TransactionsRadio />
-        <TransactionsRadio />
-      </View>
+
       <View style={styles.container}>
         <FlatList
           data={sortedContactData}
@@ -111,8 +132,10 @@ const Contacts = () => {
                 <TransactionsRadio
                   key={contact.name}
                   name={contact.name}
-                  date={contact.date}
                   isSelected={contact.isSelected}
+                  contactDetails={contact}
+                  onPress={handleContactPress} // Pass the handler function
+
                 />
               ))}
             </View>
