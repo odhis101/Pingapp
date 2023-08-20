@@ -21,7 +21,7 @@ export default function App() {
       <>
           <Provider store={store}>
         <StatusBar style="auto" />
-        <Chatmessages />
+        <Navigation />
         </Provider>
 
       </>

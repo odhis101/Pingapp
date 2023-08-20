@@ -15,9 +15,9 @@ import Mycards from "../components/Mycards/Mycards";
 import Profile from "../assets/profile.png";
 import RecentTransactions from "../components/RecentTransactions/RecentTransactions";
 
-const Home = () => {
+const Sendmoney = () => {
   return (
-    < ScrollView style={{ height: "100%" }}>
+    <ScrollView style={{ height: "100%" }}>
       <View style={styles.currencyContainer}>
         <ImageBackground
           source={BackgroundImage}
@@ -32,14 +32,13 @@ const Home = () => {
             </View>
             <Text style={styles.recentTransactions}>+ £ 790</Text>
           </View>
-          <View style={styles.moneyButtons}>
-            
-            <SendMoney name={"Send money"} onPress={"SendMoney"}/>
-            <SendMoney name={"Request money"} onPress={"Request"} />
-          </View>
+          <View style={styles.moneyButtons}></View>
+          <Text style={styles.title}>Deposit </Text>
+
           <View style={styles.Mycards}>
-            <Text style={styles.heading}>My Cards</Text>
-            <Mycards title={"Deposit"}  iconImage="trending-up"  onPress={"Deposit"} />
+            <Text style={styles.heading}>Options</Text>
+            <Mycards title={"Deposit From The Phone Number "} iconImage={"smartphone"} onPress={'DepositFromNumber'} />
+            <Mycards title={"Deposit From The Bank "} iconImage={"dollar-sign"} onPress ={'SendToBank'}/>
           </View>
           <View style={styles.MyTransactions}>
             <Text style={styles.Transactiontitle}>Transactions</Text>
@@ -81,6 +80,8 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
   },
   title: {
+    marginRight: "auto",
+    marginLeft: "auto",
     fontSize: 24,
     fontWeight: "bold",
     color: "#FFFFFF",
@@ -170,4 +171,4 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
 });
-export default Home;
+export default Sendmoney;

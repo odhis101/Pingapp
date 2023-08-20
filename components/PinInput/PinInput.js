@@ -30,14 +30,17 @@ const PinInput = ({ maxDigits }) => {
     console.log("testing .... ")
     console.log(pin, 4)
     if (pin.length < 4) {
-      setPin(pin + digit);
+      setPin((currentPin) => currentPin + digit); // Use callback form to ensure updated value
     }
-    if(pin.length === 4){
+   let pincheck = pin + digit
+    if(pincheck.length === 4){
+      console.log("it has reached 4")
+      
     try{
       console.log(pin)
-      const data = await axios.post("https://daa8-102-213-209-1.ngrok-free.app/api/v1/auth/check_pin",
+      const data = await axios.post("https://15c0-196-207-134-81.ngrok-free.app/api/v1/auth/check_pin",
       {
-        pin:pin
+        pin:pin+digit
       },{withCredentials:true}
       
       )
@@ -68,6 +71,8 @@ const PinInput = ({ maxDigits }) => {
       
       }
       else{
+        setPin(""); // Clear the pin state
+
         /*
         setIncorrectPasscodeEntered(true); // Set the state to true for incorrect passcode
 
@@ -100,6 +105,33 @@ const PinInput = ({ maxDigits }) => {
     }
     catch(error){
       console.log(error)
+      setIncorrectPasscodeEntered(true); // Set the state to true for incorrect passcode
+
+
+        Vibration.vibrate();
+        //setPin(""); // Clear the pin state
+        // Start the animation
+  
+        Animated.sequence([
+          Animated.timing(pinAnimation, {
+            toValue: 1, // This value depends on how much you want to move the pins up
+            duration: 300, // Animation duration
+            useNativeDriver: false,
+          }),
+          Animated.delay(500), // Add a delay before resetting the animation
+          Animated.timing(pinAnimation, {
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: false,
+          }),
+        ]).start(); // Start the animation sequence
+         setTimeout(() => {
+        setIncorrectPasscodeEntered(false); // Reset the state after a delay
+      }, 1000); // Adjust the delay time as needed
+        setPin(""); // Clear the pin state
+        //setIncorrectPasscodeEntered(false); // Set the state to false for incorrect passcode
+      
+      setPin("");
     }
   }
   }

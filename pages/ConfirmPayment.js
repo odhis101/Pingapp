@@ -12,10 +12,17 @@ import PinInput from '../components/PinInput/PinInput';
 import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 const ConfirmPayment = () => {
   const [imageHeight, setImageHeight] = useState(0);
-  const [balance, setBalance] = useState('');
+  const navigation = useNavigation();
+  const route = useRoute();
+  const phoneNumber = route.params?.phoneNumber || ""; // Use optional chaining and provide a default value
+  const deposit = route.params?.deposit || false;
+  const  balance = route.params.balance|| {}; // Use default object if route.params is undefined
+
+ 
   useEffect(() => {
     const window = Dimensions.get("window");
     setImageHeight(window.height);

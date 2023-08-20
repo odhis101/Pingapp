@@ -14,6 +14,9 @@ import ConfirmPayment from "../pages/ConfirmPayment";
 import Login from "../pages/Login";
 import Dailpass from "../pages/DailPass";
 import messages from "../pages/Messages";
+import Deposit from "../pages/Deposit";
+import Request from "../pages/Request"
+import DepositFromNumber from "../pages/DepositFromNumber"
 const Stack = createStackNavigator();
 
 const Navigation = () => {
@@ -34,6 +37,10 @@ const Navigation = () => {
         <Stack.Screen name="SendToBank" component={SendToBank} />
         <Stack.Screen name="AmountToSend" component={AmountToSend} />
         <Stack.Screen name="ConfirmPayment" component={ConfirmPayment} />
+        <Stack.Screen name="Deposit" component={Deposit} />
+        <Stack.Screen name="Request" component={Request} />
+        <Stack.Screen name="DepositFromNumber" component={DepositFromNumber} />
+
 
       
         {/* Add other screens here */}

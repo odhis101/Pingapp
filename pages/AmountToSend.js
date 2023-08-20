@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text,ImageBackground, View,Image,TouchableOpacity,TextInput,FlatList,ScrollView } from 'react-native';
+import { StyleSheet, Text,ImageBackground, View,Image,TouchableOpacity,TextInput,FlatList,ScrollView,Picker  } from 'react-native';
 import BackgroundImage from "../assets/background.png"
 import Topnav from '../components/Topnav/Topnav';
 import SendMoney from '../components/SendMoney/SendMoney';
@@ -13,10 +13,16 @@ import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome5 } from "@expo/vector-icons";
 import {useNavigation} from '@react-navigation/native';
+import { useRoute } from "@react-navigation/native";
+
 const AmountToSend = (maxDigits) => {
     const [imageHeight, setImageHeight] = useState(0);
     const [balance, setBalance] = useState('');
     const navigation = useNavigation();
+    const route = useRoute();
+    const phoneNumber = route.params?.phoneNumber || ""; // Use optional chaining and provide a default value
+    const deposit = route.params?.deposit || false;
+    const [selectedCurrency, setSelectedCurrency] = useState("GBP"); // Default currency
 
 
     // Calculate the imageHeight dynamically once the component is mounted
@@ -51,6 +57,17 @@ const AmountToSend = (maxDigits) => {
     
         return balanceStr;
       };
+
+      const depositAmt =() => {
+        console.log("testin")
+      }
+
+      const currencyOptions = [
+        { label: "GBP", value: "GBP" },
+        { label: "USD", value: "USD" },
+        { label: "EUR", value: "EUR" },
+        // Add more currency options here
+      ];
     return (
      
        <ImageBackground
@@ -60,10 +77,17 @@ const AmountToSend = (maxDigits) => {
             <Topnav />
 
 <View style={styles.infoContainer}>
-            <Image source={Profile} style={styles.image} />
-            <Text style={styles.name}>Dan Bilzerian</Text>
+{deposit ? (
+        <Text  style={styles.DepositText}>Deposit to Your Account</Text>
+      ) : (
+        <>
+          <Image source={Profile} style={styles.image} />
+          <Text style={styles.name}>Dan Bilzerian</Text>
+        </>
+      )}
             <View style={styles.currentBalance}>
-              <Text style={styles.currency}>£</Text>
+            <Text style={styles.currency}>{selectedCurrency}</Text>
+
               <Text style={styles.balance}>{formatBalance(balance)}</Text>
             </View>
             <Text style={styles.recentTransactions}> GBP </Text>
@@ -142,36 +166,57 @@ const AmountToSend = (maxDigits) => {
         </TouchableOpacity>
         
       </View>
-      <View style={styles.buttonContainer}>
-
-        <LinearGradient
-          colors={["#5087D3", "#2AA5D6"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.gradientButton}
-        >
-          <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
-          <TouchableOpacity 
-          style={styles.button}
-          onPress={() => navigation.navigate('ConfirmPayment')}
+      {deposit ? (
+        <View style={styles.depositButtonContainer}>
+          <LinearGradient
+            colors={["#4CB8C4", "#5BC7A5"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientButton}
           >
-            <Text style={styles.buttonText}>Send </Text>
-          </TouchableOpacity>
-        </LinearGradient>
-        <LinearGradient
-          colors={["#4CB8C4", "#5BC7A5"]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.gradientButton}
-        >
-          <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
-          <TouchableOpacity 
-          onPress={() => navigation.navigate('ConfirmPayment')}
-          style={styles.button}>
-            <Text style={styles.buttonText}>Request</Text>
-          </TouchableOpacity>
-        </LinearGradient>
-      </View>
+            <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
+            <TouchableOpacity
+            // here we call the axios endpoint we dont have to navigate 
+            onPress={depositAmt} // Pass the props
+            style={styles.button}
+            >
+              <Text style={styles.buttonText}>Deposit</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+        </View>
+      ) : (
+        <View style={styles.buttonContainer}>
+          <LinearGradient
+            colors={["#5087D3", "#2AA5D6"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientButton}
+          >
+            <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate('ConfirmPayment')}
+            >
+              <Text style={styles.buttonText}>Send</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+          <LinearGradient
+            colors={["#4CB8C4", "#5BC7A5"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientButton}
+          >
+            <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ConfirmPayment')}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Request</Text>
+            </TouchableOpacity>
+          </LinearGradient>
+        </View>
+      )}
+
     </View>
 
             </View>
@@ -221,6 +266,10 @@ const styles = StyleSheet.create({
           balance: {
             fontSize: 32,
             fontWeight: "bold",
+            color: "#FFFFFF",
+          },
+          DepositText:{
+            fontSize: 20,
             color: "#FFFFFF",
           },
           recentTransactions: {
