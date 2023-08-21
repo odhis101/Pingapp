@@ -37,7 +37,7 @@ const Home = () => {
   const fetchBalanceAndCurrency = async () => {
     try {
       const response = await axios.get(
-        "https://15c0-196-207-134-81.ngrok-free.app/api/v1/user/wallet",
+        "https://27df-196-207-134-81.ngrok-free.app/api/v1/user/wallet",
       );
 
       

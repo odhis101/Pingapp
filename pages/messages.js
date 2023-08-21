@@ -22,29 +22,35 @@ import {
 const messages = () => {
     const navigation = useNavigation();
   // an endpoint that gets and returns contactId 
-const getContactId = async () => {
-  try {
-    const response = await axios.get('https://15c0-196-207-134-81.ngrok-free.app/api/v1/contacts/get_contact');
-    const { data } = response;
-    console.log(data)
+  const [contactsDatas, setContactsData] = useState([]);
 
-    if (data.status === 'ok') {
-      return data.data.contactItems; // Return the list of contact IDs
-    } else {
-      console.error('Failed to fetch contact IDs:', data.message);
-      return [];
+  const fetchContactIds = async () => {
+    try {
+      const response = await axios.get('https://27df-196-207-134-81.ngrok-free.app/api/v1/contacts/get_contact');
+      const { data } = response;
+  
+      if (data.status === 'ok') {
+        setContactsData(data.data.contactItems); // Store the list of contact IDs in state
+      } else {
+        console.error('Failed to fetch contact IDs:', data.message);
+      }
+    } catch (error) {
+      console.error('An error occurred while fetching contact IDs:', error);
     }
-  } catch (error) {
-    console.error('An error occurred while fetching contact IDs:', error);
-    return [];
-  }
-};
+  };
+  
+  // Call fetchContactIds when the component mounts
+  useEffect(() => {
+    fetchContactIds();
+    console.log(contactsData)
+  }, []);
 
 
 
-    const contactPress = (contact) => {
-      console.log(contact)
-      navigation.navigate('Chatmessages',{contact:contact, id:getContactId});
+const contactPress = async (contact) => {
+  console.log(contact)
+
+      navigation.navigate('Chatmessages',{contact:contact, contactsData});
         
       }
       const handlePress = () => {
@@ -53,53 +59,48 @@ const getContactId = async () => {
       const [searchQuery, setSearchQuery] = useState("");
 
 
-
       const contactsData = [
-        { name: "John Doe", date: "15/04/23", isSelected: false, email:"joshodhiambo5@gmail.com", phoneNumber:"0703757369",id:getContactId },
-        { name: "John Doe", date: "ping 400$", time:"9:30", isSelected: false },
-        { name: "Alice Johnson", date: "14/04/23",time:"9:30", isSelected: true },
-        { name: "Alice Johnson", date: "14/04/23",time:"9:30", isSelected: true },
-        { name: "Bob Smith", date: "13/04/23",time:"9:30", isSelected: false },
-        { name: "Chris Evans", date: "12/04/23",time:"9:30", isSelected: true },
-
-        // Add more data items as needed...
+        {
+          "email": "benardogutu@gmail.com",
+          "firstName": "Ben",
+          "id": "64e283552df6ac93a1baafd8",
+          "lastName": "Ogutu",
+          "phoneNumber": "+254745021809",
+          "username": "Lethal"
+        }
+        // ... other contact objects ...
       ];
       const sortContactsByName = (contacts) => {
         // Sorting contacts by name
         const sortedContacts = contacts.sort((a, b) => {
-          const nameA = a.name.toUpperCase();
-          const nameB = b.name.toUpperCase();
+          const nameA = `${a.firstName} ${a.lastName}`.toUpperCase();
+          const nameB = `${b.firstName} ${b.lastName}`.toUpperCase();
           if (nameA < nameB) return -1;
           if (nameA > nameB) return 1;
           return 0;
         });
    
 
-        // Grouping contacts by first letter
         const sortedContactsByLetter = sortedContacts.reduce((acc, contact) => {
-          const firstLetter = contact.name.charAt(0).toUpperCase();
+          const firstLetter = `${contact.firstName} ${contact.lastName}`.charAt(0).toUpperCase();
           if (!acc[firstLetter]) {
             acc[firstLetter] = [];
           }
           acc[firstLetter].push(contact);
           return acc;
         }, {});
-    
+      
         return Object.entries(sortedContactsByLetter).map(([letter, contacts]) => ({
           letter,
           contacts,
         }));
       };
-      
-      
-      
-    
       const sortedContactData = sortContactsByName(contactsData);
-      
+
       const filteredSortedContactData = sortedContactData.map(({ letter, contacts }) => ({
         letter,
         contacts: contacts.filter(contact =>
-          contact.name.toLowerCase().includes(searchQuery.toLowerCase())
+          `${contact.firstName} ${contact.lastName}`.toLowerCase().includes(searchQuery.toLowerCase())
         ),
       }));
     
@@ -148,7 +149,7 @@ const getContactId = async () => {
                 >
                 <TransactionsRadio
                   key={contact.name}
-                  name={contact.name}
+                  name={`${contact.firstName} ${contact.lastName}`}
                   date={contact.date}
                   lastMessage={contact.lastMessage}
                   isSelected={contact.isSelected}

@@ -45,7 +45,7 @@ const PinInput = ({ maxDigits, route}) => {
       
     try{
       console.log(pin)
-      const data = await axios.post("https://15c0-196-207-134-81.ngrok-free.app/api/v1/auth/check_pin",
+      const data = await axios.post("https://27df-196-207-134-81.ngrok-free.app/api/v1/auth/check_pin",
       {
         pin:pin+digit
       },{withCredentials:true}

@@ -4,10 +4,17 @@ import React from 'react';
 import Profile from "../assets/profile.png";
 import Icon from 'react-native-vector-icons/Ionicons'; // If you're using react-native-vector-icons
 import { useRoute } from '@react-navigation/native';
+import io from 'socket.io-client';
 
 const messages = () => {
   const route = useRoute();
   const { contact,id } = route.params;
+  const [inputMessage, setInputMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [socket, setSocket] = useState(null);
+  const [incomingMessages, setIncomingMessages] = useState([]);
+const [outgoingMessages, setOutgoingMessages] = useState([]);
+
 
   console.log(id)
     const keyboardVerticalOffset = Platform.OS === 'ios' ? 10 : 0; // Adjust the offset as needed
@@ -21,59 +28,45 @@ const messages = () => {
       // For example, you can navigate to a payment screen or perform the money transfer operation
       // This function will be executed when the "send money" button is pressed
     };
+ // Define two separate state variables for incoming and outgoing messages
+
+
+// ...
+
+useEffect(() => {
+  const newSocket = io('https://27df-196-207-134-81.ngrok-free.app');
+  setSocket(newSocket);
+
+  newSocket.on('chat_message', (message) => {
+    // Add a timestamp to the incoming message
+    const messageWithTimestamp = { ...message, timestamp: new Date().toISOString() };
+    setIncomingMessages((prevMessages) => [...prevMessages, messageWithTimestamp]);
+  });
+
+  return () => {
+    newSocket.disconnect();
+  };
+}, []);
+
+
+const sendMessage = () => {
+  if (socket) {
+    const currentTime = new Date().toISOString();
+    const newOutgoingMessage = {
+      text: inputMessage,
+      isOutgoing: true,
+      timestamp: currentTime, // Add the timestamp
+    };
+    socket.emit('chat_message', newOutgoingMessage);
+    setOutgoingMessages((prevMessages) => [...prevMessages, newOutgoingMessage]);
+    
+    setInputMessage('');
+  }
+};
+
     
 
-      const [allMessages, setAllMessages] = useState([]);
 
-      // Simulate fetching messages from the backend
-      useEffect(() => {
-        // Replace this with your actual backend API endpoint
-        const backendAPIEndpoint = 'https://your-backend-api.com/messages';
-    
-        // Function to fetch messages from the backend API
-        const fetchMessagesFromBackend = async () => {
-          try {
-            // Simulate API response with dummy data
-            const dummyData = [
-              {
-                text: 'Hi, how are you?',
-                time: '2023-08-03T12:34:00',
-                isOutgoing: false,
-              },
-              {
-                text: 'Sure, I completed the project yesterday.',
-                time: '2023-08-03T14:35:00',
-                isOutgoing: true,
-              },
-              {
-                text: 'Sure, I completed the project yesterday.',
-                time: '2023-08-03T14:35:00',
-                isOutgoing: false,
-              },
-              // Add more messages as needed
-            ];
-    
-            // Simulate API response delay using setTimeout
-            setTimeout(() => {
-              // Sort the messages based on their timestamps in ascending order
-              const sortedMessages = dummyData.sort((a, b) => {
-                const timeDifference = new Date(a.time) - new Date(b.time);
-                if (timeDifference === 0) {
-                  // If the timestamps are the same, sort outgoing messages before incoming messages
-                  return a.isOutgoing ? -1 : 1;
-                }
-                return timeDifference;
-              });
-    
-              setAllMessages(sortedMessages);
-            }, 1000); // Simulate 1 second delay
-          } catch (error) {
-            console.error('Error fetching messages:', error);
-          }
-        };
-    
-        fetchMessagesFromBackend();
-      }, []);
       return (
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -87,17 +80,32 @@ const messages = () => {
   </TouchableOpacity>
               {/* Replace the comments with your image and name */}
               <Image source={Profile} style={styles.image} />
-              <Text>{contact.name}</Text>
+              <Text>{contact.firstName} {contact.lastName}</Text>
             </View>
             <ScrollView contentContainerStyle={styles.scrollContent}>
-              <View style={[styles.messageContainer, { flexGrow: 1 }]}>
-                {allMessages.map((message, index) => (
-                  <View key={index} style={message.isOutgoing ? styles.outgoingMessageContainer : styles.incomingMessageContainer}>
-                    <Text style={message.isOutgoing ? styles.outgoingMessageText : styles.incomingMessageText}>{message.text}</Text>
-                    <Text style={styles.timeIndicator}>{message.time}</Text>
-                  </View>
-                ))}
-              </View>
+            <View style={[styles.messageContainer, { flexGrow: 1 }]}>
+  {([...incomingMessages, ...outgoingMessages]).sort((a, b) => a.timestamp.localeCompare(b.timestamp)).map((message, index) => (
+    <View
+      key={index}
+      style={
+        message.isOutgoing
+          ? styles.outgoingMessageContainer
+          : styles.incomingMessageContainer
+      }
+    >
+      <Text
+        style={
+          message.isOutgoing
+            ? styles.outgoingMessageText
+            : styles.incomingMessageText
+        }
+      >
+        {message.text}
+      </Text>
+      <Text style={styles.timeIndicator}>{message.time}</Text>
+    </View>
+  ))}
+</View>
             </ScrollView>
       
             <View style={styles.writeMessage}>
@@ -109,9 +117,14 @@ const messages = () => {
               <TextInput
                 style={{ flex: 1, marginRight: 8, paddingVertical: 8, paddingHorizontal: 16, backgroundColor: '#F2F2F2' }}
                 placeholder="Type your message here..."
+                value={inputMessage} // Set the value of the input to the state
+                onChangeText={setInputMessage} // Handle changes to the input
               />
               {/* Send icon */}
-              <TouchableOpacity style={{ padding: 8, backgroundColor: '#007BFF', borderRadius: 4 }}>
+              <TouchableOpacity 
+                onPress={sendMessage} // Replace with the appropriate function
+
+              style={{ padding: 8, backgroundColor: '#007BFF', borderRadius: 4 }}>
                 <Text style={{ color: '#FFFFFF' }}>Send</Text>
               </TouchableOpacity>
             </View>
