@@ -18,15 +18,19 @@ import {
   import TransactionsRadio from "../components/ContactList/ContactList";
   import { useState, useEffect,useRef } from 'react';
   import axios from "axios";
+import getEnvVars from "../.env.js"
+
 
 const messages = () => {
     const navigation = useNavigation();
   // an endpoint that gets and returns contactId 
-  const [contactsDatas, setContactsData] = useState([]);
+  const { API_URL } = getEnvVars();
+  const [contactsData, setContactsData] = useState([]);
 
   const fetchContactIds = async () => {
     try {
-      const response = await axios.get('https://27df-196-207-134-81.ngrok-free.app/api/v1/contacts/get_contact');
+      const response = await axios.get(
+        `${API_URL}/api/v1/contacts/get_contact`);
       const { data } = response;
   
       if (data.status === 'ok') {
@@ -58,7 +62,7 @@ const contactPress = async (contact) => {
       }
       const [searchQuery, setSearchQuery] = useState("");
 
-
+/*
       const contactsData = [
         {
           "email": "benardogutu@gmail.com",
@@ -70,6 +74,8 @@ const contactPress = async (contact) => {
         }
         // ... other contact objects ...
       ];
+
+    */
       const sortContactsByName = (contacts) => {
         // Sorting contacts by name
         const sortedContacts = contacts.sort((a, b) => {

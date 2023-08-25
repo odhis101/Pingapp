@@ -1,12 +1,16 @@
 import axios from 'axios';
+import getEnvVars from "../../.env.js"
 
-const API_URL = 'https://27df-196-207-134-81.ngrok-free.app/api/v1/auth';
+const { API_URL } = getEnvVars();
+//const API_URL = 'https://a32f-196-207-134-81.ngrok-free.app/api/v1/auth';
 
+
+console.log("this is api url ", API_URL)
 const authService = {
   login: async (email, password, navigation) => {
     console.log("this is ffrom service ",email,password)
     try {    
-      const response = await axios.post(`${API_URL}/login`, {
+      const response = await axios.post(`${API_URL}/api/v1/auth/login`, {
         email: email,
         password: password,
       });
@@ -34,7 +38,7 @@ const authService = {
   },
   getUser: async (navigation,location) => {
     try {    
-      const response = await axios.get(`${API_URL}/user`);
+      const response = await axios.get(`${API_URL}/api/v1/auth/user`);
       console.log(response.data.data)
       if (response.data.status == "ok") {
         console.log("we are okkkkk")

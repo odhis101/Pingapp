@@ -15,9 +15,12 @@ import Mycards from "../components/Mycards/Mycards";
 import Profile from "../assets/profile.png";
 import RecentTransactions from "../components/RecentTransactions/RecentTransactions";
 import axios from "axios";
+import getEnvVars from "../.env.js"
+
 const Sendmoney = () => {
   const [balance, setBalance] = useState(0);
   const [currency, setCurrency] = useState("GBP");
+  const { API_URL } = getEnvVars();
   useEffect(() => {
     // Fetch balance and currency data here
     fetchBalanceAndCurrency();
@@ -30,7 +33,7 @@ const Sendmoney = () => {
   const fetchBalanceAndCurrency = async () => {
     try {
       const response = await axios.get(
-        "https://15c0-196-207-134-81.ngrok-free.app/api/v1/user/wallet",
+        `${API_URL}/api/v1/user/wallet`,
       );
 
       

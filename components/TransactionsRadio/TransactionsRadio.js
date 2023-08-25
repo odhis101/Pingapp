@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons'; // If you're using react-
 
 const RecentTransactions = ({ name, date,onPress,contactDetails}) => {
   const [isSelected, setIsSelected] = useState(false);
-console.log(contactDetails)
+console.log("here we are talking contactDetails ",contactDetails)
   const handleRadioPress = () => {
     setIsSelected(!isSelected);
     onPress(name, !isSelected,contactDetails); 

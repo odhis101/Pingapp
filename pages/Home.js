@@ -17,10 +17,14 @@ import RecentTransactions from "../components/RecentTransactions/RecentTransacti
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import getEnvVars from "../.env.js"
+
 const Home = () => {
   const navigation = useNavigation();
   const [balance, setBalance] = useState(0);
   const [currency, setCurrency] = useState("GBP");
+  const { API_URL } = getEnvVars();
+
 
   const authState = useSelector((state) => state.auth);
 
@@ -37,7 +41,7 @@ const Home = () => {
   const fetchBalanceAndCurrency = async () => {
     try {
       const response = await axios.get(
-        "https://27df-196-207-134-81.ngrok-free.app/api/v1/user/wallet",
+        `${API_URL}/api/v1/user/wallet`,
       );
 
       

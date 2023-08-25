@@ -14,6 +14,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import getEnvVars from "../.env.js"
+
 const ConfirmPayment = () => {
   const [imageHeight, setImageHeight] = useState(0);
   const navigation = useNavigation();
@@ -22,10 +24,13 @@ const ConfirmPayment = () => {
   const deposit = route.params?.deposit || false;
   const  balance = route.params.balance|| {}; // Use default object if route.params is undefined
 // lets use a useffect to check for balance 
+const { API_URL } = getEnvVars();
+
+console.log()
 console.log(selectedContacts[0].email)
 
 const sendCash = async () => {
-  const apiUrl = 'https://15c0-196-207-134-81.ngrok-free.app/api/v1/transaction/send_money';
+  const apiUrl =`${API_URL}/api/v1/transaction/send_money`
 
   const data = {
     receiver: selectedContacts[0].email, // Replace with your actual global variable
@@ -37,7 +42,16 @@ const sendCash = async () => {
     const response = await axios.post(apiUrl, data);
 
     // Handle the response here (e.g., show a success message)
-    console.log('Response:', response.data);
+    console.log('Response:', response.data.message);
+    if(response.data.message === " Transaction created successfully"){
+      navigation.navigate("Success",isSuccess=true)
+      console.log("success")
+    }
+    else{
+      navigation.navigate("Success",isSuccess=false) 
+      console.log("success")
+     
+    }
   } catch (error) {
     // Handle errors here (e.g., show an error message)
     console.error('Error:', error);
@@ -67,6 +81,7 @@ const sendCash = async () => {
         <Text style={styles.whiteText}> Amount </Text>
         <Text style={styles.amountText}> £ {balance} </Text>
         <Text style={styles.whiteText}> to </Text>
+
         <View style={styles.nameContainer}>
           <Image source={Profile} style={styles.profileImage} />
           
@@ -75,7 +90,7 @@ const sendCash = async () => {
   keyExtractor={(contact) => contact.name}
   renderItem={({ item: contact }) => (
     <View style={styles.contactItem}>
-      <Text style={styles.nameText}> {contact.name}</Text>
+      <Text style={styles.nameText}> {contact.firstName} {contact.lastName} </Text>
 
       {/* Add more text components for other properties */}
     </View>

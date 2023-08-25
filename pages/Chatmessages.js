@@ -5,8 +5,12 @@ import Profile from "../assets/profile.png";
 import Icon from 'react-native-vector-icons/Ionicons'; // If you're using react-native-vector-icons
 import { useRoute } from '@react-navigation/native';
 import io from 'socket.io-client';
+import { useNavigation } from '@react-navigation/native';
+import getEnvVars from "../.env.js"
 
 const messages = () => {
+  const { API_URL } = getEnvVars();
+
   const route = useRoute();
   const { contact,id } = route.params;
   const [inputMessage, setInputMessage] = useState('');
@@ -14,19 +18,24 @@ const messages = () => {
   const [socket, setSocket] = useState(null);
   const [incomingMessages, setIncomingMessages] = useState([]);
 const [outgoingMessages, setOutgoingMessages] = useState([]);
+const navigation = useNavigation();
 
 
   console.log(id)
-    const keyboardVerticalOffset = Platform.OS === 'ios' ? 10 : 0; // Adjust the offset as needed
+    //const keyboardVerticalOffset = Platform.OS === 'ios' ? 10 : 0; // Adjust the offset as needed
+    const keyboardVerticalOffset = Platform.OS === 'ios' ? 10 : 0;
+
 
     const handleBackButtonPress = () => {
       // Implement the logic to go back or perform any other actions on back button press
       // For example, you can use React Navigation's navigation.goBack() method to go back
+      navigation.goBack();
     };
     const handleSendMoneyPress = () => {
-      // Add the logic to handle the "send money" action here
-      // For example, you can navigate to a payment screen or perform the money transfer operation
-      // This function will be executed when the "send money" button is pressed
+      // reroute to amountTosend and pass the email gotten from contact 
+      console.log(contact)
+      navigation.navigate("AmountToSend",{selectedContacts:[contact] })
+
     };
  // Define two separate state variables for incoming and outgoing messages
 
@@ -34,7 +43,7 @@ const [outgoingMessages, setOutgoingMessages] = useState([]);
 // ...
 
 useEffect(() => {
-  const newSocket = io('https://27df-196-207-134-81.ngrok-free.app');
+  const newSocket = io(`${API_URL}`);
   setSocket(newSocket);
 
   newSocket.on('chat_message', (message) => {
@@ -68,11 +77,11 @@ const sendMessage = () => {
 
 
       return (
-        <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          keyboardVerticalOffset={keyboardVerticalOffset}
-          style={{ flex: 1 }}
-        >
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={keyboardVerticalOffset}
+            style={{ flex: 1 }}
+          >
           <View style={styles.container}>
             <View style={styles.topBar}>
             <TouchableOpacity onPress={() => handleBackButtonPress()}>
@@ -108,7 +117,7 @@ const sendMessage = () => {
 </View>
             </ScrollView>
       
-            <View style={styles.writeMessage}>
+            <View style ={styles.writeMessage}>
               {/* Input box */}
               <TouchableOpacity style={styles.sendMoneyButton} onPress={handleSendMoneyPress}>
     {/* Replace 'send-money-icon.png' with your send money icon image */}
@@ -175,7 +184,6 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
     },
     writeMessage: {
-      position: 'sticky',
       bottom: 1,
       flexDirection: 'row',
       alignItems: 'center',

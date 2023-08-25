@@ -20,12 +20,39 @@ import TransactionsRadio from "../components/TransactionsRadio/TransactionsRadio
 import { AntDesign } from "@expo/vector-icons";
 import {useNavigation} from '@react-navigation/native';
 import { useRoute } from "@react-navigation/native";
+import axios from "axios";
+import getEnvVars from "../.env.js"
 const Contacts = () => {
+  const { API_URL } = getEnvVars();
+
   const navigation = useNavigation();
   const [selectedContacts, setSelectedContacts] = useState([]);
+  const [contactsData, setContactsData] = useState([]);
   const route = useRoute();
   let sendMoney = route.params.sendMoney;
-  console.log("this is sendMoney", sendMoney);
+
+  const fetchContactIds = async () => {
+    try {
+      const response = await axios.get(
+        `${API_URL}/api/v1/contacts/get_contact`);
+      const { data } = response;
+  
+      if (data.status === 'ok') {
+        setContactsData(data.data.contactItems); // Store the list of contact IDs in state
+      } else {
+        console.error('Failed to fetch contact IDs:', data.message);
+      }
+    } catch (error) {
+      console.error('An error occurred while fetching contact IDs:', error);
+    }
+  };
+  
+  // Call fetchContactIds when the component mounts
+  useEffect(() => {
+    fetchContactIds();
+    console.log(contactsData)
+  }, []);
+
 
   const handlePress = () => {
     navigation.navigate('AmountToSend', {
@@ -34,14 +61,16 @@ const Contacts = () => {
 
     });
   };
-  
+  /*
   const contactsData = [
     { name: "John Doe", date: "15/04/23", isSelected: false, email:"joshodhiambo5@gmail.com", phoneNumber:"0703757369" },
     { name: "asds Doe", date: "15/04/23", isSelected: false,email:"joshodh5@gmail.com", phoneNumber:"0703757368" },
     { name: "Chris Evans", date: "12/04/23", isSelected: true ,email:"josh12@gmail.com", phoneNumber:"0703757367" },
     // Add more data items as needed...
   ];
+  */
   const handleContactPress = (contactName, isSelected,contact) => {
+    console.log("this is contact ",contact)
     //useffect to test contact
 
     if (isSelected) {
@@ -61,31 +90,31 @@ const Contacts = () => {
   
   const sortContactsByName = (contacts) => {
     // Sorting contacts by name
+    console.log(contacts)
     const sortedContacts = contacts.sort((a, b) => {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
+      const nameA = `${a.firstName} ${a.lastName}`.toUpperCase();
+      const nameB = `${b.firstName} ${b.lastName}`.toUpperCase();
       if (nameA < nameB) return -1;
       if (nameA > nameB) return 1;
       return 0;
     });
 
-    // Grouping contacts by first letter
+
     const sortedContactsByLetter = sortedContacts.reduce((acc, contact) => {
-      const firstLetter = contact.name.charAt(0).toUpperCase();
+      const firstLetter = `${contact.firstName} ${contact.lastName}`.charAt(0).toUpperCase();
       if (!acc[firstLetter]) {
         acc[firstLetter] = [];
       }
       acc[firstLetter].push(contact);
       return acc;
     }, {});
-
+  
     return Object.entries(sortedContactsByLetter).map(([letter, contacts]) => ({
       letter,
       contacts,
     }));
   };
-
-  const sortedContactData = sortContactsByName(contactsData); // Call the sorting function
+  const sortedContactData = sortContactsByName(contactsData);
 
   return (
     <View style={styles.container}>
@@ -130,11 +159,14 @@ const Contacts = () => {
               <Text style={styles.sectionHeader}>{item.letter}</Text>
               {item.contacts.map((contact) => (
                 <TransactionsRadio
-                  key={contact.name}
-                  name={contact.name}
-                  isSelected={contact.isSelected}
-                  contactDetails={contact}
-                  onPress={handleContactPress} // Pass the handler function
+                key={contact.name}
+                name={`${contact.firstName} ${contact.lastName}`}
+                date={contact.date}
+                lastMessage={contact.lastMessage}
+                isSelected={contact.isSelected}
+                time={contact.time}
+                onPress={handleContactPress}
+                contactDetails = {contact}
 
                 />
               ))}

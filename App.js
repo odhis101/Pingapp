@@ -15,13 +15,14 @@ import store from "./store";
 import BluetoothTest from "./pages/BluetoothTest";
 import Chatmessages from './pages/Chatmessages'
 import Messages from "./pages/Messages";
+import Success from "./pages/Success"
 export default function App() {
   return (
    
       <>
           <Provider store={store}>
         <StatusBar style="auto" />
-        <Navigation />
+        <BluetoothTest />
         </Provider>
 
       </>

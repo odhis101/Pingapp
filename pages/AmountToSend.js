@@ -17,6 +17,8 @@ import { useRoute } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker"; // Import Picker from the new package
 import axios from "axios";
 import { useSelector } from "react-redux";
+import getEnvVars from "../.env.js"
+
 const AmountToSend = (maxDigits) => {
     const [imageHeight, setImageHeight] = useState(0);
     const [balance, setBalance] = useState('');
@@ -25,14 +27,18 @@ const AmountToSend = (maxDigits) => {
     const phoneNumber = route.params?.phoneNumber || ""; // Use optional chaining and provide a default value
     const deposit = route.params?.deposit || false;
     const selectedContacts = route.params?.selectedContacts || [];
-    console.log(selectedContacts)
+    const { API_URL } = getEnvVars();
+
+
+    
+    console.log("this is selected contacts ",selectedContacts)
     const sendMoney = route.params?.sendMoney || false;
+    console.log(sendMoney)
     const [selectedCurrency, setSelectedCurrency] = useState("GBP"); // Default currency
     const [selectedLanguage, setSelectedLanguage] = useState();
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const dropdownRef = useRef(null); // Ref to the triggering element
     const authState = useSelector((state) => state.auth);
-
     const renderCurrencyOption = ({ item }) => (
       <TouchableOpacity
         style={styles.optionItem}
@@ -86,7 +92,7 @@ const AmountToSend = (maxDigits) => {
       const depositAmt = async () => {
         try {
           const response = await axios.post(
-            "https://15c0-196-207-134-81.ngrok-free.app/api/v1/transaction/deposit_money",
+            `${API_URL}/api/v1/transaction/deposit_money`,
             {
               receiver: authState.email, // Use the email from your Redux state
               currency: selectedCurrency.toLowerCase(),
@@ -96,7 +102,7 @@ const AmountToSend = (maxDigits) => {
           console.log(response.data);
     
           if (response.data.status == "ok"){
-            navigation.navigate("Home");
+            navigation.navigate("Success");
           }
         } catch (error) {
           console.error("Error:", error);
@@ -131,14 +137,14 @@ const AmountToSend = (maxDigits) => {
   ) : null}
 <FlatList
   data={selectedContacts}
-  keyExtractor={(contact) => contact.name}
+  keyExtractor={(contact) => contact.id} // Use the 'id' as the key
   renderItem={({ item: contact }) => (
     <View style={styles.contactItem}>
-      <Text style={styles.name}>{contact.name}</Text>
-      {/* Add more text components for other properties */}
+      <Text style={styles.name}>{`${contact.firstName} ${contact.lastName}`}</Text>
     </View>
   )}
 />
+
 
      
 </>

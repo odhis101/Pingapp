@@ -11,8 +11,11 @@ import { Dimensions } from "react-native";
 // import usenavigation from "react-navigation-hooks";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios"
+import getEnvVars from "../../.env.js"
+
 const PinInput = ({ maxDigits, route}) => {
 
+  const { API_URL } = getEnvVars();
 
   const [pinAnimation] = useState(new Animated.Value(0)); // Initialize the animation value
   const [isPasscodeCorrect, setIsPasscodeCorrect] = useState(false);
@@ -45,7 +48,8 @@ const PinInput = ({ maxDigits, route}) => {
       
     try{
       console.log(pin)
-      const data = await axios.post("https://27df-196-207-134-81.ngrok-free.app/api/v1/auth/check_pin",
+      const data = await axios.post(
+        `${API_URL}/api/v1/auth/check_pin`,
       {
         pin:pin+digit
       },{withCredentials:true}

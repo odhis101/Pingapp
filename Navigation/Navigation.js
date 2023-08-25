@@ -18,6 +18,7 @@ import Deposit from "../pages/Deposit";
 import Request from "../pages/Request"
 import DepositFromNumber from "../pages/DepositFromNumber"
 import Chatmessages from "../pages/Chatmessages"
+import Success from "../pages/Success";
 const Stack = createStackNavigator();
 
 const Navigation = () => {
@@ -43,6 +44,7 @@ const Navigation = () => {
         <Stack.Screen name="DepositFromNumber" component={DepositFromNumber} />
         <Stack.Screen name="Chatmessages" component={Chatmessages} />
         <Stack.Screen name="messages" component={messages} />
+        <Stack.Screen name="Success" component={Success} />
 
 
       
