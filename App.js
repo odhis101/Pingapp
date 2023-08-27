@@ -17,17 +17,17 @@ import Chatmessages from './pages/Chatmessages'
 import Messages from "./pages/Messages";
 import Success from "./pages/Success"
 export default function App() {
-  return (
-   
-      <>
-          <Provider store={store}>
-        <StatusBar style="auto" />
-        <BluetoothTest />
+    return (
+
+        <>
+        <Provider store = { store } >
+        < StatusBar style = "auto" />
+            <Navigation />
         </Provider>
 
-      </>
-    
-  );
+        </>
+
+    );
 }
 
 const styles = StyleSheet.create({});

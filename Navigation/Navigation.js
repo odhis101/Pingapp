@@ -27,8 +27,7 @@ const Navigation = () => {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-        }}
-      
+        }}   
       >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Dailpass" component={Dailpass} />
