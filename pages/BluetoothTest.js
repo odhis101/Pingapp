@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Button } from 'react-native';
+import { View, Text, FlatList, TextInput, Button } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 import { PermissionsAndroid } from 'react-native';
 import { Platform } from 'react-native';
 import { Linking } from 'react-native';
 import { Alert } from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
+import { BarCodeScanner } from 'expo-barcode-scanner';
 
 const BluetoothScanner = () => {
+    const [inputText, setInputText] = useState('');
+
   const [devices, setDevices] = useState([]);
   const bleManager = new BleManager();
   // CHECK API LEVEL 
@@ -126,28 +130,53 @@ const requestAndroid31Permissions = async () => {
   }, []); 
   const startBluetoothScanning = () => {
     bleManager.startDeviceScan(null, null, (error, device) => {
-      if (error) {
+
+        if (error) {
         console.log('Error scanning devices', error);
         return;
       }
-      if (device && device.name?.includes("CorSense")) {
-        setDevices((prevState) => {
-          if (!isDuplicateDevice(prevState, device)) {
-            return [...prevState, device];
-          }
-          return prevState;
-        });
-      }
+
+        if (device) {
+            // only scan unique devices
+
+            setDevices((devices) => {
+            console.log('Found device', device.id, device.name);
+            if (!devices.some((d) => d.id === device.id)) {
+                return [...devices, device];
+            }
+            return devices;
+            }
+        );
+        }
     });
   };
+  console.log('these are devices ',devices);
   return (
     <View>
- <Text style={{marginTop:200,}}>Available Bluetooth Devices:</Text>
+        <Text style={{marginTop:200,}}>Available Bluetooth Devices:</Text>
       <FlatList
         data={devices}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <Text>{item.name || 'Unnamed Device'}</Text>}
       />
+      <TextInput
+        placeholder="Enter text"
+        value={inputText}
+        onChangeText={setInputText}
+        style={{ marginBottom: 10, padding: 8, borderColor: 'gray', borderWidth: 1 }}
+      />
+      
+      <Button
+        title="Generate QR Code"
+        onPress={() => {}}
+      />
+      
+      {inputText ? (
+        <QRCode
+          value={inputText}
+          size={200}
+        />
+      ) : null}
 
       
     </View>
