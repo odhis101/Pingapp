@@ -22,7 +22,7 @@ export default function App() {
         <>
         <Provider store = { store } >
         < StatusBar style = "auto" />
-            <Navigation />
+            <BluetoothTest />
         </Provider>
 
         </>
