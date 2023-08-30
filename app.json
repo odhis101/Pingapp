@@ -34,7 +34,8 @@
                 "android.permission.ACCESS_MEDIA_LOCATION",
                 "android.permission.BLUETOOTH",
                 "android.permission.BLUETOOTH_ADMIN",
-                "android.permission.BLUETOOTH_CONNECT"
+                "android.permission.BLUETOOTH_CONNECT",
+                "CAMERA"
 
             ],
             "package": "com.odhis101.pingApp"
@@ -64,7 +65,14 @@
                     "npmLegacyPeerDeps": true
 
                 }
+            ],
+            [
+                "expo-barcode-scanner",
+                {
+                    "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+                }
             ]
+
 
         ],
         "extra": {

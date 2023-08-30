@@ -16,13 +16,14 @@ import BluetoothTest from "./pages/BluetoothTest";
 import Chatmessages from './pages/Chatmessages'
 import Messages from "./pages/Messages";
 import Success from "./pages/Success"
+import BarcodeScanner from "./pages/QrCode";
 export default function App() {
     return (
 
         <>
         <Provider store = { store } >
         < StatusBar style = "auto" />
-            <BluetoothTest />
+            <Navigation />
         </Provider>
 
         </>

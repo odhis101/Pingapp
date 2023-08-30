@@ -70,6 +70,8 @@ const Sendmoney = () => {
           <View style={styles.Mycards}>
             <Text style={styles.heading}>Options</Text>
             <Mycards title={"Request From Contacts "} iconImage={"smartphone"} onPress={'Contacts'} />
+            <Mycards title={"Request With QR  "} iconImage={"smartphone"} onPress={'BarcodeScanner'} />
+
           </View>
           <View style={styles.MyTransactions}>
             <Text style={styles.Transactiontitle}>Transactions</Text>

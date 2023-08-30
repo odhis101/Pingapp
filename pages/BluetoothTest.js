@@ -6,22 +6,22 @@ import { Platform } from 'react-native';
 import { Linking } from 'react-native';
 import { Alert } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+// import expo camera
+import { Camera } from 'expo-camera';
+import { BarCodeScanner } from 'expo-camera';
+import { TouchableOpacity } from 'react-native';
 
 const BluetoothScanner = () => {
-    const [inputText, setInputText] = useState('');
-
+  
   const [devices, setDevices] = useState([]);
   const bleManager = new BleManager();
   // CHECK API LEVEL 
 //const api_level = Platform.Version;
 const api_level = Platform.Version;
 console.log(api_level);
-const handleTakePicture = async (camera) => {
-    const options = { quality: 0.5, base64: true };
-    const data = await camera.takePictureAsync(options);
-    console.log(data.uri);
-  };
+
+
+
 
 const requestAndroid31Permissions = async () => {
     const bluetoothScanPermission = await PermissionsAndroid.request(
@@ -32,6 +32,15 @@ const requestAndroid31Permissions = async () => {
         buttonPositive: "OK",
       }
     );
+    const cameraPermission = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+            title: "Location Permission",
+            message: "Bluetooth Low Energy requires Location",
+            buttonPositive: "OK",
+        }
+    );
+
     const bluetoothConnectPermission = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
       {
@@ -80,7 +89,8 @@ const requestAndroid31Permissions = async () => {
     return (
       bluetoothScanPermission === "never_ask_again" &&
       bluetoothConnectPermission === "never_ask_again" &&
-      fineLocationPermission === "granted"
+      fineLocationPermission === "granted"&&
+      cameraPermission === "granted"
     );
   };
   
@@ -136,49 +146,51 @@ const requestAndroid31Permissions = async () => {
         return;
       }
 
-        if (device) {
-            // only scan unique devices
-
-            setDevices((devices) => {
+      if (device && device.name) {
+        setDevices((devices) => {
             console.log('Found device', device.id, device.name);
+    
             if (!devices.some((d) => d.id === device.id)) {
                 return [...devices, device];
             }
+    
             return devices;
-            }
-        );
-        }
+        });
+    }
+    
     });
   };
-  console.log('these are devices ',devices);
+  const connectToDevice = async (device) => {
+    console.log('Connecting to device', device.id, device.name);
+  
+    try {
+      // Connect to the device
+      const connectedDevice = await bleManager.connectToDevice(device.id);
+  
+      // Perform actions on the connected device
+      // For example, you might discover services and characteristics
+      // and interact with them using the connectedDevice instance.
+  
+      console.log('Connected to device', connectedDevice.id);
+    } catch (error) {
+      console.error('Error connecting to device', error);
+    }
+  };
+
+
+
   return (
     <View>
-        <Text style={{marginTop:200,}}>Available Bluetooth Devices:</Text>
-      <FlatList
-        data={devices}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Text>{item.name || 'Unnamed Device'}</Text>}
-      />
-      <TextInput
-        placeholder="Enter text"
-        value={inputText}
-        onChangeText={setInputText}
-        style={{ marginBottom: 10, padding: 8, borderColor: 'gray', borderWidth: 1 }}
-      />
-      
-      <Button
-        title="Generate QR Code"
-        onPress={() => {}}
-      />
-      
-      {inputText ? (
-        <QRCode
-          value={inputText}
-          size={200}
-        />
-      ) : null}
-
-      
+        <Text style={{marginTop:200,}}>Availablse Bluetooth Devices:</Text>
+        <FlatList
+  data={devices}
+  keyExtractor={(item) => item.id}
+  renderItem={({ item }) => (
+    <TouchableOpacity onPress={() => connectToDevice(item)}>
+      <Text>{item.name}</Text>
+    </TouchableOpacity>
+  )}
+/>      
     </View>
   );
 };

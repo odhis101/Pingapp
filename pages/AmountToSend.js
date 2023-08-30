@@ -25,6 +25,7 @@ const AmountToSend = (maxDigits) => {
     const navigation = useNavigation();
     const route = useRoute();
     const phoneNumber = route.params?.phoneNumber || ""; // Use optional chaining and provide a default value
+    const email = route.params?.email || ""; // Use optional chaining and provide a default value
     const deposit = route.params?.deposit || false;
     const selectedContacts = route.params?.selectedContacts || [];
     const { API_URL } = getEnvVars();

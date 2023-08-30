@@ -66,7 +66,8 @@ const Sendmoney = () => {
           <Text style={styles.title}>SendMoney</Text>
 
           <View style={styles.Mycards}>
-            <Text style={styles.heading}>My Cards</Text>
+            <Text style={styles.heading}>Options</Text>
+            <Mycards title={"Send to Nearby devices "} iconImage={"qrcode"} onPress ={'BluetoothScanner'}/>
             <Mycards title={"Send to contact"} iconImage={"user"} onPress ={'Contacts'} sendMoney = {true}/>
             <Mycards title={"Send to Phone Number "} iconImage={"smartphone"} onPress={'PhoneNumber'} />
             <Mycards title={"Send To Bank "} iconImage={"dollar-sign"} onPress ={'SendToBank'}/>
