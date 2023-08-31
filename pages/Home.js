@@ -72,7 +72,6 @@ const Home = () => {
               <Text style={styles.currency}>£</Text>
               <Text style={styles.balance}>{balance}</Text>
             </View>
-            <Text style={styles.recentTransactions}>+ £ 790</Text>
           </View>
           <View style={styles.moneyButtons}>
             
@@ -110,13 +109,7 @@ const styles = StyleSheet.create({
 
     // ... other styles for background image or color
   },
-  MyTransactions: {
-    height: "100%",
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    backgroundColor: "white",
-    // ... other styles for MyTransactions container
-  },
+
   infoContainer: {
     alignItems: "center",
     paddingTop: 16,
@@ -193,6 +186,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 2,
+    height:"100%"
   },
   Transactiontitle: {
     fontSize: 24,

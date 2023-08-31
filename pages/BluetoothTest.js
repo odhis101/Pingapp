@@ -10,7 +10,8 @@ import QRCode from 'react-native-qrcode-svg';
 import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-camera';
 import { TouchableOpacity } from 'react-native';
-
+import { LottieView } from 'lottie-react-native';
+import Loading from '../assets/LottieView/Loading.json';
 const BluetoothScanner = () => {
   
   const [devices, setDevices] = useState([]);
@@ -19,7 +20,6 @@ const BluetoothScanner = () => {
 //const api_level = Platform.Version;
 const api_level = Platform.Version;
 console.log(api_level);
-
 
 
 
@@ -32,6 +32,17 @@ const requestAndroid31Permissions = async () => {
         buttonPositive: "OK",
       }
     );
+    // ask for advertise permission 
+    const bluetoothAdvertisePermission = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADVERTISE,
+      {
+        title: "need advertise Permission",
+        message: "Bluetooth Low Energy requires advertise",
+        buttonPositive: "OK",
+      }
+    );
+
+
     const cameraPermission = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
         {
@@ -72,6 +83,8 @@ const requestAndroid31Permissions = async () => {
             ]
         );
     }
+
+
     else if (bluetoothConnectPermission === "never_ask_again"){
         Alert.alert(
             "bluetooth Connect Permission Permission",
@@ -87,10 +100,11 @@ const requestAndroid31Permissions = async () => {
         );
     }
     return (
-      bluetoothScanPermission === "never_ask_again" &&
-      bluetoothConnectPermission === "never_ask_again" &&
+      bluetoothScanPermission === "granted" &&
+      bluetoothConnectPermission === "granted" &&
       fineLocationPermission === "granted"&&
-      cameraPermission === "granted"
+      cameraPermission === "granted" && 
+      bluetoothAdvertisePermission === "granted"
     );
   };
   
@@ -122,6 +136,7 @@ const requestAndroid31Permissions = async () => {
       return true;
     }
   };
+
   useEffect(() => {
     const checkAndRequestPermissions = async () => {
       const granted = await requestPermissions();
@@ -148,7 +163,7 @@ const requestAndroid31Permissions = async () => {
 
       if (device && device.name) {
         setDevices((devices) => {
-            console.log('Found device', device.id, device.name);
+            console.log('Found device', device.id, device.name, device.advertising);
     
             if (!devices.some((d) => d.id === device.id)) {
                 return [...devices, device];
@@ -166,7 +181,8 @@ const requestAndroid31Permissions = async () => {
     try {
       // Connect to the device
       const connectedDevice = await bleManager.connectToDevice(device.id);
-  
+      // try and send and recieve data 
+      
       // Perform actions on the connected device
       // For example, you might discover services and characteristics
       // and interact with them using the connectedDevice instance.
@@ -191,6 +207,7 @@ const requestAndroid31Permissions = async () => {
     </TouchableOpacity>
   )}
 />      
+
     </View>
   );
 };

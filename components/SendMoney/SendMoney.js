@@ -32,7 +32,7 @@ const SendMoney = ({ name, onPress}) => {
 
 const styles = StyleSheet.create({
   sendButton: {
-    width: "35%",
+    width: "33%",
     borderRadius: 50,
     overflow: "hidden",
   },

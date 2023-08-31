@@ -33,10 +33,10 @@
                 "android.permission.WRITE_EXTERNAL_STORAGE",
                 "android.permission.ACCESS_MEDIA_LOCATION",
                 "android.permission.BLUETOOTH",
+                "android.permission.BLUETOOTH_ADVERTISE",
                 "android.permission.BLUETOOTH_ADMIN",
                 "android.permission.BLUETOOTH_CONNECT",
-                "CAMERA",
-                "android.permission.BLUETOOTH_ADVERTISE"
+                "android.permission.CAMERA"
 
 
             ],

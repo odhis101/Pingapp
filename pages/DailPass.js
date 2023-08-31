@@ -32,10 +32,12 @@ const Dailpass = () => {
 
   useEffect(() => {
     const window = Dimensions.get("window");
+    console.log(window)
+
     setImageHeight(window.height +10);
   }, []);
   return (
-    <View style={{ height: imageHeight }}>
+    <View style={{ height: "100%" }}>
       <ImageBackground source={BackgroundImage} style={styles.backgroundImage} >
         <View style={styles.container}>
           <View style={styles.credentials}>
