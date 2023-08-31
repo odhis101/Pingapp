@@ -35,7 +35,9 @@
                 "android.permission.BLUETOOTH",
                 "android.permission.BLUETOOTH_ADMIN",
                 "android.permission.BLUETOOTH_CONNECT",
-                "CAMERA"
+                "CAMERA",
+                "android.permission.BLUETOOTH_ADVERTISE"
+
 
             ],
             "package": "com.odhis101.pingApp"
