@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TextInput, Button } from 'react-native';
+import { View, Text, FlatList, TextInput, Button,ImageBackground,StyleSheet, } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 import { PermissionsAndroid } from 'react-native';
 import { Platform } from 'react-native';
@@ -12,9 +12,15 @@ import { BarCodeScanner } from 'expo-camera';
 import { TouchableOpacity } from 'react-native';
 import { LottieView } from 'lottie-react-native';
 import Loading from '../assets/LottieView/Loading.json';
+import BackgroundImage from "../assets/background.png";
+import Icon from 'react-native-vector-icons/Ionicons'; // Import your preferred icon set
+import Topnav from '../components/Topnav/Topnav';
+import Blemanager from 'react-native-ble-manager';
+
 const BluetoothScanner = () => {
   
   const [devices, setDevices] = useState([]);
+  const [getDiscoveredPeripherals, setDiscoveredPeripherals] = useState([]);
   const bleManager = new BleManager();
   // CHECK API LEVEL 
 //const api_level = Platform.Version;
@@ -163,9 +169,10 @@ const requestAndroid31Permissions = async () => {
 
       if (device && device.name) {
         setDevices((devices) => {
-            console.log('Found device', device.id, device.name, device.advertising);
+            //console.log('Found device', device.id, device.name, device.advertising);
     
             if (!devices.some((d) => d.id === device.id)) {
+              
                 return [...devices, device];
             }
     
@@ -192,24 +199,95 @@ const requestAndroid31Permissions = async () => {
       console.error('Error connecting to device', error);
     }
   };
+  Blemanager.start({ showAlert: false }).then(() => {
+    // Success code
+    console.log("Module initialized");
+  });
+
+  Blemanager.enableBluetooth()
+    .then(() => {
+      // Success code
+      console.log("The bluetooth is already enabled or the user confirm");
+    })
+    .catch((error) => {
+      // Failure code
+      console.log("The user refuse to enable bluetooth");
+    });
+  // get rrssi
+  Blemanager.getConnectedPeripherals([]).then((results) => {
+    console.log('this is connected peripherals ',results);
+  });
+
+  useEffect(() => {
+  Blemanager.getDiscoveredPeripherals([]).then((results) => {
+    
+    console.log('THIS IS DISCOVERED PERIPHERALS ',results);
+    //useffect to set discovered peripherals
+    setDiscoveredPeripherals(results);
+  
+      });
+    }, []);
+  Blemanager.scan([], 10, true).then((devices) => {
+    console.log('checking devices found ');
+    console.log(devices);
+  
+  });
+  console.log('this is discovered peripherals ',getDiscoveredPeripherals);
 
 
 
   return (
-    <View>
-        <Text style={{marginTop:200,}}>Availablse Bluetooth Devices:</Text>
-        <FlatList
-  data={devices}
-  keyExtractor={(item) => item.id}
-  renderItem={({ item }) => (
-    <TouchableOpacity onPress={() => connectToDevice(item)}>
-      <Text>{item.name}</Text>
-    </TouchableOpacity>
-  )}
-/>      
+    <ImageBackground
+    source={BackgroundImage}
+    style={styles.backgroundImage}
+    >
+      <Topnav/>
+  
+      <Text style={styles.header}>Available Bluetooth Devices:</Text>
+      <FlatList
+        data={devices}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => connectToDevice(item)} style={styles.itemContainer}>
+            <Icon name="bluetooth" size={30} color="blue" style={styles.icon} /> 
+            <Text style={styles.deviceName}>{item.name}</Text> 
+          </TouchableOpacity>
+        )}
+        ListEmptyComponent={<Text style={styles.loadingText}>Searching...</Text>} 
+      />
 
-    </View>
+    </ImageBackground>
   );
 };
+const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover", // or 'stretch' if you want to stretch the image
+  },
+    header: {
+    marginTop: 200,
+    marginBottom: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderColor: 'black', // Add your desired border color
+  },
+  icon: {
+    marginRight: 10,
+  },
+  deviceName: {
+    fontSize: 16,
+  },
+  loadingText: {
+    alignSelf: 'center',
+    marginVertical: 10,
+    fontSize: 16,
+  },
 
+});
 export default BluetoothScanner;
