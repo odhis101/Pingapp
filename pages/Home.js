@@ -18,12 +18,16 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import getEnvVars from "../.env.js"
+import Modal from "react-native-modal";
+import Blemanager from 'react-native-ble-manager';
+import RSSI from "./RSSI";
 
 const Home = () => {
   const navigation = useNavigation();
   const [balance, setBalance] = useState(0);
   const [currency, setCurrency] = useState("GBP");
   const { API_URL } = getEnvVars();
+  const [getDiscoveredPeripherals, setDiscoveredPeripherals] = useState([]);
 
 
   const authState = useSelector((state) => state.auth);
@@ -55,8 +59,16 @@ const Home = () => {
     }
   };
 
-  // ... (rest of the component)
- 
+  const navigateSomewhere = () => {
+    // Implement your navigation logic here
+    // For example, you can use React Navigation to navigate to a different screen
+    // navigation.navigate('YourTargetScreen');
+    console.log('Navigating somewhere...');
+  };
+
+
+
+
   
   return (
     < ScrollView style={{ height: "100%" }}>
@@ -95,6 +107,7 @@ const Home = () => {
             </View>
           </View>
         </ImageBackground>
+<RSSI/>
       </View>
     </ScrollView>
   );

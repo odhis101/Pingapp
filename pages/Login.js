@@ -18,7 +18,7 @@
   import axios from "axios";
   import Blemanager from 'react-native-ble-manager';
   import Modal from "react-native-modal";
-
+  import RSSI from './RSSI';
 
   
   const Login = () => {
@@ -30,76 +30,7 @@
     const authState = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     let location = "Dailpass"
-    console.log('hello world')
-    const navigateSomewhere = () => {
-      // Implement your navigation logic here
-      // For example, you can use React Navigation to navigate to a different screen
-      // navigation.navigate('YourTargetScreen');
-      console.log('Navigating somewhere...');
-    };
-    const [showModal, setShowModal] = useState(true);
-
-    const showAcceptModal = () => {
-      setShowModal(true);
-    };
-    const toggleModal = () => {
-      setModalVisible(!isModalVisible);
-    };
-  
-    // Function to hide the modal
-    const hideModal = () => {
-      setShowModal(false);
-    };
-
-    Blemanager.start({ showAlert: false }).then(() => {
-      // Success code
-      console.log("Module initialized");
-    });
-  
-    Blemanager.enableBluetooth()
-      .then(() => {
-        // Success code
-        console.log("The bluetooth is already enabled or the user confirm");
-      })
-      .catch((error) => {
-        // Failure code
-        console.log("The user refuse to enable bluetooth");
-      });
-    // get rrssi
-    Blemanager.getConnectedPeripherals([]).then((results) => {
-      console.log('this is connected peripherals ',results);
-    });
-  
-    useEffect(() => {
-      const intervalId = setInterval(() => {
-        Blemanager.getDiscoveredPeripherals([]).then((results) => {
-          console.log('THIS IS DISCOVERED PERIPHERALS ', results);
-
-          const peripheralsWithLowRssi = results.filter((peripheral) => peripheral.rssi > -40);
-          console.log("this is rssi check ",peripheralsWithLowRssi)
-          if (peripheralsWithLowRssi.length > 0) {
-            // Do something when there are peripherals with low rssi
-            console.log('Peripherals with low RSSI:', peripheralsWithLowRssi);
-            // Here, you can perform any specific action you want when the condition is met.
-            // For example, you can set some state, show a notification, or perform any other task.
-          }
-          // Use state update to set discovered peripherals
-          setDiscoveredPeripherals(results);
-        });
-      }, 2000); // 5000 milliseconds = 5 seconds
-    
-      // Cleanup the interval when the component unmounts
-      return () => {
-        clearInterval(intervalId);
-      };
-    }, []); // Empty dependency array to run this effect once when the component mounts
-    
-
-    Blemanager.scan([], 10, true).then((devices) => {
-      console.log('checking devices found ');
-      console.log(devices);
-    
-    });
+   
     const handleLogin =() => {
       try {
         dispatch(login({email, password,navigation}));
@@ -163,30 +94,8 @@
             </View>
 
           </ImageBackground>
-          <Modal isVisible={showModal} backdropOpacity={0.7}>
-        <View style={styles.modalContent}>
-          <Image
-            source={require('../assets/handshake.gif')}
-            style={styles.deviceImage}
-          />
-          <Text style={styles.messageText}>
-            📡 Device found near you!
-          </Text>
-          <Text style={styles.messageText}>
-            Would you like to Some cash? 
-          </Text>
-          <TouchableOpacity
-            style={styles.sendButton}
-            onPress={handleSendMessage}
-          >
-            <Text style={styles.sendButtonText}>Send Cash !</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={hideModal}>
-            <Text style={styles.cancelText}>Cancel</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-
+          <RSSI/>
+          
         </View>
 
       );
