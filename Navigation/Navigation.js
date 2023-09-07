@@ -35,6 +35,7 @@ const Navigation = () => {
           headerShown: false,
         }}
       >
+        
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Dailpass" component={Dailpass} />
         <Stack.Screen name="Home" component={Home} />

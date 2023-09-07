@@ -22,8 +22,8 @@ const ConfirmPayment = () => {
   const route = useRoute();
   const selectedContacts = route.params?.selectedContacts || ""; // Use optional chaining and provide a default value
   const deposit = route.params?.deposit || false;
-  const  balance = route.params.balance|| {}; // Use default object if route.params is undefined
-// lets use a useffect to check for balance 
+  const balance = parseInt(route.params.balance) || 0; // Convert balance to an integer, use 0 if NaN
+  // lets use a useffect to check for balance 
 const { API_URL } = getEnvVars();
 
 console.log()
@@ -40,10 +40,12 @@ const sendCash = async () => {
 
   try {
     const response = await axios.post(apiUrl, data);
+    console.log("THIS IS RESSSSPOSNE", response)
+    
 
     // Handle the response here (e.g., show a success message)
     console.log('Response:', response.data.message);
-    if(response.data.message === " Transaction created successfully"){
+    if (response.status === 200) {
       navigation.navigate("Success",isSuccess=true)
       console.log("success")
     }
@@ -55,6 +57,8 @@ const sendCash = async () => {
   } catch (error) {
     // Handle errors here (e.g., show an error message)
     console.error('Error:', error);
+    navigation.navigate("Success",isSuccess=false) 
+
   }
 };
 

@@ -9,18 +9,40 @@ import {
 } from "react-native";
 import Modal from "react-native-modal";
 import Blemanager from 'react-native-ble-manager';
+import { useSelector } from "react-redux";
+import {useNavigation} from '@react-navigation/native';
 
 export default function RSSI() {
     const [DiscoveredPeripherals, setDiscoveredPeripherals] = useState([]);
     const [servicesAndCharacteristics, setServicesAndCharacteristics] = useState(null);
     let i = 0 
+    const navigation = useNavigation();
+
+    const authState = useSelector((state) => state.auth);
     
+    const authStateArray = Object.values(authState);
+    console.log('THIS IS THE ARRRAYY VALUE ',authStateArray)
+    const user = [{
+        "firstName": "natashs",
+        "lastName":"odhiambo",
+        "username":"nat",
+        "password":"123456",
+        "email":"natasha@gmail.com",
+        "phoneNumber":"+254703815733",
+        "pin":1998
+      }]
+
+
 
     const navigateSomewhere = () => {
+        i+=1
         // Implement your navigation logic here
         // For example, you can use React Navigation to navigate to a different screen
         // navigation.navigate('YourTargetScreen');
-        console.log('Navigating somewhere...');
+           navigation.navigate('AmountToSend', {
+            selectedContacts: user
+      
+          });
       };
       const [showModal, setShowModal] = useState(false);
 
@@ -64,7 +86,7 @@ export default function RSSI() {
           Blemanager.getDiscoveredPeripherals([]).then((results) => {
             console.log('THIS IS DISCOVERED PERIPHERALS ', results);
     
-            const peripheralsWithLowRssi = results.filter((peripheral) => peripheral.rssi < -70);
+            const peripheralsWithLowRssi = results.filter((peripheral) => peripheral.rssi > -130);
             console.log("this is rssi check ",peripheralsWithLowRssi)
             if (peripheralsWithLowRssi.length > 0) {
               // Do something when there are peripherals with low rssi
@@ -85,7 +107,7 @@ export default function RSSI() {
             // Use state update to set discovered peripherals
             setDiscoveredPeripherals(results);
           });
-        }, 2000); // 5000 milliseconds = 5 seconds
+        }, 20000); // 5000 milliseconds = 5 seconds
       
         // Cleanup the interval when the component unmounts
         return () => {
@@ -101,17 +123,17 @@ export default function RSSI() {
       
       });
       const handleSendMessage = () => {
-        console.log('this is after i have sent cash ',DiscoveredPeripherals[0])
-        console.log(typeof(DiscoveredPeripherals))
+        //console.log('this is after i have sent cash ',DiscoveredPeripherals[1].id)
+        //console.log(typeof(DiscoveredPeripherals))
         
-        // i 
         /*
-        Blemanager.connect(DiscoveredPeripherals)
+        Blemanager.connect(DiscoveredPeripherals[1].id)
         .then((peripheralInfo) => {
+
             console.log('Services and characteristics discovered', peripheralInfo);
             setServicesAndCharacteristics(peripheralInfo.services);
             // After successful connection, retrieve services
-            return Blemanager.retrieveServices(DiscoveredPeripherals);
+            return Blemanager.retrieveServices(DiscoveredPeripherals[1].id);
   })
   .then(() => {
     console.log('Services and characteristics discovered');
@@ -136,11 +158,11 @@ export default function RSSI() {
 
     // Handle any errors that occur during the process
   });
-  */
-
+  
+*/
 
         
-        
+navigateSomewhere()
         toggleModal();
       };
     
@@ -157,7 +179,7 @@ export default function RSSI() {
             style={styles.deviceImage}
           />
           <Text style={styles.messageText}>
-            📡 Device found near you!
+            📡 Natasha found near you!
           </Text>
           <Text style={styles.messageText}>
             Would you like to Some cash? 

@@ -28,11 +28,15 @@ const AmountToSend = (maxDigits) => {
     const email = route.params?.email || ""; // Use optional chaining and provide a default value
     const deposit = route.params?.deposit || false;
     const selectedContacts = route.params?.selectedContacts || [];
+    const request = route.params?.request || false; // Use a default value of false if "request" is not provided
+
+    
     const { API_URL } = getEnvVars();
 
 
     
-    console.log("this is selected contacts ",selectedContacts)
+    console.log("this is selected contactsssssssss ",selectedContacts)
+
     const sendMoney = route.params?.sendMoney || false;
     console.log(sendMoney)
     const [selectedCurrency, setSelectedCurrency] = useState("GBP"); // Default currency
@@ -89,6 +93,13 @@ const AmountToSend = (maxDigits) => {
         // we navigate to the pin screen with the balance 
         navigation.navigate("Dailpass", { balance: balance, selectedContacts: selectedContacts,sendCash: true }); 
       }
+      const requestCash = () => {
+        // we navigate to the pin screen with the balance
+        // navigate to messages and send a message to the selected contact
+        console.log("this is selected contact from amt to sendsss ", selectedContacts)
+        
+        navigation.navigate("Chatmessages", { balance: balance, contact: selectedContacts[0] });
+      }
 
       const depositAmt = async () => {
         try {
@@ -124,7 +135,7 @@ const AmountToSend = (maxDigits) => {
      
        <ImageBackground
           source={BackgroundImage}
-          style={{ ...styles.backgroundImage, height: imageHeight }}
+          style={{ ...styles.backgroundImage, height: "100%" }}
         >
             <Topnav />
 
@@ -270,36 +281,39 @@ const AmountToSend = (maxDigits) => {
           </LinearGradient>
         </View>
       ) : (
-        <View style={styles.buttonContainer}>
-          <LinearGradient
-            colors={["#5087D3", "#2AA5D6"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.gradientButton}
-          >
-            <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
-            <TouchableOpacity
-              style={styles.button}
-              onPress={sendCash}
-            >
-              <Text style={styles.buttonText}>Send</Text>
-            </TouchableOpacity>
-          </LinearGradient>
-          <LinearGradient
-            colors={["#4CB8C4", "#5BC7A5"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.gradientButton}
-          >
-            <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ConfirmPayment')}
-              style={styles.button}
-            >
-              <Text style={styles.buttonText}>Request</Text>
-            </TouchableOpacity>
-          </LinearGradient>
-        </View>
+<View style={styles.buttonContainer}>
+  {request ? ( // Conditionally render based on the "request" prop
+    <LinearGradient
+      colors={["#4CB8C4", "#5BC7A5"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      style={styles.gradientButton}
+    >
+      <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
+      <TouchableOpacity
+        onPress={requestCash}
+        >
+        <Text style={styles.buttonText}>Request</Text>
+      </TouchableOpacity>
+    </LinearGradient>
+  ) : (
+    <LinearGradient
+      colors={["#5087D3", "#2AA5D6"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      style={styles.gradientButton}
+    >
+      <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={sendCash}
+      >
+        <Text style={styles.buttonText}>Send</Text>
+      </TouchableOpacity>
+    </LinearGradient>
+  )}
+</View>
+
       )}
 
     </View>
@@ -435,6 +449,9 @@ const styles = StyleSheet.create({
            
           },
           gradientButton: {
+
+            marginRight:"auto",
+            marginLeft:"auto",
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
@@ -452,6 +469,8 @@ const styles = StyleSheet.create({
           button: {
             flex: 1,
             alignItems: "center",
+         
+
           },
           buttonText: {
             color: "white",

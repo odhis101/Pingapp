@@ -14,7 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 const SendMoney = ({ name, onPress}) => {
   const navigation = useNavigation();
   const handleSendMoney = () => {
-    navigation.navigate(onPress);
+    navigation.navigate(onPress);// we plan on sending a prop saying sending and requesting 
   };
 
   return (

@@ -167,11 +167,12 @@ const requestAndroid31Permissions = async () => {
         return;
       }
 
-      if (device && device.name) {
+      if (device) {
         setDevices((devices) => {
-            //console.log('Found device', device.id, device.name, device.advertising);
+            console.log('Found device', device.id, device.name, device.advertising);
     
             if (!devices.some((d) => d.id === device.id)) {
+              
               
                 return [...devices, device];
             }
@@ -223,7 +224,7 @@ const requestAndroid31Permissions = async () => {
     
     console.log('THIS IS DISCOVERED PERIPHERALS ',results);
     //useffect to set discovered peripherals
-    setDiscoveredPeripherals(results);
+    //setDiscoveredPeripherals(results);
   
       });
     }, []);
@@ -250,7 +251,7 @@ const requestAndroid31Permissions = async () => {
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => connectToDevice(item)} style={styles.itemContainer}>
             <Icon name="bluetooth" size={30} color="blue" style={styles.icon} /> 
-            <Text style={styles.deviceName}>{item.name}</Text> 
+            <Text style={styles.deviceName}>{item.name || 'Unkown device'}</Text> 
           </TouchableOpacity>
         )}
         ListEmptyComponent={<Text style={styles.loadingText}>Searching...</Text>} 

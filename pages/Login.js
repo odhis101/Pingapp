@@ -94,7 +94,6 @@
             </View>
 
           </ImageBackground>
-          <RSSI/>
           
         </View>
 

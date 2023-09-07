@@ -41,7 +41,9 @@ return(
           <TextInput style={styles.input} placeholder="Branch Code" />
         </View>
       </View>
-      <TouchableOpacity style={styles.proceedBtn}>
+      <TouchableOpacity 
+      onPress={() => navigation.navigate("Success",{isSuccess:true})}
+      style={styles.proceedBtn}>
                 <Text> Proceed</Text>
 
             </TouchableOpacity>

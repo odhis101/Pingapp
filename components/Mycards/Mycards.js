@@ -4,11 +4,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Icon from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
 
-const Mycards = ({title,iconImage,onPress,sendmoney}) => {
-const navigate = useNavigation();
-const handlePress = () => {
-  navigate.navigate(onPress, { sendmoney });
-}
+const Mycards = ({ title, iconImage, onPress, request, sendmoney }) => {
+  const navigate = useNavigation();
+
+  const handlePress = () => {
+    navigate.navigate(onPress, {request });
+  };
 return(
 
     <TouchableOpacity 

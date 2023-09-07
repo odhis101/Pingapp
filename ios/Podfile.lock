@@ -106,6 +106,8 @@ PODS:
     - ExpoModulesCore
   - ExpoLinearGradient (12.3.0):
     - ExpoModulesCore
+  - ExpoLocalAuthentication (13.3.0):
+    - ExpoModulesCore
   - ExpoModulesCore (1.2.7):
     - React-Core
     - React-RCTAppDelegate
@@ -124,6 +126,10 @@ PODS:
     - ReactCommon/turbomodule/core (= 0.71.8)
   - fmt (6.2.1)
   - glog (0.3.5)
+  - lottie-ios (4.2.0)
+  - lottie-react-native (6.2.0):
+    - lottie-ios (~> 4.2.0)
+    - React-Core
   - MultiplatformBleAdapter (0.1.9)
   - RCT-Folly (2021.07.22.00):
     - boost
@@ -507,12 +513,14 @@ DEPENDENCIES:
   - expo-dev-menu-interface (from `../node_modules/expo-dev-menu-interface/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - ExpoLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
+  - ExpoLocalAuthentication (from `../node_modules/expo-local-authentication/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - EXUpdatesInterface (from `../node_modules/expo-updates-interface/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - lottie-react-native (from `../node_modules/lottie-react-native`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -558,6 +566,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - fmt
+    - lottie-ios
     - MultiplatformBleAdapter
     - ZXingObjC
 
@@ -602,6 +611,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-keep-awake/ios"
   ExpoLinearGradient:
     :path: "../node_modules/expo-linear-gradient/ios"
+  ExpoLocalAuthentication:
+    :path: "../node_modules/expo-local-authentication/ios"
   ExpoModulesCore:
     :path: "../node_modules/expo-modules-core"
   EXSplashScreen:
@@ -614,6 +625,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  lottie-react-native:
+    :path: "../node_modules/lottie-react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -716,6 +729,7 @@ SPEC CHECKSUMS:
   expo-dev-menu-interface: 6c82ae323c4b8724dead4763ce3ff24a2108bdb1
   ExpoKeepAwake: 69f5f627670d62318410392d03e0b5db0f85759a
   ExpoLinearGradient: 5966dd5d49872cc9c104fedc8bbc298b6049b2e8
+  ExpoLocalAuthentication: 32919307c66fb3661caefa07e7811a95a7539d7b
   ExpoModulesCore: 653958063a301098b541ae4dfed1ac0b98db607b
   EXSplashScreen: 0e0a9ba0cf7553094e93213099bd7b42e6e237e9
   EXUpdatesInterface: e86394c0770f14eb96386cbb32be83fa6a97e8f9
@@ -723,6 +737,8 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: 0d9a4f4de7ab614c49e98c00aedfd3bfbda33d59
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
+  lottie-ios: 809ecf2d460ed650a6aed7aa88b2ec45fab4779c
+  lottie-react-native: b04640d81bfc87915cd5c9058caa1112374691ff
   MultiplatformBleAdapter: 5a6a897b006764392f9cef785e4360f54fb9477d
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 8af6a32dfc2b65ec82193c2dee6e1011ff22ac2a
