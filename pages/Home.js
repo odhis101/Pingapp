@@ -231,7 +231,7 @@ const Home = () => {
           <View style={styles.infoContainer}>
             <Text style={styles.title}>Balance</Text>
             <View style={styles.currentBalance}>
-              <Text style={styles.currency}>£</Text>
+              <Text style={styles.currency}>$</Text>
               <Text style={styles.balance}>{formatBalance(balance)}</Text>
             </View>
           </View>
