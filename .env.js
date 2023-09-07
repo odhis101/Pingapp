@@ -1,19 +1,19 @@
-import Constants from 'expo-constants';
+import Constants from "expo-constants"
 
 const ENV = {
   dev: {
-    API_URL: 'https://740d-196-207-134-81.ngrok-free.app',
+    API_URL: "https://cfd4-102-213-209-1.ngrok-free.app",
   },
   prod: {
-    API_URL: 'https://740d-196-207-134-81.ngrok-free.app',
+    API_URL: "https://cfd4-102-213-209-1.ngrok-free.app",
   },
-};
+}
 
 const getEnvVars = (env = Constants.manifest.releaseChannel) => {
   if (__DEV__) {
-    return ENV.dev;
+    return ENV.dev
   }
-  return ENV.prod;
-};
+  return ENV.prod
+}
 
-export default getEnvVars;
+export default getEnvVars
