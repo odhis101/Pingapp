@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { useRoute } from "@react-navigation/native";
 
+
 //q: get dimesnsion of screen and set the height of the container to 100% of the screen
 //q: how to make the pin input box responsive to the screen size
 
@@ -26,13 +27,17 @@ const Dailpass = () => {
   const [imageHeight, setImageHeight] = useState(0);
   const route = useRoute();
   const navigation = useNavigation();
+  const authstate = useSelector((state) => state.auth);
+  console.log("this is the authstate", authstate);
 
   useEffect(() => {
     const window = Dimensions.get("window");
+    console.log(window)
+
     setImageHeight(window.height +10);
   }, []);
   return (
-    <View style={{ height: imageHeight }}>
+    <View style={{ height: "100%" }}>
       <ImageBackground source={BackgroundImage} style={styles.backgroundImage} >
         <View style={styles.container}>
           <View style={styles.credentials}>

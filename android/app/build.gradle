@@ -113,7 +113,7 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.pingapp"
+    namespace 'com.odhis101.pingApp'
     defaultConfig {
         applicationId 'com.odhis101.pingApp'
         minSdkVersion rootProject.ext.minSdkVersion

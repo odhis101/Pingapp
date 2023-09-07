@@ -14,7 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 const SendMoney = ({ name, onPress}) => {
   const navigation = useNavigation();
   const handleSendMoney = () => {
-    navigation.navigate(onPress);
+    navigation.navigate(onPress);// we plan on sending a prop saying sending and requesting 
   };
 
   return (
@@ -32,7 +32,7 @@ const SendMoney = ({ name, onPress}) => {
 
 const styles = StyleSheet.create({
   sendButton: {
-    width: "35%",
+    width: "33%",
     borderRadius: 50,
     overflow: "hidden",
   },

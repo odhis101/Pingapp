@@ -16,16 +16,21 @@
   import { login,getUser } from '../features/auth/authSlice';
   import { useDispatch, useSelector } from 'react-redux';
   import axios from "axios";
+  import Blemanager from 'react-native-ble-manager';
+  import Modal from "react-native-modal";
+  import RSSI from './RSSI';
+
   
   const Login = () => {
     const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState(null);
+    const [getDiscoveredPeripherals, setDiscoveredPeripherals] = useState([]);
     const authState = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     let location = "Dailpass"
-
+   
     const handleLogin =() => {
       try {
         dispatch(login({email, password,navigation}));
@@ -33,6 +38,12 @@
       } catch (error) {
         setErrorMsg(error.message);
       }
+    };
+    const handleSendMessage = () => {
+      // Add your logic here to send the message
+      // You can navigate to another screen or perform any action
+      // For now, we'll just close the modal
+      toggleModal();
     };
 
     useEffect(() => {
@@ -49,7 +60,9 @@
 
     if (!authState?.user?.firstName){
       return (
+
         <View style={styles.container}>
+          
           <ImageBackground source={BackgroundImage} style={styles.backgroundImage}>
             <View style={styles.container}>
               <View style={styles.credentials}>
@@ -79,8 +92,11 @@
                 </View>
               </View>
             </View>
+
           </ImageBackground>
+          
         </View>
+
       );
     }
     else{
@@ -106,6 +122,39 @@
     container: {
       flex: 1,
       height: 800,
+    },
+    modalContent: {
+      backgroundColor: 'white',
+      padding: 22,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 4,
+      borderColor: 'rgba(0, 0, 0, 0.1)',
+    },
+    deviceImage: {
+      width: 100,
+      height: 100,
+      marginBottom: 16,
+    },
+    messageText: {
+      fontSize: 18,
+      marginBottom: 16,
+    },
+    sendButton: {
+      backgroundColor: '#41CFD6',
+      paddingVertical: 12,
+      paddingHorizontal: 24,
+      borderRadius: 24,
+      marginBottom: 16,
+    },
+    sendButtonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+    },
+    cancelText: {
+      color: 'gray',
+      fontSize: 16,
     },
     credentials: {
       marginLeft: "5%",

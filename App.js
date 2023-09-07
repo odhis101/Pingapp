@@ -16,6 +16,8 @@ import BluetoothTest from "./pages/BluetoothTest";
 import Chatmessages from './pages/Chatmessages'
 import Messages from "./pages/Messages";
 import Success from "./pages/Success"
+import BarcodeScanner from "./pages/QrCode";
+import SignUp from "./pages/SignUp";
 export default function App() {
     return (
 

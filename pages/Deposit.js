@@ -63,7 +63,6 @@ const Sendmoney = () => {
               <Text style={styles.currency}>£</Text>
               <Text style={styles.balance}>{balance}</Text>
             </View>
-            <Text style={styles.recentTransactions}>+ £ 790</Text>
           </View>
           <View style={styles.moneyButtons}></View>
           <Text style={styles.title}>Deposit </Text>

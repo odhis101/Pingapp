@@ -21,6 +21,17 @@ const Sendmoney = () => {
   const [balance, setBalance] = useState(0);
   const [currency, setCurrency] = useState("GBP");
   const { API_URL } = getEnvVars();
+  const formatBalance = (balance) => {
+    // Convert balance to a string
+    const balanceStr = balance.toString();
+    
+    // Add commas when it passes three digits
+    if (balanceStr.length > 3) {
+      return balanceStr.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    return balanceStr;
+  };
   useEffect(() => {
     // Fetch balance and currency data here
     fetchBalanceAndCurrency();
@@ -58,16 +69,16 @@ const Sendmoney = () => {
             <Text style={styles.title}>Balance</Text>
             <View style={styles.currentBalance}>
               <Text style={styles.currency}>£</Text>
-              <Text style={styles.balance}>{balance}</Text>
+              <Text style={styles.balance}>{formatBalance(balance)}</Text>
             </View>
-            <Text style={styles.recentTransactions}>+ £ 790</Text>
           </View>
           <View style={styles.moneyButtons}></View>
           <Text style={styles.title}>SendMoney</Text>
 
           <View style={styles.Mycards}>
-            <Text style={styles.heading}>My Cards</Text>
-            <Mycards title={"Send to contact"} iconImage={"user"} onPress ={'Contacts'} sendMoney = {true}/>
+            <Text style={styles.heading}>Options</Text>
+            <Mycards title={"Send to Nearby devices "} iconImage={"qrcode"} onPress ={'BluetoothScanner'}/>
+            <Mycards title={"Send To Contacts "} iconImage={"smartphone"} onPress={'Contacts'} request={false} />
             <Mycards title={"Send to Phone Number "} iconImage={"smartphone"} onPress={'PhoneNumber'} />
             <Mycards title={"Send To Bank "} iconImage={"dollar-sign"} onPress ={'SendToBank'}/>
           </View>

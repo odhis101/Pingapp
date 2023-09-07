@@ -15,29 +15,29 @@ const RecentTransactions = ({ name, date,onPress,contactDetails}) => {
   const [isSelected, setIsSelected] = useState(false);
 console.log("here we are talking contactDetails ",contactDetails)
   const handleRadioPress = () => {
-    setIsSelected(!isSelected);
+    setIsSelected((prevIsSelected) => !prevIsSelected); // Use the functional form
     onPress(name, !isSelected,contactDetails); 
   };
   return (
-    <View style={styles.TransactionDetails}>
-      <Image source={Profile} style={styles.image} />
-      <View style={styles.textContainer}>
-        <Text style={styles.Username}>{name}</Text>
-        <Text style={styles.Date}>{date}</Text>
-      </View>
-      <View style={styles.radioButtonContainer}>
-        <TouchableOpacity onPress={handleRadioPress}>
-          <View
-            style={[
-              styles.radioButton,
-              isSelected && styles.radioButtonSelected,
-            ]}
-          >
-            {isSelected && <AntDesign name="check" size={20} color="white" />}
-          </View>
-        </TouchableOpacity>
+<TouchableOpacity onPress={handleRadioPress}>
+  <View style={styles.TransactionDetails}>
+    <Image source={Profile} style={styles.image} />
+    <View style={styles.textContainer}>
+      <Text style={styles.Username}>{name}</Text>
+      <Text style={styles.Date}>{date}</Text>
+    </View>
+    <View style={styles.radioButtonContainer}>
+      <View
+        style={[
+          styles.radioButton,
+          isSelected && styles.radioButtonSelected,
+        ]}
+      >
+        {isSelected && <AntDesign name="check" size={20} color="white" />}
       </View>
     </View>
+  </View>
+</TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({

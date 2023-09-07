@@ -1,43 +1,92 @@
 {
-  "expo": {
-    "name": "pingApp",
-    "slug": "pingApp",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.odhis101.pingApp"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "permissions": [
-        "android.permission.NFC"
-      ],
-      "package": "com.odhis101.pingApp"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "react-native-nfc-manager"
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "b011e55e-e3b9-4591-b682-9ef65e13067f"
-      }
+    "expo": {
+        "name": "pingApp",
+        "slug": "pingApp",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "userInterfaceStyle": "light",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "assetBundlePatterns": [
+            "**/*"
+        ],
+
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.odhis101.pingApp",
+            "infoPlist": {
+                "NSCameraUsageDescription": "We need access to your camera to enable of scanning qr codes  ."
+            }
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            },
+            "permissions": [
+                "android.permission.NFC",
+                "android.permission.READ_EXTERNAL_STORAGE",
+                "android.permission.WRITE_EXTERNAL_STORAGE",
+                "android.permission.ACCESS_MEDIA_LOCATION",
+                "android.permission.BLUETOOTH",
+                "android.permission.BLUETOOTH_ADVERTISE",
+                "android.permission.BLUETOOTH_ADMIN",
+                "android.permission.BLUETOOTH_CONNECT",
+                "android.permission.CAMERA"
+
+
+            ],
+            "package": "com.odhis101.pingApp"
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "plugins": [
+            [
+                "react-native-nfc-manager"
+            ],
+            [
+                "@config-plugins/react-native-ble-plx",
+                {
+                    "isBackgroundEnabled": true,
+                    "modes": ["central"],
+                    "bluetoothAlwaysPermission": "Allow $(PRODUCT_NAME) to connect to bluetooth devices",
+                    "npmLegacyPeerDeps": true
+                }
+            ],
+            [
+                "expo-media-library",
+                {
+                    "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+                    "savePhotosPermission": "Allow $(PRODUCT_NAME) to save photos.",
+                    "isAccessMediaLocationEnabled": true,
+                    "npmLegacyPeerDeps": true
+
+                }
+            ],
+            [
+                "expo-barcode-scanner",
+                {
+                    "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+                }
+            ],
+            [
+                "expo-local-authentication",
+                {
+                    "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID."
+                }
+            ]
+
+
+        ],
+        "extra": {
+            "eas": {
+                "projectId": "b011e55e-e3b9-4591-b682-9ef65e13067f"
+            }
+        }
     }
-  }
 }
