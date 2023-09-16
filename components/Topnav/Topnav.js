@@ -17,40 +17,35 @@ import { BleManager, Characteristic, Service } from 'react-native-ble-plx';
 import { useDispatch, useSelector } from "react-redux";
 import BLEAdvertiser from 'react-native-ble-advertiser'
 import { PermissionsAndroid } from 'react-native';
+import axios from 'axios';
+import getEnvVars from "../../.env.js"
 
 const Topnav = () => {
   const navigation = useNavigation();
   const bleManager = new BleManager();
   const [hasPermission, setHasPermission] = useState(false);
+  const { API_URL } = getEnvVars();
+
 
   const handlePress = () => {
     navigation.navigate("messages");
   }
+  const handleLogout = () => {
+    // Make a GET request to the logout URL
+    axios.get(`${API_URL}/api/v1/auth/logout`)
+      .then((response) => {
+        console.log(response.data.status)
+        navigation.navigate("Login")
+        // Handle the response as needed (e.g., clearing user data)
+
+        // Navigate the user to the login screen
+      })
+      .catch((error) => {
+        console.error('Logout request failed:', error);
+      });
+  };
   const authState = useSelector((state) => state.auth);
-  function generateUuid() {
-    let uuid = '';
-    const characters = 'abcdef0123456789';
   
-    // Generate a string of 32 hexadecimal characters
-    for (let i = 0; i < 32; i++) {
-      const randomIndex = Math.floor(Math.random() * characters.length);
-      uuid += characters[randomIndex];
-    }
-  
-    // Insert dashes at specific positions to create a UUID format
-    uuid =
-      uuid.substr(0, 8) +
-      '-' +
-      uuid.substr(8, 4) +
-      '-' +
-      uuid.substr(12, 4) +
-      '-' +
-      uuid.substr(16, 4) +
-      '-' +
-      uuid.substr(20);
-  
-    return uuid;
-  }
 
   const requestAndroid31Permissions = async () => {
     const bluetoothScanPermission = await PermissionsAndroid.request(
@@ -191,28 +186,43 @@ const Topnav = () => {
 
     checkAndRequestPermissions();
   }, []); 
+  const handleConnectPress = ()=>{
+    navigation.navigate("BluetoothScanner")
+
+  }
 
 
 
   return (
     <View style={styles.container}>
-      <View style={styles.backgroundImage}>
-        <View style={styles.topnav}>
-          <View style={styles.topnavLeft}>
+    <View style={styles.backgroundImage}>
+      <View style={styles.topnav}>
+        <View style={styles.topnavLeft}>
+          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
             <Image source={Logo} style={styles.image} />
-          </View>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.iconContainer}>
+          <TouchableOpacity onPress={handleConnectPress}>
+            <Icon name="person-add-outline" size={25} color="white" style={styles.icon} />
+          </TouchableOpacity>
           <TouchableOpacity onPress={handlePress}>
-            <Icon name="ios-create" size={30} color="white" />
+            <Icon name="ios-create" size={30} color="white" style={styles.icon} />
+          </TouchableOpacity>
+          {/* Logout button */}
+          <TouchableOpacity onPress={handleLogout}>
+            <Icon name="log-out" size={28} color="white" style={styles.icon} />
           </TouchableOpacity>
         </View>
       </View>
     </View>
+  </View>
   );
 };
 const styles = StyleSheet.create({
   image: {
-    width: "40%",
-    height: "40%",
+    width: 100,
+    height: 40,
     resizeMode: "contain",
   },
   backgroundImage: {
@@ -224,18 +234,21 @@ const styles = StyleSheet.create({
     marginBottom: "14%",
   },
   topnav: {
-    // backgroundColor:'red',
     marginTop: "10%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-
-  topnavRight: {},
-  image: {
-    width: 60,
-    height: 60,
-    resizeMode: "contain",
+  topnavLeft: {
+    width: '40%', // Adjust the width as needed
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    marginRight: 10, // Adjust the spacing between icons as needed
   },
 });
+
 export default Topnav;

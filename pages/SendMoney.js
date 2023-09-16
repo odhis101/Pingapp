@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import {
   StyleSheet,
   Text,
@@ -7,70 +7,92 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-} from "react-native";
-import BackgroundImage from "../assets/background.png";
-import Topnav from "../components/Topnav/Topnav";
-import SendMoney from "../components/SendMoney/SendMoney";
-import Mycards from "../components/Mycards/Mycards";
-import Profile from "../assets/profile.png";
-import RecentTransactions from "../components/RecentTransactions/RecentTransactions";
-import axios from "axios";
+} from "react-native"
+import BackgroundImage from "../assets/background.png"
+import Topnav from "../components/Topnav/Topnav"
+import SendMoney from "../components/SendMoney/SendMoney"
+import Mycards from "../components/Mycards/Mycards"
+import Profile from "../assets/profile.png"
+import RecentTransactions from "../components/RecentTransactions/RecentTransactions"
+import axios from "axios"
 import getEnvVars from "../.env.js"
 
 const Sendmoney = () => {
-  const [balance, setBalance] = useState(0);
-  const [currency, setCurrency] = useState("GBP");
-  const { API_URL } = getEnvVars();
+  const [balance, setBalance] = useState(0)
+  const [currency, setCurrency] = useState("GBP")
+  const { API_URL } = getEnvVars()
+  const formatBalance = (balance) => {
+    // Convert balance to a string
+    const balanceStr = balance.toString()
+
+    // Add commas when it passes three digits
+    if (balanceStr.length > 3) {
+      return balanceStr.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    }
+
+    return balanceStr
+  }
   useEffect(() => {
     // Fetch balance and currency data here
-    fetchBalanceAndCurrency();
-  },  []);
-// use effect to see changes if balance changes
+    fetchBalanceAndCurrency()
+  }, [])
+  // use effect to see changes if balance changes
   React.useEffect(() => {
-    console.log("Balance: ", balance);
-  }, [balance]);
+    console.log("Balance: ", balance)
+  }, [balance])
 
   const fetchBalanceAndCurrency = async () => {
     try {
-      const response = await axios.get(
-        `${API_URL}/api/v1/user/wallet`,
-      );
+      const response = await axios.get(`${API_URL}/api/v1/user/wallet`)
 
-      
-      console.log("Response: ", response.data.data.wallet.balance);
+      console.log("Response: ", response.data.data.wallet.balance)
 
-    
-      setBalance(response.data.data.wallet.balance);
-      setCurrency(currency);
+      setBalance(response.data.data.wallet.balance)
+      setCurrency(currency)
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error:", error)
     }
-  };
+  }
   return (
     <ScrollView style={{ height: "100%" }}>
       <View style={styles.currencyContainer}>
         <ImageBackground
           source={BackgroundImage}
-          style={styles.backgroundImage}
-        >
+          style={styles.backgroundImage}>
           <Topnav />
           <View style={styles.infoContainer}>
             <Text style={styles.title}>Balance</Text>
             <View style={styles.currentBalance}>
-              <Text style={styles.currency}>£</Text>
-              <Text style={styles.balance}>{balance}</Text>
+              <Text style={styles.currency}>$</Text>
+              <Text style={styles.balance}>{formatBalance(balance)}</Text>
             </View>
-            <Text style={styles.recentTransactions}>+ £ 790</Text>
           </View>
           <View style={styles.moneyButtons}></View>
           <Text style={styles.title}>SendMoney</Text>
 
           <View style={styles.Mycards}>
             <Text style={styles.heading}>Options</Text>
-            <Mycards title={"Send to Nearby devices "} iconImage={"qrcode"} onPress ={'BluetoothScanner'}/>
-            <Mycards title={"Send to contact"} iconImage={"user"} onPress ={'Contacts'} sendMoney = {true}/>
-            <Mycards title={"Send to Phone Number "} iconImage={"smartphone"} onPress={'PhoneNumber'} />
-            <Mycards title={"Send To Bank "} iconImage={"dollar-sign"} onPress ={'SendToBank'}/>
+            <Mycards
+              title={"Send to Nearby devices "}
+              iconImage={"qrcode"}
+              onPress={"BluetoothScanner"}
+            />
+            <Mycards
+              title={"Send To Contacts "}
+              iconImage={"smartphone"}
+              onPress={"Contacts"}
+              request={false}
+            />
+            <Mycards
+              title={"Send to Phone Number "}
+              iconImage={"smartphone"}
+              onPress={"PhoneNumber"}
+            />
+            <Mycards
+              title={"Send To Bank "}
+              iconImage={"dollar-sign"}
+              onPress={"SendToBank"}
+            />
           </View>
           <View style={styles.MyTransactions}>
             <Text style={styles.Transactiontitle}>Transactions</Text>
@@ -87,8 +109,8 @@ const Sendmoney = () => {
         </ImageBackground>
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
@@ -202,5 +224,5 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-});
-export default Sendmoney;
+})
+export default Sendmoney

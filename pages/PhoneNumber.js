@@ -32,7 +32,7 @@ return(
         <TouchableOpacity style={styles.countryCode} onPress={() => setShowCountryCodes(!showCountryCodes)}>
             <Text> {selectedCountryCode} </Text>
           </TouchableOpacity>
-          <TextInput style={styles.input} placeholder="Enter Phone Number" />
+          <TextInput style={styles.input} keyboardType="numeric" placeholder="Enter Phone Number" />
         </View>
         {showCountryCodes && (
           <View style={styles.countryCodesDropDown}>

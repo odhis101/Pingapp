@@ -53,8 +53,8 @@ const messages = () => {
 
 const contactPress = async (contact) => {
   console.log(contact)
-
-      navigation.navigate('Chatmessages',{contact:contact, contactsData});
+console.log("this is contact from messages ",contact)
+    navigation.navigate('Chatmessages',{contact:contact, contactsData});
         
       }
       const handlePress = () => {

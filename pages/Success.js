@@ -20,9 +20,10 @@ const Success = () => {
   navigation = useNavigation()
   //const isSuccess = false
   const route = useRoute()
-  const isSuccess = route.params?.isSuccess || false;
+  const isSuccess = route.params?.isSuccess || true;
+  console.log("this is is sucess",isSuccess)
   const backHome =()=>{
-    navigation.navigate("")
+    navigation.navigate("Home")
   }
 
 
@@ -52,9 +53,12 @@ const Success = () => {
         style={styles.button}>
           <Text style={styles.buttonText}>Back to Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>New Transaction</Text>
-        </TouchableOpacity>
+        <TouchableOpacity 
+  onPress={() => navigation.navigate("SendMoney")} // Wrap it in an arrow function
+  style={styles.button}
+>
+  <Text style={styles.buttonText}>New Transaction</Text>
+</TouchableOpacity>
       </View>
 
     </View>

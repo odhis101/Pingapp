@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   StyleSheet,
   Text,
@@ -6,29 +6,26 @@ import {
   View,
   Image,
   TouchableOpacity,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import Icon from "react-native-vector-icons/Feather";
-import {useNavigation} from '@react-navigation/native';
+} from "react-native"
+import { LinearGradient } from "expo-linear-gradient"
+import Icon from "react-native-vector-icons/Feather"
+import { useNavigation } from "@react-navigation/native"
 
-const SendMoney = ({ name, onPress}) => {
-  const navigation = useNavigation();
+const SendMoney = ({ name, onPress }) => {
+  const navigation = useNavigation()
   const handleSendMoney = () => {
-    navigation.navigate(onPress);
-  };
+    navigation.navigate(onPress) // we plan on sending a prop saying sending and requesting
+  }
 
   return (
-    <TouchableOpacity 
-    style={styles.sendButton}
-    onPress={handleSendMoney}
-    >
+    <TouchableOpacity style={styles.sendButton} onPress={handleSendMoney}>
       <View style={styles.gradientBackground}>
-        <Icon name="credit-card" size={24} color="#FFFFFF" />
+        <Icon name='credit-card' size={24} color='#FFFFFF' />
         <Text style={styles.buttonText}>{name}</Text>
       </View>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   sendButton: {
@@ -45,11 +42,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     marginLeft: 10,
-    fontSize: 14,
-    paddingLeft:"5%",
+    fontSize: 15,
+    paddingLeft: "5%",
     fontWeight: "bold",
     color: "#FFFFFF",
   },
-});
+})
 
-export default SendMoney;
+export default SendMoney

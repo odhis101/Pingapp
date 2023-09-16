@@ -1,35 +1,23 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  FlatList,
-  Image,
-  TouchableOpacity,
-  Dimensions,
-  TextInput,
-} from "react-native";
+import React, { useState } from "react"
+import { View, StyleSheet, TextInput } from "react-native"
+import { styled } from "nativewind"
 
-const inputFeilds = ({title,textValue,textOnchange}) => {
+const inputFeilds = ({ title, textValue, textOnchange }) => {
+  const [hidePassword, setHidePassword] = useState(true)
 
-  const [hidePassword, setHidePassword] = useState(true);
-
+  const StyledInput = styled(TextInput)
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.input}
-        placeholder={title}
-        placeholderTextColor="#A9A9A9"
-        textAlignVertical="center"
-        value={textValue}
-        onChangeText={textOnchange}
-        secureTextEntry={title === 'Password' ? hidePassword : false}
-      />
-    </View>
-  );
-};
+    <StyledInput
+      placeholder={title}
+      className='bg-white shadow-2xl w-full rounded-xl h-16 mb-4 px-6 '
+      placeholderTextColor='#A9A9A9'
+      value={textValue}
+      onChangeText={textOnchange}
+      secureTextEntry={title === "Password" ? hidePassword : false}
+    />
+  )
+}
 
 const styles = StyleSheet.create({
   vendorName: {
@@ -99,5 +87,5 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: "black",
   },
-});
-export default inputFeilds;
+})
+export default inputFeilds

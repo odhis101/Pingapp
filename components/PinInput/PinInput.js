@@ -58,6 +58,7 @@ const PinInput = ({ maxDigits, route}) => {
       if(data){
         if(sendCash){
           console.log("joshuiaasd")
+          setPin("");
           navigate.navigate("ConfirmPayment",{balance:balance,selectedContacts:selectedContacts})
         }
         else{

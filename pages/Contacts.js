@@ -30,6 +30,9 @@ const Contacts = () => {
   const [contactsData, setContactsData] = useState([]);
   const route = useRoute();
   let sendMoney = route.params.sendMoney;
+  const { request } = route.params; // Access the "request" prop from route.params
+  console.log(request)
+  const [searchQuery, setSearchQuery] = useState("");
 
   const fetchContactIds = async () => {
     try {
@@ -58,6 +61,7 @@ const Contacts = () => {
     navigation.navigate('AmountToSend', {
       selectedContacts: selectedContacts,
       sendMoney: sendMoney,
+      request:request,
 
     });
   };
@@ -69,20 +73,29 @@ const Contacts = () => {
     // Add more data items as needed...
   ];
   */
-  const handleContactPress = (contactName, isSelected,contact) => {
-    console.log("this is contact ",contact)
-    //useffect to test contact
-
-    if (isSelected) {
-      setSelectedContacts((prevSelectedContacts) =>
-        [...prevSelectedContacts,contact]
+  const handleContactPress = (contactName, isSelected, contact) => {
+    console.log("this is contact", contact);
+  
+    setSelectedContacts((prevSelectedContacts) => {
+      // Check if the contact already exists in the selectedContacts array
+      const contactExists = prevSelectedContacts.some(
+        (selectedContact) => selectedContact.name === contact.name
       );
-    } else {
-      setSelectedContacts((prevSelectedContacts) =>
-        prevSelectedContacts.filter((name) => name !== contactName)
-      );
-    }
+  
+      if (isSelected && !contactExists) {
+        // Add the contact to the array only if it's selected and not already in the array
+        return [...prevSelectedContacts, contact];
+      } else if (!isSelected && contactExists) {
+        // Remove the contact from the array if it's unselected and exists in the array
+        return prevSelectedContacts.filter(
+          (selectedContact) => selectedContact.name !== contact.name
+        );
+      }
+  
+      return prevSelectedContacts; // If neither adding nor removing, return the current state
+    });
   };
+  
   // useffect to see changes if selected contact changes 
   React.useEffect(() => {
     console.log("Selected contacts: ", selectedContacts);
@@ -90,7 +103,6 @@ const Contacts = () => {
   
   const sortContactsByName = (contacts) => {
     // Sorting contacts by name
-    console.log(contacts)
     const sortedContacts = contacts.sort((a, b) => {
       const nameA = `${a.firstName} ${a.lastName}`.toUpperCase();
       const nameB = `${b.firstName} ${b.lastName}`.toUpperCase();
@@ -116,6 +128,14 @@ const Contacts = () => {
   };
   const sortedContactData = sortContactsByName(contactsData);
 
+  const filteredSortedContactData = sortedContactData.map(({ letter, contacts }) => ({
+    letter,
+    contacts: contacts.filter(contact =>
+      `${contact.firstName} ${contact.lastName}`.toLowerCase().includes(searchQuery.toLowerCase())
+    ),
+  }));
+
+
   return (
     <View style={styles.container}>
       <View style={styles.contactContainer}>
@@ -139,6 +159,8 @@ const Contacts = () => {
               style={styles.searchInput}
               placeholder="Search"
               placeholderTextColor="white"
+              onChangeText={text => setSearchQuery(text)}
+
             />
             <AntDesign
               name="search1"
@@ -152,7 +174,7 @@ const Contacts = () => {
 
       <View style={styles.container}>
         <FlatList
-          data={sortedContactData}
+          data={filteredSortedContactData}
           keyExtractor={(item) => item.letter}
           renderItem={({ item }) => (
             <View>
