@@ -8,7 +8,7 @@ import Profile from '../assets/profile.png'
 import RecentTransactions from '../components/RecentTransactions/RecentTransactions';
 import TransactionsRadio from '../components/TransactionsRadio/TransactionsRadio';
 import { AntDesign } from '@expo/vector-icons';
-
+import {colors} from "../Colors"
 
 const SendToBank = () => {
     const [showCountryCodes, setShowCountryCodes] = useState(false);
@@ -18,11 +18,9 @@ const SendToBank = () => {
       setSelectedCountryCode(countryCode);
       setShowCountryCodes(!showCountryCodes);
     };
-
 return(
     <View style={styles.container}>
-              <ImageBackground
-          source={BackgroundImage}
+              <View
           style={styles.backgroundImage}
         >
          <Text style={styles.sendToNumber}>Send To Bank</Text>
@@ -44,11 +42,11 @@ return(
       <TouchableOpacity 
       onPress={() => navigation.navigate("Success",{isSuccess:true})}
       style={styles.proceedBtn}>
-                <Text> Proceed</Text>
+                <Text style ={{color:colors.textColor}}> Proceed</Text>
 
             </TouchableOpacity>
 
-            </ImageBackground>
+            </View>
 
     
     </View>
@@ -70,7 +68,7 @@ backgroundImage: {
   },
   sendToNumber: {
     fontSize: 24, // Large font size
-    color: 'white',
+    color: colors.textColor,
   
   position:'absolute',
   top:150,
@@ -97,6 +95,7 @@ left:20,
   inputTitle: {
     marginBottom: 10,
     fontSize: 16,
+    color:colors.textColor
   },
   phoneInputContainer: {
     flexDirection: 'row',

@@ -63,7 +63,6 @@
 
         <View style={styles.container}>
           
-          <ImageBackground source={BackgroundImage} style={styles.backgroundImage}>
             <View style={styles.container}>
               <View style={styles.credentials}>
                 <Image source={Logo} style={styles.image} />
@@ -93,7 +92,6 @@
               </View>
             </View>
 
-          </ImageBackground>
           
         </View>
 
@@ -166,7 +164,6 @@
       fontSize: 24,
       fontWeight: "bold",
       color: "#FFFFFF",
-      marginBottom: "10%",
     },
     subtitle: {
       fontSize: 18,

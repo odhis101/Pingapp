@@ -220,37 +220,6 @@ useEffect(() => {
               <Text>{contact.firstName} {contact.lastName}</Text>
             </View>
             <ScrollView contentContainerStyle={styles.scrollContent}>
-            <View style={[styles.messageContainer, { flexGrow: 1 }]}>
-  {(mergedMessages).sort((a, b) => a.timestamp.localeCompare(b.timestamp)).map((message, index) => (
-    <View
-      key={index}
-      style={
-        message.sender === authState.user.id
-          ? styles.outgoingMessageContainer
-          : styles.incomingMessageContainer
-      }
-    >
-      {/* Check if the message contains a balance request */}
-      {message.message.includes('[BalanceRequest]') ? (
-        <TouchableOpacity onPress={() => handleBalanceRequestClick(message)}>
-          <Text style={styles.balanceRequestText}>
-            {message.message}
-          </Text>
-        </TouchableOpacity>
-      ) : (
-        <Text
-          style={
-            message.sender === authState.user.id
-              ? styles.outgoingMessageText
-              : styles.incomingMessageText
-          }
-        >
-          {message.message}
-        </Text>
-      )}
-    </View>
-  ))}
-</View>
 
             </ScrollView>
       

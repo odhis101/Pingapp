@@ -17,6 +17,8 @@ import RecentTransactions from "../components/RecentTransactions/RecentTransacti
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import getEnvVars from "../.env.js"
+import {colors } from "../Colors"
+import Transactions from "../components/Transactions/Transactions";
 const Sendmoney = () => {
 
   const [balance, setBalance] = useState(0);
@@ -62,10 +64,7 @@ const Sendmoney = () => {
   return (
     <ScrollView style={{ height: "100%" }}>
       <View style={styles.currencyContainer}>
-        <ImageBackground
-          source={BackgroundImage}
-          style={styles.backgroundImage}
-        >
+  
           <Topnav />
           <View style={styles.infoContainer}>
             <Text style={styles.title}>Balance</Text>
@@ -83,19 +82,7 @@ const Sendmoney = () => {
             <Mycards title={"Request With QR  "} iconImage={"smartphone"} onPress={'BarcodeScanner'} />
 
           </View>
-          <View style={styles.MyTransactions}>
-            <Text style={styles.Transactiontitle}>Transactions</Text>
-            <View style={styles.TransactionsContainer}>
-              <TouchableOpacity style={styles.recents}>
-                <Text>Sort by recents</Text>
-              </TouchableOpacity>
-
-              <RecentTransactions />
-              <RecentTransactions />
-              <RecentTransactions />
-            </View>
-          </View>
-        </ImageBackground>
+<Transactions/>
       </View>
     </ScrollView>
   );
@@ -125,25 +112,22 @@ const styles = StyleSheet.create({
   title: {
     marginRight: "auto",
     marginLeft: "auto",
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#FFFFFF",
-    marginBottom: 16,
+    fontSize: 14,
+    color: colors.textColor,
+
   },
   currentBalance: {
     flexDirection: "row",
     alignItems: "center",
   },
   currency: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "#FFFFFF",
+    fontSize: 42,
+    color: colors.textColor,
     marginRight: 8,
   },
   balance: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "#FFFFFF",
+    fontSize: 42,
+    color: colors.textColor,
   },
   recentTransactions: {
     fontSize: 20,
@@ -197,15 +181,18 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   Transactiontitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontSize: 14,
     marginBottom: 8,
     marginTop: 8,
+    color: colors.textColor,
+    marginLeft: 16,
   },
   TransactionsContainer: {
+    width: "90%",
+    marginLeft: "auto",
+    marginRight: "auto",
     backgroundColor: "#FFFFFF",
-    borderRadius: 8,
+    borderRadius: 10,
     padding: 16,
     shadowColor: "#000000",
     shadowOffset: { width: 0, height: 2 },
