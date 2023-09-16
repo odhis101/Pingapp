@@ -352,6 +352,7 @@ const styles = StyleSheet.create({
             fontSize: 14,
             color: "#FFFFFF",
             marginBottom: 16,
+            color: colors.textColor,
           },
           currentBalance: {
             flexDirection: "row",
