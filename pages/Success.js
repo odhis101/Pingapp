@@ -14,7 +14,7 @@ import BackgroundImage from "../assets/background.png";
 import { Dimensions } from "react-native";
 import CorrectImg from "../assets/Success.png"
 import WrongImg from "../assets/Reject.png"
-
+import { colors } from "../Colors";
 const Success = () => {
   const [imageHeight, setImageHeight] = useState(0);
   navigation = useNavigation()
@@ -36,7 +36,7 @@ const Success = () => {
   console.log(imageHeight);
 
   return (
-    <ImageBackground
+    <View
       source={BackgroundImage}
       style={{ ...styles.backgroundImage, height: imageHeight }}
     >
@@ -65,7 +65,7 @@ const Success = () => {
 
      
     
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   button: {
-    backgroundColor: '#3E80B2', // Greyish color
+    backgroundColor: 'white', // Greyish color
     //backgroundColor: 'rgba(204, 204, 204, 0.34)', // Greyish color with reduced opacity
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white',
+    color: colors.textColor,
     fontSize: 16,
   },
   centeredImage:{
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
   
   backgroundImage: {
     resizeMode: 'cover',
+    backgroundColor:colors.background
   },
 });
 

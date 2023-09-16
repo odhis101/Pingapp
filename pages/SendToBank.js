@@ -11,48 +11,54 @@ import {
   ScrollView,
 } from "react-native"
 import BackgroundImage from "../assets/background.png"
-import Topnav from "../components/Topnav/Topnav"
-import SendMoney from "../components/SendMoney/SendMoney"
-import Mycards from "../components/Mycards/Mycards"
-import Profile from "../assets/profile.png"
-import RecentTransactions from "../components/RecentTransactions/RecentTransactions"
-import TransactionsRadio from "../components/TransactionsRadio/TransactionsRadio"
-import { AntDesign } from "@expo/vector-icons"
+import Topnav from '../components/Topnav/Topnav';
+import SendMoney from '../components/SendMoney/SendMoney';
+import Mycards from '../components/Mycards/Mycards';
+import Profile from '../assets/profile.png'
+import RecentTransactions from '../components/RecentTransactions/RecentTransactions';
+import TransactionsRadio from '../components/TransactionsRadio/TransactionsRadio';
+import { AntDesign } from '@expo/vector-icons';
+import {colors} from "../Colors"
 
 const SendToBank = () => {
-  const [showCountryCodes, setShowCountryCodes] = useState(false)
-  const [selectedCountryCode, setSelectedCountryCode] = useState("+44")
-
-  const handleCountryCodePress = (countryCode) => {
-    setSelectedCountryCode(countryCode)
-    setShowCountryCodes(!showCountryCodes)
-  }
-
-  return (
+    const [showCountryCodes, setShowCountryCodes] = useState(false);
+    const [selectedCountryCode, setSelectedCountryCode] = useState('+44');
+  
+    const handleCountryCodePress = (countryCode) => {
+      setSelectedCountryCode(countryCode);
+      setShowCountryCodes(!showCountryCodes);
+    };
+return(
     <View style={styles.container}>
-      <ImageBackground source={BackgroundImage} style={styles.backgroundImage}>
-        <Text style={styles.sendToNumber}>Send To Bank</Text>
-        <View style={styles.inputContainer}>
-          <Text style={styles.inputTitle}>Enter the Bank Details</Text>
-          <View style={styles.phoneInputContainer}>
-            <TextInput style={styles.input} placeholder='Bank Name' />
-          </View>
-          <View style={styles.phoneInputContainer}>
-            <TextInput style={styles.input} placeholder='IBAN' />
-          </View>
-          <View style={styles.phoneInputContainer}>
-            <TextInput style={styles.input} placeholder='Country' />
-          </View>
-          <View style={styles.phoneInputContainer}>
-            <TextInput style={styles.input} placeholder='Branch Code' />
-          </View>
+              <View
+          style={styles.backgroundImage}
+        >
+         <Text style={styles.sendToNumber}>Send To Bank</Text>
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputTitle}>Enter the Bank Details</Text>
+        <View style={styles.phoneInputContainer}>
+          <TextInput style={styles.input} placeholder="Bank Name" />
         </View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("AmountToSend", { deposit: true })}
-          style={styles.proceedBtn}>
-          <Text> Proceed</Text>
-        </TouchableOpacity>
-      </ImageBackground>
+        <View style={styles.phoneInputContainer}>
+          <TextInput style={styles.input} placeholder="IBAN" />
+        </View>
+        <View style={styles.phoneInputContainer}>
+          <TextInput style={styles.input} placeholder="Country" />
+        </View>
+        <View style={styles.phoneInputContainer}>
+          <TextInput style={styles.input} placeholder="Branch Code" />
+        </View>
+      </View>
+      <TouchableOpacity 
+      onPress={() => navigation.navigate("Success",{isSuccess:true})}
+      style={styles.proceedBtn}>
+                <Text style ={{color:colors.textColor}}> Proceed</Text>
+
+            </TouchableOpacity>
+
+            </View>
+
+    
     </View>
   )
 }
@@ -69,11 +75,11 @@ const styles = StyleSheet.create({
   },
   sendToNumber: {
     fontSize: 24, // Large font size
-    color: "white",
-
-    position: "absolute",
-    top: 150,
-    left: 20,
+    color: colors.textColor,
+  
+  position:'absolute',
+  top:150,
+left:20,
   },
   inputContainer: {
     backgroundColor: "white",
@@ -96,6 +102,7 @@ const styles = StyleSheet.create({
   inputTitle: {
     marginBottom: 10,
     fontSize: 16,
+    color:colors.textColor
   },
   phoneInputContainer: {
     flexDirection: "row",

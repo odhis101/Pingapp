@@ -22,7 +22,7 @@ import getEnvVars from "../../.env.js"
 
 const Topnav = () => {
   const navigation = useNavigation();
-  const bleManager = new BleManager();
+  //const bleManager = new BleManager();
   const [hasPermission, setHasPermission] = useState(false);
   const { API_URL } = getEnvVars();
 

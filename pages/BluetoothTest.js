@@ -21,7 +21,7 @@ const BluetoothScanner = () => {
   
   const [devices, setDevices] = useState([]);
   const [getDiscoveredPeripherals, setDiscoveredPeripherals] = useState([]);
-  const bleManager = new BleManager();
+  //const bleManager = new BleManager();
   // CHECK API LEVEL 
 //const api_level = Platform.Version;
 const api_level = Platform.Version;

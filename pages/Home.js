@@ -18,11 +18,12 @@ import { useSelector } from "react-redux"
 import axios from "axios"
 import { useNavigation } from "@react-navigation/native"
 import getEnvVars from "../.env.js"
-import Modal from "react-native-modal"
-import Blemanager from "react-native-ble-manager"
-import RSSI from "./RSSI"
-import { PermissionsAndroid } from "react-native"
-import { Platform } from "react-native"
+import Modal from "react-native-modal";
+import Blemanager from 'react-native-ble-manager';
+import RSSI from "./RSSI";
+import { PermissionsAndroid } from 'react-native';
+import { Platform } from 'react-native';
+import Transactions from "../components/Transactions/Transactions";
 
 const Home = () => {
   const navigation = useNavigation()
@@ -227,18 +228,8 @@ const Home = () => {
               onPress={"Deposit"}
             />
           </View>
-          <View style={styles.MyTransactions}>
-            <Text style={styles.Transactiontitle}>Transactions</Text>
-            <View style={styles.TransactionsContainer}>
-              <TouchableOpacity style={styles.recents}>
-                <Text>Sort by recents</Text>
-              </TouchableOpacity>
-
-              <RecentTransactions />
-              <RecentTransactions />
-              <RecentTransactions />
-            </View>
-          </View>
+        <Transactions/>
+   
         </ImageBackground>
       </View>
       <RSSI />
