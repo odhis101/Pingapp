@@ -22,7 +22,7 @@ import getEnvVars from "../../.env.js"
 
 const Topnav = () => {
   const navigation = useNavigation();
-  const bleManager = new BleManager();
+  // const bleManager = new BleManager();
   const [hasPermission, setHasPermission] = useState(false);
   const { API_URL } = getEnvVars();
 
@@ -194,24 +194,24 @@ const Topnav = () => {
 
 
   return (
-    <View style={styles.container}>
+    <View className='flex flex-row items-center m-4'>
     <View style={styles.backgroundImage}>
       <View style={styles.topnav}>
         <View style={styles.topnavLeft}>
           <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <Image source={Logo} style={styles.image} />
+            <Image source={Logo} className='w-[28px] h-[28px] m-2' />
           </TouchableOpacity>
         </View>
-        <View style={styles.iconContainer}>
+        <View className='flex flex-row items-center'>
           <TouchableOpacity onPress={handleConnectPress}>
-            <Icon name="person-add-outline" size={25} color="white" style={styles.icon} />
+            <Icon name="person-add" size={25} color="#B1843D" style={styles.icon} />
           </TouchableOpacity>
           <TouchableOpacity onPress={handlePress}>
-            <Icon name="ios-create" size={30} color="white" style={styles.icon} />
+            <Icon name="ios-create" size={25} color="#B1843D" style={styles.icon} />
           </TouchableOpacity>
           {/* Logout button */}
           <TouchableOpacity onPress={handleLogout}>
-            <Icon name="log-out" size={28} color="white" style={styles.icon} />
+            <Icon name="log-out" size={28} color="#B1843D" style={styles.icon} />
           </TouchableOpacity>
         </View>
       </View>

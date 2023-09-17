@@ -13,13 +13,13 @@ const Mycards = ({ title, iconImage, onPress, request, sendmoney }) => {
 return(
 
     <TouchableOpacity 
-    style={styles.Mycard}
+    className='flex flex-row bg-white h-[70px] items-center mt-2 rounded-xl'
     onPress={handlePress}
     >
-      <View style={styles.cardIcon}>
-        <Icon name={iconImage} size={20} color="#FFFFFF" />
+      <View className='rounded-lg px-4'>
+        <Icon name={iconImage} size={20} color="#B1843D" />
       </View>
-      <Text style={styles.cardText}>{title}</Text>
+      <Text className='text-[#B1843D] pl-2'>{title}</Text>
     </TouchableOpacity>
 
 

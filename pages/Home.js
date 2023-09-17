@@ -222,17 +222,13 @@ const Home = () => {
   
   return (
     < ScrollView style={{ height: "100%" }}>
-      <View style={styles.currencyContainer}>
-        <ImageBackground
-          source={BackgroundImage}
-          style={styles.backgroundImage}
-        >
+      <View className='bg-[#FEFAF4]' style={styles.currencyContainer}>
           <Topnav  />
           <View style={styles.infoContainer}>
-            <Text style={styles.title}>Balance</Text>
+            <Text className='text-[#B1843D] text-[12px] italic'>Balance</Text>
             <View style={styles.currentBalance}>
-              <Text style={styles.currency}>£</Text>
-              <Text style={styles.balance}>{formatBalance(balance)}</Text>
+              <Text className='text-[#B1843D] font-light text-[64px]'>£</Text>
+              <Text className='text-[#B1843D] font-light text-[64px]'>{formatBalance(balance)}</Text>
             </View>
           </View>
           <View style={styles.moneyButtons}>
@@ -241,14 +237,14 @@ const Home = () => {
             <SendMoney name={"Request money"} onPress={"Request"} />
           </View>
           <View style={styles.Mycards}>
-            <Text style={styles.heading}>My Cards</Text>
+            <Text className='text-[#B1843D] font-light text-sm'>My Cards</Text>
             <Mycards title={"Deposit"}  iconImage="trending-up"  onPress={"Deposit"} />
           </View>
           <View style={styles.MyTransactions}>
-            <Text style={styles.Transactiontitle}>Transactions</Text>
+            <Text className='text-[#B1843D] my-4'>Transactions</Text>
             <View style={styles.TransactionsContainer}>
               <TouchableOpacity style={styles.recents}>
-                <Text>Sort by recents</Text>
+                <Text className='text-[#06672B]'>Sort by recents</Text>
               </TouchableOpacity>
 
               <RecentTransactions />
@@ -256,7 +252,6 @@ const Home = () => {
               <RecentTransactions />
             </View>
           </View>
-        </ImageBackground>
       </View>
       <RSSI/>
     </ScrollView>

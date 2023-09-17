@@ -19,37 +19,16 @@ const SendMoney = ({ name, onPress}) => {
 
   return (
     <TouchableOpacity 
-    style={styles.sendButton}
+    className='w-[40%]'
     onPress={handleSendMoney}
     >
-      <View style={styles.gradientBackground}>
-        <Icon name="credit-card" size={24} color="#FFFFFF" />
-        <Text style={styles.buttonText}>{name}</Text>
+      <View className='rounded-full bg-white flex flex-row items-center justify-center shadow-md p-4'>
+        <Icon name="credit-card" size={24} color="#B1843D" />
+        <Text className='font-light text-[#B1843D] pl-2'>{name}</Text>
       </View>
     </TouchableOpacity>
   );
 };
 
-const styles = StyleSheet.create({
-  sendButton: {
-    width: "33%",
-    borderRadius: 50,
-    overflow: "hidden",
-  },
-  gradientBackground: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-  },
-  buttonText: {
-    marginLeft: 10,
-    fontSize: 14,
-    paddingLeft:"5%",
-    fontWeight: "bold",
-    color: "#FFFFFF",
-  },
-});
 
 export default SendMoney;

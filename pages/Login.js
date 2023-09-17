@@ -20,6 +20,7 @@
   import Modal from "react-native-modal";
   import RSSI from './RSSI';
 
+
   
   const Login = () => {
     const navigation = useNavigation();
@@ -63,10 +64,9 @@
 
         <View style={styles.container}>
           
-          <ImageBackground source={BackgroundImage} style={styles.backgroundImage}>
-            <View style={styles.container}>
+            <View classname='bg-black'>
               <View style={styles.credentials}>
-                <Image source={Logo} style={styles.image} />
+                <Image source={Logo}  style={styles.image} />
                 <Text style={styles.title}>Welcome to Ping</Text>
                 <Text style={styles.subtitle}>Please sign in to continue</Text>
   
@@ -91,10 +91,7 @@
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
-
-          </ImageBackground>
-          
+            </View>          
         </View>
 
       );
