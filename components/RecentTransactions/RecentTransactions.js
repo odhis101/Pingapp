@@ -10,13 +10,15 @@ import Profile from "../../assets/profile.png";
 
 const RecentTransactions = () => {
   return (
-    <View style={styles.TransactionDetails}>
-      <Image source={Profile} style={styles.image} />
-      <View style={styles.textContainer}>
-        <Text style={styles.Username}>Dan Bilzerian</Text>
-        <Text style={styles.Date}>14/04/23</Text>
+    <View className='flex flex-row items-center justify-between'>
+      <View className='flex flex-row items-center my-2'>
+        <Image source={Profile} style={styles.image} />
+        <View style={styles.textContainer}>
+          <Text className='text-base'>Dan Bilzerian</Text>
+          <Text className='text-[#06672B] text-sm'>14/04/23</Text>
+        </View>
       </View>
-      <Text style={styles.TransactionAmt}>£ 20000</Text>
+      <Text className='text-[#06672B] text-xl'>£ 20000</Text>
     </View>
   );
 };
