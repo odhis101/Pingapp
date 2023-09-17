@@ -16,6 +16,7 @@ import BackgroundImage from "../assets/background.png";
 import Icon from 'react-native-vector-icons/Ionicons'; // Import your preferred icon set
 import Topnav from '../components/Topnav/Topnav';
 import Blemanager from 'react-native-ble-manager';
+import { colors } from '../Colors';
 
 const BluetoothScanner = () => {
   
@@ -238,8 +239,7 @@ const requestAndroid31Permissions = async () => {
 
 
   return (
-    <ImageBackground
-    source={BackgroundImage}
+    <View
     style={styles.backgroundImage}
     >
       <Topnav/>
@@ -257,19 +257,21 @@ const requestAndroid31Permissions = async () => {
         ListEmptyComponent={<Text style={styles.loadingText}>Searching...</Text>} 
       />
 
-    </ImageBackground>
+    </View>
   );
 };
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     resizeMode: "cover", // or 'stretch' if you want to stretch the image
+    color:colors.textColor
   },
     header: {
     marginTop: 200,
     marginBottom: 10,
     fontSize: 18,
     fontWeight: 'bold',
+    color:colors.textColor
   },
   itemContainer: {
     flexDirection: 'row',
@@ -283,11 +285,13 @@ const styles = StyleSheet.create({
   },
   deviceName: {
     fontSize: 16,
+    color:colors.textColor
   },
   loadingText: {
     alignSelf: 'center',
     marginVertical: 10,
     fontSize: 16,
+    color:colors.textColor
   },
 
 });

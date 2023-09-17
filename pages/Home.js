@@ -18,12 +18,13 @@ import { useSelector } from "react-redux"
 import axios from "axios"
 import { useNavigation } from "@react-navigation/native"
 import getEnvVars from "../.env.js"
-import Modal from "react-native-modal";
-import Blemanager from 'react-native-ble-manager';
-import RSSI from "./RSSI";
-import { PermissionsAndroid } from 'react-native';
-import { Platform } from 'react-native';
-import Transactions from "../components/Transactions/Transactions";
+import Modal from "react-native-modal"
+import Blemanager from "react-native-ble-manager"
+import RSSI from "./RSSI"
+import { PermissionsAndroid } from "react-native"
+import { Platform } from "react-native"
+import Transactions from "../components/Transactions/Transactions"
+import { colors } from "../Colors"
 
 const Home = () => {
   const navigation = useNavigation()
@@ -203,7 +204,7 @@ const Home = () => {
   }
 
   return (
-    <ScrollView style={{ height: "100%" }}>
+    <ScrollView style={{ height: "100%", backgroundColor: colors.background }}>
       <View style={styles.currencyContainer}>
         <ImageBackground
           source={BackgroundImage}
@@ -228,8 +229,7 @@ const Home = () => {
               onPress={"Deposit"}
             />
           </View>
-        <Transactions/>
-   
+          <Transactions />
         </ImageBackground>
       </View>
       <RSSI />

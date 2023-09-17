@@ -4,7 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import QRCode from 'react-native-qrcode-svg';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
-
+import {colors} from "../Colors"
 const QRCodePage = () => {
     const navigation = useNavigation();
     const authState = useSelector((state) => state.auth);
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor:colors.background,
   },
   qrCodeContainer: {
     alignItems: 'center',

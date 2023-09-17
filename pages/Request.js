@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
   },
   currencyContainer: {
     height: "100%",
+    backgroundColor:colors.background,
 
     // ... other styles for background image or color
   },

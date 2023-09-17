@@ -2,10 +2,10 @@ import Constants from "expo-constants"
 
 const ENV = {
   dev: {
-    API_URL: "https://b02e-102-213-209-1.ngrok-free.app",
+    API_URL: "https://ba56-102-213-209-1.ngrok-free.app",
   },
   prod: {
-    API_URL: "https://b02e-102-213-209-1.ngrok-free.app",
+    API_URL: "https://ba56-102-213-209-1.ngrok-free.app",
   },
 }
 

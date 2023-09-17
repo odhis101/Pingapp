@@ -46,7 +46,7 @@ const Sendmoney = () => {
   }
 
   return (
-    <ScrollView style={{ height: "100%" }}>
+    <ScrollView style={{ height: "100%",backgroundColor:colors.background }}>
       <View style={styles.currencyContainer}>
           <Topnav />
           <View style={styles.infoContainer}>
