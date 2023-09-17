@@ -20,6 +20,7 @@ import Blemanager from "react-native-ble-manager"
 import Modal from "react-native-modal"
 import RSSI from "./RSSI"
 import { styled } from "nativewind"
+import { colors } from "../Colors"
 
 const Login = () => {
   const navigation = useNavigation()
@@ -57,27 +58,28 @@ const Login = () => {
     }
   }, [])
 
-  const StyledText = styled(Text)
-  const StyledBtn = styled(TouchableOpacity)
-  const StyledView = styled(View)
+  const handleEmailChange = (value) => {
+    setEmail(value)
+  }
 
   if (!authState?.user?.firstName) {
     return (
-      <StyledView className='flex-1 '>
-        <StyledView style={styles.container} className='bg-[#FEFBF4]'>
+      <View className='flex-1 '>
+        <View style={styles.container} className={`bg-[${colors.background}]`}>
           <View style={styles.credentials}>
             <Image source={Logo} style={styles.image} />
-            <StyledText className='text-yellow-600 text-3xl'>
+            <Text
+              className={`text-[${colors.textColor}] font-semibold text-3xl`}>
               Welcome to Ping
-            </StyledText>
-            <StyledText className='text-yellow-600 mt-1 mb-6 text-lg'>
+            </Text>
+            <Text className={`text-[${colors.textColor}] mt-1 mb-6 text-lg`}>
               Please sign in to continue
-            </StyledText>
+            </Text>
 
             <InputFeild
               title='Email'
               textValue={email}
-              textOnchange={setEmail}
+              textOnchange={handleEmailChange}
             />
             <InputFeild
               title='Password'
@@ -86,26 +88,24 @@ const Login = () => {
               secureTextEntry
             />
             <View style={styles.signInContainer}>
-              <StyledBtn className='w-[40%]' onPress={handleLogin}>
+              <TouchableOpacity className='w-[40%]' onPress={handleLogin}>
                 <LinearGradient
-                  colors={["#CA8A04", "#FCD34D"]}
+                  colors={[colors.gradientBeginning, colors.gradientEnding]}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                   style={styles.gradientBackground}>
-                  <StyledText className='text-white text-center'>
-                    Sign In
-                  </StyledText>
+                  <Text className='text-white text-center'>Sign In</Text>
                 </LinearGradient>
-              </StyledBtn>
-              <StyledBtn className=' w-[60%]'>
-                <StyledText className='text-yellow-600 mt-1 mb-6 mx-auto my-auto'>
+              </TouchableOpacity>
+              <TouchableOpacity className=' w-[60%]'>
+                <Text className='text-yellow-600 mt-1 mb-6 mx-auto my-auto'>
                   Forgot Password?
-                </StyledText>
-              </StyledBtn>
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
-        </StyledView>
-      </StyledView>
+        </View>
+      </View>
     )
   } else {
     return <></>
@@ -114,8 +114,8 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   image: {
-    width: "30%",
-    height: "30%",
+    width: "25%",
+    height: "25%",
     resizeMode: "contain",
   },
   backgroundImage: {

@@ -7,10 +7,26 @@ const inputFeilds = ({ title, textValue, textOnchange }) => {
 
   const StyledInput = styled(TextInput)
 
+  // <View style={styles.inputContainer}>
+  //     <TextInput
+  //       style={styles.input}
+  //       placeholder={title}
+  //       placeholderTextColor='#A9A9A9'
+  //       textAlignVertical='center'
+  //       value={textValue}
+  //       onChangeText={textOnchange}
+  //       secureTextEntry={title === "Password" ? hidePassword : false}
+  //     />
+  //   </View>
+
   return (
-    <StyledInput
+    // <View style={styles.inputContainer}>
+
+    <TextInput
+      style={styles.input}
       placeholder={title}
-      className='bg-white shadow-2xl w-full rounded-xl h-16 mb-4 px-6 '
+      textAlignVertical='center'
+      className='bg-white shadow-lg w-full rounded-xl h-16 mb-4 px-6 '
       placeholderTextColor='#A9A9A9'
       value={textValue}
       onChangeText={textOnchange}
