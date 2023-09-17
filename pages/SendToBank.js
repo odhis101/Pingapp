@@ -65,6 +65,7 @@ backgroundImage: {
     flex: 1,
     resizeMode: "cover", // or 'stretch' if you want to stretch the image
     height:820,
+    backgroundColor:colors.background,
   },
   sendToNumber: {
     fontSize: 24, // Large font size

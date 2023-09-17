@@ -86,12 +86,13 @@ const styles = StyleSheet.create({
 container:{
     flex:1,
     height:"100%",
+  
 },
 backgroundImage: {
     flex: 1,
     resizeMode: "cover", // or 'stretch' if you want to stretch the image
     height:"100%",
-    color:colors.background
+    backgroundColor:colors.background
 
   },
   sendToNumber: {

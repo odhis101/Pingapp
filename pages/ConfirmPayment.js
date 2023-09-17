@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   
   backgroundImage: {
     resizeMode: 'cover',
-    color:colors.background,
+    backgroundColor:colors.background,
   },
 });
 
