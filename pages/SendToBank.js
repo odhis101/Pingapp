@@ -8,16 +8,22 @@ import Profile from '../assets/profile.png'
 import RecentTransactions from '../components/RecentTransactions/RecentTransactions';
 import TransactionsRadio from '../components/TransactionsRadio/TransactionsRadio';
 import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 import {colors} from "../Colors"
 
 const SendToBank = () => {
     const [showCountryCodes, setShowCountryCodes] = useState(false);
     const [selectedCountryCode, setSelectedCountryCode] = useState('+44');
+    navigate = useNavigation();
   
     const handleCountryCodePress = (countryCode) => {
       setSelectedCountryCode(countryCode);
       setShowCountryCodes(!showCountryCodes);
     };
+    const handleProceed = () => {
+      navigate.navigate("AmountToSend", { deposit: true }); // Pass phoneNumber as prop
+    };
+    
 return(
     <View style={styles.container}>
               <View
@@ -40,7 +46,7 @@ return(
         </View>
       </View>
       <TouchableOpacity 
-      onPress={() => navigation.navigate("Success",{isSuccess:true})}
+     onPress={handleProceed}
       style={styles.proceedBtn}>
                 <Text style ={{color:colors.textColor}}> Proceed</Text>
 
