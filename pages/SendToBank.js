@@ -8,21 +8,25 @@ import Profile from '../assets/profile.png'
 import RecentTransactions from '../components/RecentTransactions/RecentTransactions';
 import TransactionsRadio from '../components/TransactionsRadio/TransactionsRadio';
 import { AntDesign } from '@expo/vector-icons';
-
+import { useNavigation } from "@react-navigation/native";
+import {colors} from "../Colors"
 
 const SendToBank = () => {
     const [showCountryCodes, setShowCountryCodes] = useState(false);
     const [selectedCountryCode, setSelectedCountryCode] = useState('+44');
+    navigate = useNavigation();
   
     const handleCountryCodePress = (countryCode) => {
       setSelectedCountryCode(countryCode);
       setShowCountryCodes(!showCountryCodes);
     };
-
+    const handleProceed = () => {
+      navigate.navigate("AmountToSend", { deposit: true }); // Pass phoneNumber as prop
+    };
+    
 return(
     <View style={styles.container}>
-              <ImageBackground
-          source={BackgroundImage}
+              <View
           style={styles.backgroundImage}
         >
          <Text style={styles.sendToNumber}>Send To Bank</Text>
@@ -42,13 +46,13 @@ return(
         </View>
       </View>
       <TouchableOpacity 
-      onPress={() => navigation.navigate("Success",{isSuccess:true})}
+     onPress={handleProceed}
       style={styles.proceedBtn}>
-                <Text> Proceed</Text>
+                <Text style ={{color:colors.textColor}}> Proceed</Text>
 
             </TouchableOpacity>
 
-            </ImageBackground>
+            </View>
 
     
     </View>
@@ -67,10 +71,11 @@ backgroundImage: {
     flex: 1,
     resizeMode: "cover", // or 'stretch' if you want to stretch the image
     height:820,
+    backgroundColor:colors.background,
   },
   sendToNumber: {
     fontSize: 24, // Large font size
-    color: 'white',
+    color: colors.textColor,
   
   position:'absolute',
   top:150,
@@ -97,6 +102,7 @@ left:20,
   inputTitle: {
     marginBottom: 10,
     fontSize: 16,
+    color:colors.textColor
   },
   phoneInputContainer: {
     flexDirection: 'row',

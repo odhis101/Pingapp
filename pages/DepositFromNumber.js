@@ -9,7 +9,7 @@ import RecentTransactions from '../components/RecentTransactions/RecentTransacti
 import TransactionsRadio from '../components/TransactionsRadio/TransactionsRadio';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
-
+import {colors} from "../Colors"
 
 const PhoneNumber = () => {
     const navigate = useNavigation();
@@ -30,16 +30,15 @@ const PhoneNumber = () => {
 
 return(
     <View style={styles.container}>
-              <ImageBackground
-          source={BackgroundImage}
+              <View
           style={styles.backgroundImage}
         >
-         <Text style={styles.sendToNumber}>Deposit From Number</Text>
+         <Text style={styles.sendToNumber}>Deposit From Numberss</Text>
       <View style={styles.inputContainer}>
         <Text style={styles.inputTitle}>Enter Phone Number</Text>
         <View style={styles.phoneInputContainer}>
         <TouchableOpacity style={styles.countryCode} onPress={() => setShowCountryCodes(!showCountryCodes)}>
-            <Text> {selectedCountryCode} </Text>
+            <Text > {selectedCountryCode} </Text>
           </TouchableOpacity>
           <TextInput
         style={styles.input}
@@ -69,11 +68,11 @@ return(
 
       </View>
       <TouchableOpacity  onPress={handleProceed}  style={styles.proceedBtn}>
-                <Text> Proceed</Text>
+                <Text style={{color:colors.textColor}}> Proceed</Text>
 
             </TouchableOpacity>
 
-            </ImageBackground>
+            </View>
 
     
     </View>
@@ -87,15 +86,18 @@ const styles = StyleSheet.create({
 container:{
     flex:1,
     height:"100%",
+  
 },
 backgroundImage: {
     flex: 1,
     resizeMode: "cover", // or 'stretch' if you want to stretch the image
-    height:820,
+    height:"100%",
+    backgroundColor:colors.background
+
   },
   sendToNumber: {
     fontSize: 24, // Large font size
-    color: 'white',
+    color: colors.textColor,
   
   position:'absolute',
   top:150,
@@ -122,6 +124,7 @@ left:20,
   inputTitle: {
     marginBottom: 10,
     fontSize: 16,
+    color:colors.textColor,
   },
   phoneInputContainer: {
     flexDirection: 'row',
@@ -131,6 +134,7 @@ left:20,
   countryCode: {
     backgroundColor: 'white',
     borderRadius: 10,
+    color:colors.textColor,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -170,6 +174,7 @@ left:20,
   },
   proceedBtn: {
     backgroundColor: 'white',
+    
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: {

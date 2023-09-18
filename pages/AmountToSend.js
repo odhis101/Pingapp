@@ -18,6 +18,7 @@ import { Picker } from "@react-native-picker/picker"; // Import Picker from the 
 import axios from "axios";
 import { useSelector } from "react-redux";
 import getEnvVars from "../.env.js"
+import {colors} from "../Colors"
 
 const AmountToSend = (maxDigits) => {
     const [imageHeight, setImageHeight] = useState(0);
@@ -133,8 +134,7 @@ const AmountToSend = (maxDigits) => {
     
     return (
      
-       <ImageBackground
-          source={BackgroundImage}
+       <View
           style={{ ...styles.backgroundImage, height: "100%" }}
         >
             <Topnav />
@@ -265,12 +265,12 @@ const AmountToSend = (maxDigits) => {
       {deposit ? (
         <View style={styles.depositButtonContainer}>
           <LinearGradient
-            colors={["#4CB8C4", "#5BC7A5"]}
+            colors={["white", "white"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.gradientButton}
           >
-            <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
+            <FontAwesome5 name="credit-card" size={24} color={colors.textColor} style={styles.icon} />
             <TouchableOpacity
             // here we call the axios endpoint we dont have to navigate 
             onPress={depositAmt} // Pass the props
@@ -284,7 +284,7 @@ const AmountToSend = (maxDigits) => {
 <View style={styles.buttonContainer}>
   {request ? ( // Conditionally render based on the "request" prop
     <LinearGradient
-      colors={["#4CB8C4", "#5BC7A5"]}
+      colors={["white", "white"]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}
       style={styles.gradientButton}
@@ -303,7 +303,7 @@ const AmountToSend = (maxDigits) => {
       end={{ x: 1, y: 0 }}
       style={styles.gradientButton}
     >
-      <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
+      <FontAwesome5 name="credit-card" siz e={24} color="white" style={styles.icon} />
       <TouchableOpacity
         style={styles.button}
         onPress={sendCash}
@@ -321,7 +321,7 @@ const AmountToSend = (maxDigits) => {
             </View>
 
 
-        </ImageBackground>
+        </View>
         
         
         
@@ -332,6 +332,7 @@ const styles = StyleSheet.create({
     backgroundImage: {
         width: "100%",
         borderWidth: 1,
+        backgroundColor: colors.background,
 
         },
         infoContainer: {
@@ -351,6 +352,7 @@ const styles = StyleSheet.create({
             fontSize: 14,
             color: "#FFFFFF",
             marginBottom: 16,
+            color: colors.textColor,
           },
           currentBalance: {
             flexDirection: "row",
@@ -359,17 +361,17 @@ const styles = StyleSheet.create({
           currency: {
             fontSize: 32,
             fontWeight: "bold",
-            color: "#FFFFFF",
+            color: colors.textColor,
             marginRight: 8,
           },
           balance: {
             fontSize: 32,
             fontWeight: "bold",
-            color: "#FFFFFF",
+            color: colors.textColor,
           },
           DepositText:{
             fontSize: 20,
-            color: "#FFFFFF",
+            color: colors.textColor,
           },
           recentTransactions: {
             fontSize: 14,
@@ -396,6 +398,7 @@ const styles = StyleSheet.create({
             justifyContent: "center",
             alignItems: "center",
             marginBottom: 10,
+
           },
           pinButton: {
             marginLeft: "5%",
@@ -425,7 +428,7 @@ const styles = StyleSheet.create({
           pinText: {
             fontSize: 20,
             fontWeight: "bold",
-            color: "#3D9195",
+            color: colors.textColor,
           },
           dot: {
             width: 40,
@@ -449,20 +452,27 @@ const styles = StyleSheet.create({
            
           },
           gradientButton: {
-
-            marginRight:"auto",
-            marginLeft:"auto",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
+            marginRight: 'auto',
+            marginLeft: 'auto',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
             borderRadius: 30,
             paddingVertical: 12,
             paddingHorizontal: 20,
             marginVertical: 10,
-            width: "48%",
+            width: '48%',
             height: 50,
-            overflow: "hidden",
+            overflow: 'hidden',
+            // Shadow properties for Android
+            elevation: 5, // You can adjust the elevation value for the desired shadow depth
+            // Shadow properties for iOS
+            shadowColor: 'rgba(0, 0, 0, 0.2)', // Shadow color
+            shadowOffset: { width: 0, height: 2 }, // Shadow offset
+            shadowOpacity: 0.5, // Shadow opacity
+            shadowRadius: 2, // Shadow radius
           },
+          
           icon: {
             marginRight: 10,
           },
@@ -473,7 +483,7 @@ const styles = StyleSheet.create({
 
           },
           buttonText: {
-            color: "white",
+            color: colors.textColor,
             fontSize: 12,
             fontWeight: "bold",
           },

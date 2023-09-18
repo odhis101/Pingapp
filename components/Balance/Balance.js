@@ -15,14 +15,25 @@ import Mycards from "../components/Mycards/Mycards";
 import Profile from "../assets/profile.png";
 import RecentTransactions from "../components/RecentTransactions/RecentTransactions";
 import axios from "axios";
-import { useNavigation } from "@react-navigation/native";
 import getEnvVars from "../.env.js"
-import Transactions from "../components/Transactions/Transactions";
 import {colors} from "../Colors"
+import Transactions from "../components/Transactions/Transactions";
+
 const Sendmoney = () => {
   const [balance, setBalance] = useState(0);
   const [currency, setCurrency] = useState("GBP");
   const { API_URL } = getEnvVars();
+  const formatBalance = (balance) => {
+    // Convert balance to a string
+    const balanceStr = balance.toString();
+    
+    // Add commas when it passes three digits
+    if (balanceStr.length > 3) {
+      return balanceStr.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    return balanceStr;
+  };
   useEffect(() => {
     // Fetch balance and currency data here
     fetchBalanceAndCurrency();
@@ -48,30 +59,43 @@ const Sendmoney = () => {
       console.error("Error:", error);
     }
   };
-
-
-
   return (
-    <ScrollView style={{ height: "100%",backgroundColor:colors.background }}>
+    <ScrollView style={{ height: "100%" }}>
       <View style={styles.currencyContainer}>
+      <View style={{ backgroundColor: colors.background }}>
 
           <Topnav />
+          
           <View style={styles.infoContainer}>
             <Text style={styles.title}>Balance</Text>
             <View style={styles.currentBalance}>
               <Text style={styles.currency}>$</Text>
-              <Text style={styles.balance}>{balance}</Text>
+              <Text style={styles.balance}>{formatBalance(balance)}</Text>
             </View>
           </View>
           <View style={styles.moneyButtons}></View>
-          <Text style={styles.title}>Deposit </Text>
+          <Text style={styles.title}>Send Money</Text>
 
           <View style={styles.Mycards}>
             <Text style={styles.heading}>Options</Text>
-            <Mycards title={"Deposit From The Phone Number "} iconImage={"smartphone"} onPress={'DepositFromNumber'} />
-            <Mycards title={"Deposit From The Bank "} iconImage={"dollar-sign"} onPress ={'SendToBank'}/>
+            <Mycards title={"Send to Nearby devices "} iconImage={"qrcode"} onPress ={'BluetoothScanner'}/>
+            <Mycards title={"Send To Contacts "} iconImage={"smartphone"} onPress={'Contacts'} request={false} />
+            <Mycards title={"Send to Phone Number "} iconImage={"smartphone"} onPress={'PhoneNumber'} />
+            <Mycards title={"Send To Bank "} iconImage={"dollar-sign"} onPress ={'SendToBank'}/>
           </View>
-        <Transactions/>
+          <View>
+            <Text style={styles.Transactiontitle}>Previous Transactions</Text>
+            <View style={styles.TransactionsContainer}>
+              <TouchableOpacity style={styles.recents}>
+                <Text>Sort by recents</Text>
+              </TouchableOpacity>
+
+              <RecentTransactions />
+              <RecentTransactions />
+              <RecentTransactions />
+            </View>
+          </View>
+        </View>
       </View>
     </ScrollView>
   );

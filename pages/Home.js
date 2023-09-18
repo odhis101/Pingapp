@@ -23,6 +23,8 @@ import Blemanager from 'react-native-ble-manager';
 import RSSI from "./RSSI";
 import { PermissionsAndroid } from 'react-native';
 import { Platform } from 'react-native';
+import Transactions from "../components/Transactions/Transactions";
+import { colors } from "../Colors";
 
 const Home = () => {
   const navigation = useNavigation();

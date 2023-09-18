@@ -64,7 +64,7 @@
 
         <View style={styles.container}>
           
-            <View classname='bg-black'>
+            <View style={styles.container}>
               <View style={styles.credentials}>
                 <Image source={Logo}  style={styles.image} />
                 <Text style={styles.title}>Welcome to Ping</Text>
@@ -91,7 +91,9 @@
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>          
+            </View>
+
+          
         </View>
 
       );
@@ -163,7 +165,6 @@
       fontSize: 24,
       fontWeight: "bold",
       color: "#FFFFFF",
-      marginBottom: "10%",
     },
     subtitle: {
       fontSize: 18,

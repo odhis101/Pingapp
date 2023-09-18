@@ -15,7 +15,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import getEnvVars from "../.env.js"
-
+import {color, colors} from "../Colors"
 const ConfirmPayment = () => {
   const [imageHeight, setImageHeight] = useState(0);
   const navigation = useNavigation();
@@ -77,8 +77,7 @@ const sendCash = async () => {
   console.log(imageHeight);
 
   return (
-    <ImageBackground
-      source={BackgroundImage}
+    <View
       style={{ ...styles.backgroundImage, height: imageHeight }}
     >
       <View style={styles.container}>
@@ -111,7 +110,7 @@ const sendCash = async () => {
           <FontAwesome5 name="check" size={20} color="white" />
         </TouchableOpacity>
       </View>
-    </ImageBackground>
+    </View>
   );
 }
 
@@ -142,11 +141,11 @@ const styles = StyleSheet.create({
 
   },
   whiteText: {
-    color: 'white',
+    color: colors.textColor,
     fontSize: 16,
   },
   amountText: {
-    color: 'white',
+    color: colors.textColor,
     fontSize: 32,
     marginTop: 10,
   },
@@ -177,6 +176,7 @@ const styles = StyleSheet.create({
   
   backgroundImage: {
     resizeMode: 'cover',
+    backgroundColor:colors.background,
   },
 });
 

@@ -9,7 +9,7 @@ import {
     FlatList,
     ScrollView,
   } from "react-native";import React from 'react'
-  import BackgroundImage from "../assets/background.png";
+  import BackgroundImage from "../assets/open.png";
   import Topnav from "../components/Topnav/Topnav";
   import { AntDesign } from "@expo/vector-icons";
   import {useNavigation} from '@react-navigation/native';
@@ -111,62 +111,62 @@ console.log("this is contact from messages ",contact)
       }));
     
   return (
-    <View style={styles.container}>
-        <View style={styles.contactContainer}>
-        <ImageBackground
-          source={BackgroundImage}
-          style={styles.backgroundImage}
-        >         
-        <View style={styles.headerContainer}>
-          <Image source={Logo} style={styles.logoImage} />
-          <Text style={styles.messagesHeaderText}>Messagess</Text>
-          <TouchableOpacity onPress={handlePress}>
-            <Icon name="ios-create" size={30} color="white" />
-          </TouchableOpacity>
-        </View>
-          <View style={styles.searchContainer}>
+    <View className='bg-[#FEFAF4]'>
+      <ImageBackground
+        source={BackgroundImage}
+        
+      >   
+        <View className='bg-gradient-to-tr from-[#A77835] to-[#FCF7A8] my-4'>
+          <View style={styles.headerContainer}>
+            <Image source={Logo}  className='w-[26px] h-[26px]'/>
+            <Text className='text-white text-lg'>Messages</Text>
+            <TouchableOpacity onPress={handlePress}>
+              <Icon name="ios-create" size={30} color="white" />
+            </TouchableOpacity>
+          </View>
+          <View className='flex flex-row py-2 px-4 bg-white items-center justify-between rounded-lg mx-4 my-4'>
             <TextInput
-              style={styles.searchInput}
+              className='bg-white text-[#AB7D3A] flex items-center '
               placeholder="Search"
-              placeholderTextColor="white"
+              placeholderTextColor="#AB7D3A"
               onChangeText={text => setSearchQuery(text)}
 
             />
             <AntDesign
               name="search1"
               size={24}
-              color="white"
-              style={styles.searchIcon}
+              color="#AB7D3A"
+              // style={styles.searchIcon}
             />
           </View>
-        </ImageBackground>
         </View>
+      </ImageBackground>
         <View style={styles.container}>
-        <FlatList
-          data={filteredSortedContactData}
-          keyExtractor={(item) => item.letter}
-          renderItem={({ item }) => (
-            <View>
-              {item.contacts.map((contact) => (
-                  <TouchableOpacity
-                  key={contact.name}
-                  onPress={() => contactPress(contact)}
-                 
-                >
-                <TransactionsRadio
-                  key={contact.name}
-                  name={`${contact.firstName} ${contact.lastName}`}
-                  date={contact.date}
-                  lastMessage={contact.lastMessage}
-                  isSelected={contact.isSelected}
-                  time={contact.time}
-                />
-            </TouchableOpacity>
-              ))}
-            </View>
-          )}
-        />
-      </View>
+          <FlatList
+            data={filteredSortedContactData}
+            keyExtractor={(item) => item.letter}
+            renderItem={({ item }) => (
+              <View>
+                {item.contacts.map((contact) => (
+                    <TouchableOpacity
+                    key={contact.name}
+                    onPress={() => contactPress(contact)}
+                    className='text-[#B1843D]'
+                  >
+                  <TransactionsRadio
+                    key={contact.name}
+                    name={`${contact.firstName} ${contact.lastName}`}
+                    date={contact.date}
+                    lastMessage={contact.lastMessage}
+                    isSelected={contact.isSelected}
+                    time={contact.time}
+                  />
+              </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          />
+        </View>
 
 
     </View>
