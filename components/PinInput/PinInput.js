@@ -178,6 +178,7 @@ const PinInput = ({ maxDigits, route}) => {
       dots.push(
         <View
           key={i}
+          className='border border-[#AD7F39] bg-transparent mx-2'
           style={[
             styles.dot,
             i < pin.length ? styles.dotFilled : styles.dotEmpty,
@@ -195,7 +196,7 @@ const PinInput = ({ maxDigits, route}) => {
 
   return (
     <View style={styles.container}>
-       <Animated.View style={[styles.container, animatedContainerStyle]}>
+       <Animated.View className='flex items-center' style={[styles.container, animatedContainerStyle]}>
       {renderDots()}
 
       {/* ... rest of your code ... */}
@@ -203,70 +204,70 @@ const PinInput = ({ maxDigits, route}) => {
 
       <View style={styles.rowContainer}>
         <TouchableOpacity
-          style={[styles.pinButton]}
+          className='p-2 rounded-full bg-white w-[70px] h-[70px] flex items-center justify-center shadow-md my-2 mx-4'
           onPress={() => handlePinChange("1")}
         >
-          <Text style={styles.pinText}>1</Text>
+          <Text className='text-[#AD7F39]'>1</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.pinButton]}
+          className='p-2 rounded-full bg-white w-[70px] h-[70px]  flex items-center justify-center shadow-md my-2 mx-4'
           onPress={() => handlePinChange("2")}
         >
-          <Text style={styles.pinText}>2</Text>
+          <Text className='text-[#AD7F39]'>2</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.pinButton}
+          className='p-2 rounded-full bg-white w-[70px] h-[70px]  flex items-center justify-center shadow-md my-2 mx-4'
           onPress={() => handlePinChange("3")}
         >
-          <Text style={styles.pinText}>3</Text>
+          <Text className='text-[#AD7F39]'>3</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.rowContainer}>
         <TouchableOpacity
-          style={[styles.pinButton]}
+         className='p-2 rounded-full bg-white w-[70px] h-[70px]  flex items-center justify-center shadow-md my-2 mx-4'
           onPress={() => handlePinChange("4")}
         >
-          <Text style={styles.pinText}>4</Text>
+          <Text className='text-[#AD7F39]'>4</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.pinButton]}
+         className='p-2 rounded-full bg-white w-[70px] h-[70px]  flex items-center justify-center shadow-md my-2 mx-4'
           onPress={() => handlePinChange("5")}
         >
-          <Text style={styles.pinText}>5</Text>
+          <Text className='text-[#AD7F39]'>5</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.pinButton}
+          className='p-2 rounded-full bg-white w-[70px] h-[70px]  flex items-center justify-center shadow-md my-2 mx-4'
           onPress={() => handlePinChange("6")}
         >
-          <Text style={styles.pinText}>6</Text>
+          <Text className='text-[#AD7F39]'>6</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.rowContainer}>
         <TouchableOpacity
-          style={[styles.pinButton]}
+         className='p-2 rounded-full bg-white w-[70px] h-[70px]  flex items-center justify-center shadow-md my-2 mx-4'
           onPress={() => handlePinChange("7")}
         >
-          <Text style={styles.pinText}>7</Text>
+          <Text className='text-[#AD7F39]'>7</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.pinButton]}
+         className='p-2 rounded-full bg-white w-[70px] h-[70px]  flex items-center justify-center shadow-md my-2 mx-4'
           onPress={() => handlePinChange("8")}
         >
-          <Text style={styles.pinText}>8</Text>
+          <Text className='text-[#AD7F39]'>8</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.pinButton}
+          className='p-2 rounded-full bg-white w-[70px] h-[70px]  flex items-center justify-center shadow-md my-2 mx-4'
           onPress={() => handlePinChange("9")}
         >
-          <Text style={styles.pinText}>9</Text>
+          <Text className='text-[#AD7F39]'>9</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.rowContainer}>
         <TouchableOpacity
-          style={styles.pinButton}
+          className='p-2 rounded-full bg-white w-[70px] h-[70px]  flex items-center justify-center shadow-md my-2 mx-4'
           onPress={() => handlePinChange("0")}
         >
-          <Text style={styles.pinText}>0</Text>
+          <Text className='text-[#AD7F39]'>0</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -323,14 +324,14 @@ const styles = StyleSheet.create({
   },
   dotEmpty: {
     backgroundColor: "#FFFFFF",
-    marginLeft: "5%",
+    // marginLeft: "5%",
   },
   dotFilled: {
     marginLeft: "5%",
-    backgroundColor: "#000000",
+    backgroundColor: "#AD7F39",
   },
   dotWrong: {
-    backgroundColor: "red",
+    backgroundColor: "#992222",
   },
   dotCorrect: {
     backgroundColor: "green",

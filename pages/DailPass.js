@@ -38,14 +38,12 @@ const Dailpass = () => {
   }, []);
   return (
     <View style={{ height: "100%" }}>
-      <ImageBackground source={BackgroundImage} style={styles.backgroundImage} >
-        <View style={styles.container}>
-          <View style={styles.credentials}>
-            <Image source={Logo} style={styles.image} />
+        <View className='bg-[#FEFAF4] h-screen'>
+          <View className='flex flex-col justify-center items-center h-full'>
+            <Image source={Logo} className='w-[26px] h-[26px] my-4' />
             <PinInput maxDigits={4} route = {route} />
           </View>
         </View>
-      </ImageBackground>
     </View>
   );
 };
