@@ -70,6 +70,7 @@ const Sendmoney = () => {
               title={"Deposit From The Bank "}
               iconImage={"dollar-sign"}
               onPress={"SendToBank"}
+              sendmoney={true}
             />
           </View>
         <Transactions/>

@@ -22,9 +22,9 @@ const PhoneNumber = () => {
     };
     const user = [{
       "email": "natasha@gmail.com", 
-      "firstName": "Joshua", 
+      "firstName": "", 
       "id": "64e0a097f835c1946a8dbb78", 
-      "lastName": "Odhiambo",
+      "lastName": "",
        "phoneNumber": "+254703757369", 
        "username": "odhis101"
       }]

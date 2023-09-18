@@ -8,7 +8,7 @@ const Mycards = ({ title, iconImage, onPress, request, sendmoney }) => {
   const navigate = useNavigation();
 
   const handlePress = () => {
-    navigate.navigate(onPress, {request });
+    navigate.navigate(onPress, {request,sendmoney });
   };
 return(
 

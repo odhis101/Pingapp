@@ -84,6 +84,7 @@ const Sendmoney = () => {
               title={"Send to Phone Number "}
               iconImage={"smartphone"}
               onPress={"PhoneNumber"}
+              
             />
             <Mycards
               title={"Send To Bank "}

@@ -18,13 +18,16 @@ import Profile from "../assets/profile.png"
 import RecentTransactions from "../components/RecentTransactions/RecentTransactions"
 import TransactionsRadio from "../components/TransactionsRadio/TransactionsRadio"
 import { AntDesign } from "@expo/vector-icons"
-import { useNavigation } from "@react-navigation/native"
+import { useRoute, useNavigation } from "@react-navigation/native"
 import { colors } from "../Colors"
 
 const SendToBank = () => {
   const [showCountryCodes, setShowCountryCodes] = useState(false)
   const [selectedCountryCode, setSelectedCountryCode] = useState("+44")
   navigate = useNavigation()
+  const route = useRoute();
+  const sendmoney = route.params?.sendmoney || false;
+
 
   const handleCountryCodePress = (countryCode) => {
     setSelectedCountryCode(countryCode)
@@ -39,8 +42,13 @@ const SendToBank = () => {
      "username": "odhis101"
     }]
   const handleProceed = () => {
+    if(sendmoney){
+    navigate.navigate("AmountToSend", { deposit: true, selectedContacts:user }) // Pass phoneNumber as prop
+  }
+  else{
     navigate.navigate("AmountToSend", { deposit: false, selectedContacts:user }) // Pass phoneNumber as prop
   }
+}
 
   return (
     <View style={styles.container}>
