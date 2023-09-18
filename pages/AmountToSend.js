@@ -298,7 +298,7 @@ const AmountToSend = (maxDigits) => {
     </LinearGradient>
   ) : (
     <LinearGradient
-      colors={["#5087D3", "#2AA5D6"]}
+      colors={["white", "white"]}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}
       style={styles.gradientButton}

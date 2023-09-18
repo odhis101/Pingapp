@@ -107,7 +107,7 @@ export default function RSSI() {
             // Use state update to set discovered peripherals
             setDiscoveredPeripherals(results);
           });
-        }, 20000); // 5000 milliseconds = 5 seconds
+        }, 180000); // 5000 milliseconds = 5 seconds
       
         // Cleanup the interval when the component unmounts
         return () => {
@@ -179,7 +179,7 @@ navigateSomewhere()
             style={styles.deviceImage}
           />
           <Text style={styles.messageText}>
-            📡 Natasha found near you!
+            📡 Natasha Requesting near you!
           </Text>
           <Text style={styles.messageText}>
             Would you like to Some cash? 

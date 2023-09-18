@@ -53,7 +53,7 @@ const Messages = () => {
   console.log("this is the merged messages", mergedMessages)
   useEffect(() => {
     async function fetchData() {
-      console.log("this is sendedrrrr ,", authState.user.id);
+      console.log("this is sendedrrrr ,", authState?.user?.id);
       console.log("this is recepeint", contact.id);
   
       try {
@@ -73,6 +73,7 @@ const Messages = () => {
           setmergedMessages(data.data.messages);
         } else {
           console.log("something is wrong ");
+          console.log(authState?.user?.data.id)
         }
       } catch (error) {
         console.error("Error fetching messages:", error);
