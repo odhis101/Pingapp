@@ -20,9 +20,17 @@ const PhoneNumber = () => {
       setSelectedCountryCode(countryCode);
       setShowCountryCodes(!showCountryCodes);
     };
-    const handleProceed = () => {
-      navigate.navigate("AmountToSend", { deposit: true }); // Pass phoneNumber as prop
-    };
+    const user = [{
+      "email": "natasha@gmail.com", 
+      "firstName": "Joshua", 
+      "id": "64e0a097f835c1946a8dbb78", 
+      "lastName": "Odhiambo",
+       "phoneNumber": "+254703757369", 
+       "username": "odhis101"
+      }]
+      const handleProceed = () => {
+        navigate.navigate("AmountToSend", { deposit: false, selectedContacts:user }) // Pass phoneNumber as prop
+      }
 
 return(
     <View style={styles.container}>
