@@ -1,23 +1,24 @@
 import {
-    StyleSheet,
-    Text,
-    ImageBackground,
-    View,
-    Image,
-    TouchableOpacity,
-    TextInput,
-    FlatList,
-    ScrollView,
-  } from "react-native";import React from 'react'
-  import BackgroundImage from "../assets/open.png";
-  import Topnav from "../components/Topnav/Topnav";
-  import { AntDesign } from "@expo/vector-icons";
-  import {useNavigation} from '@react-navigation/native';
-  import Logo from "../assets/logo.png";
-  import Icon from 'react-native-vector-icons/Ionicons'; // Import the appropriate icon set
-  import TransactionsRadio from "../components/ContactList/ContactList";
-  import { useState, useEffect,useRef } from 'react';
-  import axios from "axios";
+  StyleSheet,
+  Text,
+  ImageBackground,
+  View,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  FlatList,
+  ScrollView,
+} from "react-native"
+import React from "react"
+import BackgroundImage from "../assets/open.png"
+import Topnav from "../components/Topnav/Topnav"
+import { AntDesign } from "@expo/vector-icons"
+import { useNavigation } from "@react-navigation/native"
+import Logo from "../assets/logo.png"
+import Icon from "react-native-vector-icons/Ionicons" // Import the appropriate icon set
+import TransactionsRadio from "../components/ContactList/ContactList"
+import { useState, useEffect, useRef } from "react"
+import axios from "axios"
 import getEnvVars from "../.env.js"
 
 const Messages = () => {
@@ -112,47 +113,42 @@ const Messages = () => {
 
   return (
     <View className='bg-[#FEFAF4]'>
-      <ImageBackground
-        source={BackgroundImage}
-        
-      >   
+      <ImageBackground source={BackgroundImage}>
         <View className='bg-gradient-to-tr from-[#A77835] to-[#FCF7A8] my-4'>
           <View style={styles.headerContainer}>
-            <Image source={Logo}  className='w-[26px] h-[26px]'/>
+            <Image source={Logo} className='w-[26px] h-[26px]' />
             <Text className='text-white text-lg'>Messages</Text>
             <TouchableOpacity onPress={handlePress}>
-              <Icon name="ios-create" size={30} color="white" />
+              <Icon name='ios-create' size={30} color='white' />
             </TouchableOpacity>
           </View>
           <View className='flex flex-row py-2 px-4 bg-white items-center justify-between rounded-lg mx-4 my-4'>
             <TextInput
               className='bg-white text-[#AB7D3A] flex items-center '
-              placeholder="Search"
-              placeholderTextColor="#AB7D3A"
-              onChangeText={text => setSearchQuery(text)}
-
+              placeholder='Search'
+              placeholderTextColor='#AB7D3A'
+              onChangeText={(text) => setSearchQuery(text)}
             />
             <AntDesign
               name='search1'
               size={24}
-              color="#AB7D3A"
+              color='#AB7D3A'
               // style={styles.searchIcon}
             />
           </View>
         </View>
       </ImageBackground>
-        <View style={styles.container}>
-          <FlatList
-            data={filteredSortedContactData}
-            keyExtractor={(item) => item.letter}
-            renderItem={({ item }) => (
-              <View>
-                {item.contacts.map((contact) => (
-                    <TouchableOpacity
-                    key={contact.name}
-                    onPress={() => contactPress(contact)}
-                    className='text-[#B1843D]'
-                  >
+      <View style={styles.container}>
+        <FlatList
+          data={filteredSortedContactData}
+          keyExtractor={(item) => item.letter}
+          renderItem={({ item }) => (
+            <View>
+              {item.contacts.map((contact) => (
+                <TouchableOpacity
+                  key={contact.name}
+                  onPress={() => contactPress(contact)}
+                  className='text-[#B1843D]'>
                   <TransactionsRadio
                     key={contact.name}
                     name={`${contact.firstName} ${contact.lastName}`}
@@ -161,14 +157,12 @@ const Messages = () => {
                     isSelected={contact.isSelected}
                     time={contact.time}
                   />
-              </TouchableOpacity>
-                ))}
-              </View>
-            )}
-          />
-        </View>
-
-
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+        />
+      </View>
     </View>
   )
 }

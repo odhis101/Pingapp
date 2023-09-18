@@ -11,7 +11,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
 } from "react-native"
-import BackgroundImage from "../assets/background.png"
+import BackgroundImage from "../assets/open.png"
 import Topnav from "../components/Topnav/Topnav"
 import SendMoney from "../components/SendMoney/SendMoney"
 import Mycards from "../components/Mycards/Mycards"
@@ -144,21 +144,17 @@ const Contacts = () => {
   console.log(`bg-[${colors.gradientBeginning}]`)
 
   return (
-    <View className='bg-white'>
-      <View className={` h-[50%] rounded-b-[80px]`}>
-        <LinearGradient
-          colors={[colors.gradientBeginning, colors.gradientEnding]}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          className='flex-1 rounded-b-[30px] h-full'>
+    <View className='bg-white flex-1'>
+      <ImageBackground source={BackgroundImage}>
+        <View className='bg-gradient-to-tr from-[#A77835] to-[#FCF7A8] my-4 '>
           <Topnav />
-          <View className='flex  flex-row px-4 items-center mt-12'>
+          <View className='flex  flex-row px-4 items-center '>
             <Text className='flex-1 text-2xl text-white font-medium'>
               Contacts
             </Text>
 
             <TouchableOpacity
-              className={`bg-white rounded-lg w-fit px-6 py-2 shadow-xl shadow-gray-400 border border-gray-400 `}
+              className={`bg-white rounded-lg w-fit px-6 py-1 shadow-xl shadow-gray-400 my-6 `}
               onPress={handlePress}>
               <Text className={`text-lg text-[${colors.textColor}]`}>Done</Text>
             </TouchableOpacity>
@@ -177,8 +173,7 @@ const Contacts = () => {
               style={styles.searchIcon}
             />
           </View>
-        </LinearGradient>
-        {/* <ImageBackground
+          {/* <ImageBackground
           source={BackgroundImage}
           style={styles.backgroundImage}>
           <Topnav />
@@ -204,7 +199,8 @@ const Contacts = () => {
             />
           </View>
         </ImageBackground> */}
-      </View>
+        </View>
+      </ImageBackground>
 
       <View className=' bg-white h-[40%]'>
         <FlatList

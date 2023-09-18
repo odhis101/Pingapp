@@ -21,7 +21,7 @@ import getEnvVars from "../.env.js"
 import Modal from "react-native-modal"
 import { useSelector } from "react-redux"
 import axios from "axios"
-import backgroundImage from '../assets/chat.png'
+import backgroundImage from "../assets/chat.png"
 
 const Messages = () => {
   const { API_URL } = getEnvVars()
@@ -239,55 +239,57 @@ const Messages = () => {
       keyboardVerticalOffset={keyboardVerticalOffset}
       style={{ flex: 1 }}>
       <View style={styles.container}>
-          <View className='flex flex-row py-2 bg-white items-center mx-2'>
-            <TouchableOpacity onPress={() => handleBackButtonPress()}>
-              <Icon name='arrow-back' size={24} color='black' />
-            </TouchableOpacity>
-            {/* Replace the comments with your image and name */}
-            <Image source={Profile} style={styles.image} />
-            <Text>
-              {contact.firstName} {contact.lastName}
-            </Text>
-          </View>
-          <ScrollView contentContainerStyle={styles.scrollContent}>
-            <ImageBackground source={backgroundImage} >
-              <View style={[styles.messageContainer, { flexGrow: 1 }]}>
-                {mergedMessages
-                  .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
-                  .map((message, index) => (
-                    <View
-                      key={index}
-                      // className={`px-4 py-2 flex w-full ${message.sender === authState.user.id ? 'bg-white items-end' : 'items-start'}`}
-                      style={
-                        message.sender === authState.user.id
-                          ? styles.outgoingMessageContainer
-                          : styles.incomingMessageContainer
-                      }>
-                      {/* Check if the message contains a balance request */}
-                      {message.message.includes("[BalanceRequest]") ? (
-                        <TouchableOpacity
-                          onPress={() => handleBalanceRequestClick(message)}>
-                          <Text style={styles.balanceRequestText}>
-                            {message.message}
-                          </Text>
-                        </TouchableOpacity>
-                      ) : (
-                        <Text
-                          style={
-                            message.sender === authState.user.id
-                              ? styles.outgoingMessageText
-                              : styles.incomingMessageText
-                          }>
+        <View className='flex flex-row py-2 bg-white items-center mx-2'>
+          <TouchableOpacity onPress={() => handleBackButtonPress()}>
+            <Icon name='arrow-back' size={24} color='black' />
+          </TouchableOpacity>
+          {/* Replace the comments with your image and name */}
+          <Image source={Profile} style={styles.image} />
+          <Text>
+            {contact.firstName} {contact.lastName}
+          </Text>
+        </View>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <ImageBackground source={backgroundImage}>
+            <View style={[styles.messageContainer, { flexGrow: 1 }]}>
+              {mergedMessages
+                .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
+                .map((message, index) => (
+                  <View
+                    key={index}
+                    // className={`px-4 py-2 flex w-full ${message.sender === authState.user.id ? 'bg-white items-end' : 'items-start'}`}
+                    style={
+                      message.sender === authState.user.id
+                        ? styles.outgoingMessageContainer
+                        : styles.incomingMessageContainer
+                    }>
+                    {/* Check if the message contains a balance request */}
+                    {message.message.includes("[BalanceRequest]") ? (
+                      <TouchableOpacity
+                        onPress={() => handleBalanceRequestClick(message)}>
+                        <Text style={styles.balanceRequestText}>
                           {message.message}
                         </Text>
-                      )}
-                    </View>
-                  ))}
-              </View>
-            </ImageBackground>
-          </ScrollView>
+                      </TouchableOpacity>
+                    ) : (
+                      <Text
+                        style={
+                          message.sender === authState.user.id
+                            ? styles.outgoingMessageText
+                            : styles.incomingMessageText
+                        }>
+                        {message.message}
+                      </Text>
+                    )}
+                  </View>
+                ))}
+            </View>
+          </ImageBackground>
+        </ScrollView>
 
-        <View style={styles.writeMessage} className='py-8 flex flx-row items-center justify-center rounded-t-xl'>
+        <View
+          style={styles.writeMessage}
+          className='py-8 flex flx-row items-center justify-center rounded-t-xl'>
           {/* Input box */}
           <TouchableOpacity
             style={styles.sendMoneyButton}
@@ -413,7 +415,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginBottom: 8,
-    marginRight: '5%'
+    marginRight: "5%",
   },
 
   outgoingMessageText: {

@@ -25,6 +25,9 @@ import { PermissionsAndroid } from "react-native"
 import { Platform } from "react-native"
 import Transactions from "../components/Transactions/Transactions"
 import { colors } from "../Colors"
+import Profile1 from "../assets/img1.jpg"
+import Profile2 from "../assets/img2.jpg"
+import Profile3 from "../assets/img3.jpg"
 
 const Home = () => {
   const navigation = useNavigation()
@@ -204,36 +207,60 @@ const Home = () => {
   }
 
   return (
-    < ScrollView style={{ height: "100%" }}>
+    <ScrollView style={{ height: "100%" }}>
       <View className='bg-[#FEFAF4]' style={styles.currencyContainer}>
-          <Topnav  />
-          <View style={styles.infoContainer}>
-            <Text className='text-[#B1843D] text-[12px] italic'>Balance</Text>
-            <View style={styles.currentBalance}>
-              <Text className='text-[#B1843D] font-light text-[64px]'>£</Text>
-              <Text className='text-[#B1843D] font-light text-[64px]'>{formatBalance(balance)}</Text>
-            </View>
+        <Topnav />
+        <View style={styles.infoContainer}>
+          <Text className='text-[#B1843D] text-[12px] italic'>Balance</Text>
+          <View style={styles.currentBalance}>
+            <Text className='text-[#B1843D] font-light text-[64px]'>£</Text>
+            <Text className='text-[#B1843D] font-light text-[64px]'>
+              {formatBalance(balance)}
+            </Text>
           </View>
-          <View style={styles.moneyButtons}>
-            <SendMoney name={"Send money"} onPress={"SendMoney"} />
-            <SendMoney name={"Request money"} onPress={"Request"} />
-          </View>
-          <View style={styles.Mycards}>
-            <Text className='text-[#B1843D] font-light text-sm'>My Cards</Text>
-            <Mycards title={"Deposit"}  iconImage="trending-up"  onPress={"Deposit"} />
-          </View>
-          <View style={styles.MyTransactions}>
-            <Text className='text-[#B1843D] my-4'>Transactions</Text>
-            <View style={styles.TransactionsContainer}>
-              <TouchableOpacity style={styles.recents}>
-                <Text className='text-[#06672B]'>Sort by recents</Text>
-              </TouchableOpacity>
+        </View>
+        <View style={styles.moneyButtons}>
+          <SendMoney name={"Send money"} onPress={"SendMoney"} />
+          <SendMoney name={"Request money"} onPress={"Request"} />
+        </View>
+        <View style={styles.Mycards}>
+          <Text className='text-[#B1843D] font-light text-sm'>My Cards</Text>
+          <Mycards
+            title={"Deposit"}
+            iconImage='trending-up'
+            onPress={"Deposit"}
+          />
+        </View>
+        <View style={styles.MyTransactions}>
+          <Text className='text-[#B1843D] my-4'>Transactions</Text>
+          <View style={styles.TransactionsContainer}>
+            <TouchableOpacity style={styles.recents}>
+              <Text className='text-[#06672B]'>Sort by recents</Text>
+            </TouchableOpacity>
 
-              <RecentTransactions />
-              <RecentTransactions />
-              <RecentTransactions />
-            </View>
+            <RecentTransactions
+              name='Benard Ogutu'
+              negative={false}
+              date={"8/18/23"}
+              amount={700}
+              image={Profile1}
+            />
+            <RecentTransactions
+              name='Joshua Odhiambo'
+              negative={false}
+              date={"8/10/23"}
+              amount={400}
+              image={Profile2}
+            />
+            <RecentTransactions
+              name='Arthur Oyugi'
+              negative={true}
+              date={"7/01/23"}
+              amount={200}
+              image={Profile3}
+            />
           </View>
+        </View>
       </View>
       <RSSI />
     </ScrollView>
