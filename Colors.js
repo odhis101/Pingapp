@@ -1,7 +1,7 @@
 // colors.js
 
 export const colors = {
-  background: "#FEFAFa4",
+  background: "#FEFAF4",
   textColor: "#B1843D",
   gradientBeginning: "#996322",
   gradientEnding: "#FCF7A8",

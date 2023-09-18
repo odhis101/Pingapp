@@ -65,14 +65,19 @@ const Login = () => {
   if (!authState?.user?.firstName) {
     return (
       <View className='flex-1 '>
-        <View style={styles.container} className={`bg-[${colors.background}]`}>
-          <View style={styles.credentials}>
+        <View
+          style={styles.container}
+          className={`bg-[${colors.background}] flex-1   items-center flex-col`}>
+          <View
+            style={styles.credentials}
+            className=' justify-center  flex-col w-[90%] px-3 h-[70%]'>
             <Image source={Logo} style={styles.image} />
             <Text
-              className={`text-[${colors.textColor}] font-semibold text-3xl`}>
+              className={`text-[${colors.textColor}]  text-3xl font-medium`}>
               Welcome to Ping
             </Text>
-            <Text className={`text-[${colors.textColor}] mt-1 mb-6 text-lg`}>
+            <Text
+              className={`text-[${colors.textColor}] mt-1 mb-6 text-lg font-medium`}>
               Please sign in to continue
             </Text>
 
@@ -114,8 +119,8 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   image: {
-    width: "25%",
-    height: "25%",
+    width: "20%",
+    height: "20%",
     resizeMode: "contain",
   },
   backgroundImage: {

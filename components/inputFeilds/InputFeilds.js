@@ -9,7 +9,7 @@ const inputFeilds = ({ title, textValue, textOnchange }) => {
     <TextInput
       placeholder={title}
       textAlignVertical='center'
-      className='bg-white shadow-lg w-full rounded-xl h-16 mb-4 px-6 '
+      className='bg-white shadow-xl shadow-gray-400 w-full rounded-2xl h-14 mb-4 px-6 '
       placeholderTextColor='#A9A9A9'
       value={textValue}
       onChangeText={textOnchange}

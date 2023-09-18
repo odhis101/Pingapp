@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 import {
   StyleSheet,
   Text,
@@ -9,62 +9,63 @@ import {
   TextInput,
   FlatList,
   ScrollView,
-} from "react-native";
-import BackgroundImage from "../assets/background.png";
-import Topnav from "../components/Topnav/Topnav";
-import SendMoney from "../components/SendMoney/SendMoney";
-import Mycards from "../components/Mycards/Mycards";
-import Profile from "../assets/profile.png";
-import RecentTransactions from "../components/RecentTransactions/RecentTransactions";
-import TransactionsRadio from "../components/TransactionsRadio/TransactionsRadio";
-import { AntDesign } from "@expo/vector-icons";
-import {useNavigation} from '@react-navigation/native';
-import { useRoute } from "@react-navigation/native";
-import axios from "axios";
+  KeyboardAvoidingView,
+} from "react-native"
+import BackgroundImage from "../assets/background.png"
+import Topnav from "../components/Topnav/Topnav"
+import SendMoney from "../components/SendMoney/SendMoney"
+import Mycards from "../components/Mycards/Mycards"
+import Profile from "../assets/profile.png"
+import RecentTransactions from "../components/RecentTransactions/RecentTransactions"
+import TransactionsRadio from "../components/TransactionsRadio/TransactionsRadio"
+import { AntDesign } from "@expo/vector-icons"
+import { useNavigation } from "@react-navigation/native"
+import { useRoute } from "@react-navigation/native"
+import axios from "axios"
+import { colors } from "../Colors"
 import getEnvVars from "../.env.js"
-const Contacts = () => {
-  const { API_URL } = getEnvVars();
+import { LinearGradient } from "expo-linear-gradient"
 
-  const navigation = useNavigation();
-  const [selectedContacts, setSelectedContacts] = useState([]);
-  const [contactsData, setContactsData] = useState([]);
-  const route = useRoute();
-  let sendMoney = route.params.sendMoney;
-  const { request } = route.params; // Access the "request" prop from route.params
+const Contacts = () => {
+  const { API_URL } = getEnvVars()
+
+  const navigation = useNavigation()
+  const [selectedContacts, setSelectedContacts] = useState([])
+  const [contactsData, setContactsData] = useState([])
+  const route = useRoute()
+  let sendMoney = route.params.sendMoney
+  const { request } = route.params // Access the "request" prop from route.params
   console.log(request)
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("")
 
   const fetchContactIds = async () => {
     try {
-      const response = await axios.get(
-        `${API_URL}/api/v1/contacts/get_contact`);
-      const { data } = response;
-  
-      if (data.status === 'ok') {
-        setContactsData(data.data.contactItems); // Store the list of contact IDs in state
+      const response = await axios.get(`${API_URL}/api/v1/contacts/get_contact`)
+      const { data } = response
+
+      if (data.status === "ok") {
+        setContactsData(data.data.contactItems) // Store the list of contact IDs in state
       } else {
-        console.error('Failed to fetch contact IDs:', data.message);
+        console.error("Failed to fetch contact IDs:", data.message)
       }
     } catch (error) {
-      console.error('An error occurred while fetching contact IDs:', error);
+      console.error("An error occurred while fetching contact IDs:", error)
     }
-  };
-  
+  }
+
   // Call fetchContactIds when the component mounts
   useEffect(() => {
-    fetchContactIds();
+    fetchContactIds()
     console.log(contactsData)
-  }, []);
-
+  }, [])
 
   const handlePress = () => {
-    navigation.navigate('AmountToSend', {
+    navigation.navigate("AmountToSend", {
       selectedContacts: selectedContacts,
       sendMoney: sendMoney,
-      request:request,
-
-    });
-  };
+      request: request,
+    })
+  }
   /*
   const contactsData = [
     { name: "John Doe", date: "15/04/23", isSelected: false, email:"joshodhiambo5@gmail.com", phoneNumber:"0703757369" },
@@ -74,122 +75,154 @@ const Contacts = () => {
   ];
   */
   const handleContactPress = (contactName, isSelected, contact) => {
-    console.log("this is contact", contact);
-  
+    console.log("this is contact", contact)
+
     setSelectedContacts((prevSelectedContacts) => {
       // Check if the contact already exists in the selectedContacts array
       const contactExists = prevSelectedContacts.some(
         (selectedContact) => selectedContact.name === contact.name
-      );
-  
+      )
+
       if (isSelected && !contactExists) {
         // Add the contact to the array only if it's selected and not already in the array
-        return [...prevSelectedContacts, contact];
+        return [...prevSelectedContacts, contact]
       } else if (!isSelected && contactExists) {
         // Remove the contact from the array if it's unselected and exists in the array
         return prevSelectedContacts.filter(
           (selectedContact) => selectedContact.name !== contact.name
-        );
+        )
       }
-  
-      return prevSelectedContacts; // If neither adding nor removing, return the current state
-    });
-  };
-  
-  // useffect to see changes if selected contact changes 
+
+      return prevSelectedContacts // If neither adding nor removing, return the current state
+    })
+  }
+
+  // useffect to see changes if selected contact changes
   React.useEffect(() => {
-    console.log("Selected contacts: ", selectedContacts);
-  }, [selectedContacts]);
-  
+    console.log("Selected contacts: ", selectedContacts)
+  }, [selectedContacts])
+
   const sortContactsByName = (contacts) => {
     // Sorting contacts by name
     const sortedContacts = contacts.sort((a, b) => {
-      const nameA = `${a.firstName} ${a.lastName}`.toUpperCase();
-      const nameB = `${b.firstName} ${b.lastName}`.toUpperCase();
-      if (nameA < nameB) return -1;
-      if (nameA > nameB) return 1;
-      return 0;
-    });
-
+      const nameA = `${a.firstName} ${a.lastName}`.toUpperCase()
+      const nameB = `${b.firstName} ${b.lastName}`.toUpperCase()
+      if (nameA < nameB) return -1
+      if (nameA > nameB) return 1
+      return 0
+    })
 
     const sortedContactsByLetter = sortedContacts.reduce((acc, contact) => {
-      const firstLetter = `${contact.firstName} ${contact.lastName}`.charAt(0).toUpperCase();
+      const firstLetter = `${contact.firstName} ${contact.lastName}`
+        .charAt(0)
+        .toUpperCase()
       if (!acc[firstLetter]) {
-        acc[firstLetter] = [];
+        acc[firstLetter] = []
       }
-      acc[firstLetter].push(contact);
-      return acc;
-    }, {});
-  
+      acc[firstLetter].push(contact)
+      return acc
+    }, {})
+
     return Object.entries(sortedContactsByLetter).map(([letter, contacts]) => ({
       letter,
       contacts,
-    }));
-  };
-  const sortedContactData = sortContactsByName(contactsData);
+    }))
+  }
+  const sortedContactData = sortContactsByName(contactsData)
 
-  const filteredSortedContactData = sortedContactData.map(({ letter, contacts }) => ({
-    letter,
-    contacts: contacts.filter(contact =>
-      `${contact.firstName} ${contact.lastName}`.toLowerCase().includes(searchQuery.toLowerCase())
-    ),
-  }));
+  const filteredSortedContactData = sortedContactData.map(
+    ({ letter, contacts }) => ({
+      letter,
+      contacts: contacts.filter((contact) =>
+        `${contact.firstName} ${contact.lastName}`
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      ),
+    })
+  )
 
+  console.log(`bg-[${colors.gradientBeginning}]`)
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contactContainer}>
-        <ImageBackground
+    <View className='bg-white'>
+      <View className={` h-[50%] rounded-b-[80px]`}>
+        <LinearGradient
+          colors={[colors.gradientBeginning, colors.gradientEnding]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          className='flex-1 rounded-b-[30px] h-full'>
+          <Topnav />
+          <View className='flex  flex-row px-4 items-center mt-12'>
+            <Text className='flex-1 text-2xl text-white font-medium'>
+              Contacts
+            </Text>
+
+            <TouchableOpacity
+              className={`bg-white rounded-lg w-fit px-6 py-2 shadow-xl shadow-gray-400 border border-gray-400 `}
+              onPress={handlePress}>
+              <Text className={`text-lg text-[${colors.textColor}]`}>Done</Text>
+            </TouchableOpacity>
+          </View>
+          <View className='mx-4 bg-black/25 flex flex-row items-center px-2 my-6 rounded-2xl'>
+            <TextInput
+              style={styles.searchInput}
+              placeholder='Search'
+              placeholderTextColor='white'
+              onChangeText={(text) => setSearchQuery(text)}
+            />
+            <AntDesign
+              name='search1'
+              size={24}
+              color='white'
+              style={styles.searchIcon}
+            />
+          </View>
+        </LinearGradient>
+        {/* <ImageBackground
           source={BackgroundImage}
-          style={styles.backgroundImage}
-        >
+          style={styles.backgroundImage}>
           <Topnav />
           <View style={styles.contactFlex}>
-            <Text style={styles.contactText}>Contact</Text>
+            <Text style={styles.contactText}>Contacts</Text>
 
-            <TouchableOpacity 
-            style={styles.doneButton}
-            onPress={handlePress}
-            >
+            <TouchableOpacity style={styles.doneButton} onPress={handlePress}>
               <Text style={styles.doneButtonText}>Done</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.searchContainer}>
             <TextInput
               style={styles.searchInput}
-              placeholder="Search"
-              placeholderTextColor="white"
-              onChangeText={text => setSearchQuery(text)}
-
+              placeholder='Search'
+              placeholderTextColor='white'
+              onChangeText={(text) => setSearchQuery(text)}
             />
             <AntDesign
-              name="search1"
+              name='search1'
               size={24}
-              color="white"
+              color='white'
               style={styles.searchIcon}
             />
           </View>
-        </ImageBackground>
+        </ImageBackground> */}
       </View>
 
-      <View style={styles.container}>
+      <View className=' bg-white h-[40%]'>
         <FlatList
           data={filteredSortedContactData}
           keyExtractor={(item) => item.letter}
           renderItem={({ item }) => (
-            <View>
+            <View className='mt-6'>
               <Text style={styles.sectionHeader}>{item.letter}</Text>
               {item.contacts.map((contact) => (
                 <TransactionsRadio
-                key={contact.name}
-                name={`${contact.firstName} ${contact.lastName}`}
-                date={contact.date}
-                lastMessage={contact.lastMessage}
-                isSelected={contact.isSelected}
-                time={contact.time}
-                onPress={handleContactPress}
-                contactDetails = {contact}
-
+                  key={contact.name}
+                  name={`${contact.firstName} ${contact.lastName}`}
+                  date={contact.date}
+                  lastMessage={contact.lastMessage}
+                  isSelected={contact.isSelected}
+                  time={contact.time}
+                  onPress={handleContactPress}
+                  contactDetails={contact}
                 />
               ))}
             </View>
@@ -197,8 +230,8 @@ const Contacts = () => {
         />
       </View>
     </View>
-  );
-};
+  )
+}
 const styles = StyleSheet.create({
   container: {
     height: 800,
@@ -272,6 +305,6 @@ const styles = StyleSheet.create({
     marginLeft: "5%",
     color: "#5087D3",
   },
-});
+})
 
-export default Contacts;
+export default Contacts
