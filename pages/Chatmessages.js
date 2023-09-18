@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  ImageBackground,
 } from "react-native"
 import React from "react"
 import Profile from "../assets/profile.png"
@@ -20,6 +21,8 @@ import getEnvVars from "../.env.js"
 import Modal from "react-native-modal"
 import { useSelector } from "react-redux"
 import axios from "axios"
+import backgroundImage from '../assets/chat.png'
+
 const Messages = () => {
   const { API_URL } = getEnvVars()
   const scrollViewRef = useRef()
@@ -236,52 +239,55 @@ const Messages = () => {
       keyboardVerticalOffset={keyboardVerticalOffset}
       style={{ flex: 1 }}>
       <View style={styles.container}>
-        <View style={styles.topBar}>
-          <TouchableOpacity onPress={() => handleBackButtonPress()}>
-            <Icon name='arrow-back' size={24} color='black' />
-          </TouchableOpacity>
-          {/* Replace the comments with your image and name */}
-          <Image source={Profile} style={styles.image} />
-          <Text>
-            {contact.firstName} {contact.lastName}
-          </Text>
-        </View>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          <View style={[styles.messageContainer, { flexGrow: 1 }]}>
-            {mergedMessages
-              .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
-              .map((message, index) => (
-                <View
-                  key={index}
-                  style={
-                    message.sender === authState.user.id
-                      ? styles.outgoingMessageContainer
-                      : styles.incomingMessageContainer
-                  }>
-                  {/* Check if the message contains a balance request */}
-                  {message.message.includes("[BalanceRequest]") ? (
-                    <TouchableOpacity
-                      onPress={() => handleBalanceRequestClick(message)}>
-                      <Text style={styles.balanceRequestText}>
-                        {message.message}
-                      </Text>
-                    </TouchableOpacity>
-                  ) : (
-                    <Text
+          <View className='flex flex-row py-2 bg-white items-center mx-2'>
+            <TouchableOpacity onPress={() => handleBackButtonPress()}>
+              <Icon name='arrow-back' size={24} color='black' />
+            </TouchableOpacity>
+            {/* Replace the comments with your image and name */}
+            <Image source={Profile} style={styles.image} />
+            <Text>
+              {contact.firstName} {contact.lastName}
+            </Text>
+          </View>
+          <ScrollView contentContainerStyle={styles.scrollContent}>
+            <ImageBackground source={backgroundImage} >
+              <View style={[styles.messageContainer, { flexGrow: 1 }]}>
+                {mergedMessages
+                  .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
+                  .map((message, index) => (
+                    <View
+                      key={index}
+                      // className={`px-4 py-2 flex w-full ${message.sender === authState.user.id ? 'bg-white items-end' : 'items-start'}`}
                       style={
                         message.sender === authState.user.id
-                          ? styles.outgoingMessageText
-                          : styles.incomingMessageText
+                          ? styles.outgoingMessageContainer
+                          : styles.incomingMessageContainer
                       }>
-                      {message.message}
-                    </Text>
-                  )}
-                </View>
-              ))}
-          </View>
-        </ScrollView>
+                      {/* Check if the message contains a balance request */}
+                      {message.message.includes("[BalanceRequest]") ? (
+                        <TouchableOpacity
+                          onPress={() => handleBalanceRequestClick(message)}>
+                          <Text style={styles.balanceRequestText}>
+                            {message.message}
+                          </Text>
+                        </TouchableOpacity>
+                      ) : (
+                        <Text
+                          style={
+                            message.sender === authState.user.id
+                              ? styles.outgoingMessageText
+                              : styles.incomingMessageText
+                          }>
+                          {message.message}
+                        </Text>
+                      )}
+                    </View>
+                  ))}
+              </View>
+            </ImageBackground>
+          </ScrollView>
 
-        <View style={styles.writeMessage}>
+        <View style={styles.writeMessage} className='py-8 flex flx-row items-center justify-center rounded-t-xl'>
           {/* Input box */}
           <TouchableOpacity
             style={styles.sendMoneyButton}
@@ -375,10 +381,10 @@ const styles = StyleSheet.create({
   },
 
   incomingMessageText: {
-    backgroundColor: "#007BFF", // Blue background for incoming messages
-    color: "#FFFFFF", // Text color for incoming messages
+    backgroundColor: "#FCC2A8", // Blue background for incoming messages
+    color: "#000", // Text color for incoming messages
     padding: 10,
-    borderRadius: 8,
+    borderRadius: 12,
     marginBottom: 8, // Add some space between messages
   },
 
@@ -402,11 +408,12 @@ const styles = StyleSheet.create({
   },
   outgoingMessageContainer: {
     alignSelf: "flex-end", // Align outgoing messages to the right
-    backgroundColor: "#DCF8C6", // Some background color for outgoing messages
+    backgroundColor: "#fff", // Some background color for outgoing messages
     maxWidth: "60%", // Set maximum width to 60%
     borderRadius: 8,
     padding: 10,
     marginBottom: 8,
+    marginRight: '5%'
   },
 
   outgoingMessageText: {
