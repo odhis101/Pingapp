@@ -203,15 +203,15 @@ const Topnav = () => {
           </TouchableOpacity>
         </View>
         <View className='flex flex-row items-center'>
-          <TouchableOpacity onPress={handleConnectPress}>
-            <Icon name="person-add" size={25} color="#B1843D" style={styles.icon} />
+          <TouchableOpacity className='bg-white px-3 py-2 shadow-md flex items-center justify-center rounded-full ' onPress={handleConnectPress}>
+            <Icon name="person-add" size={20} color="#B1843D"  className='text-center ' />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handlePress}>
-            <Icon name="ios-create" size={25} color="#B1843D" style={styles.icon} />
+          <TouchableOpacity className='bg-white px-3 py-2 shadow-md mx-2 flex items-center justify-center rounded-full ' onPress={handlePress}>
+            <Icon name="ios-create" size={20} color="#B1843D"  className='text-center ' />
           </TouchableOpacity>
           {/* Logout button */}
-          <TouchableOpacity onPress={handleLogout}>
-            <Icon name="log-out" size={28} color="#B1843D" style={styles.icon} />
+          <TouchableOpacity className='bg-white px-3 py-2 shadow-md flex items-center justify-center rounded-full ' onPress={handleLogout}>
+            <Icon name="log-out" size={20} color="#B1843D"  className='text-center ' />
           </TouchableOpacity>
         </View>
       </View>
