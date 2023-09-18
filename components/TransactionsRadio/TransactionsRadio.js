@@ -5,41 +5,40 @@ import {
   View,
   Image,
   TouchableOpacity,
-} from "react-native";
-import Profile from "../../assets/profile.png";
-import React, { useState } from "react";
-import { AntDesign } from "@expo/vector-icons";
-import Icon from 'react-native-vector-icons/Ionicons'; // If you're using react-native-vector-icons
+} from "react-native"
+import Profile from "../../assets/profile.png"
+import React, { useState } from "react"
+import { AntDesign } from "@expo/vector-icons"
+import Icon from "react-native-vector-icons/Ionicons" // If you're using react-native-vector-icons
 
-const RecentTransactions = ({ name, date,onPress,contactDetails}) => {
-  const [isSelected, setIsSelected] = useState(false);
-console.log("here we are talking contactDetails ",contactDetails)
+const RecentTransactions = ({ name, date, onPress, contactDetails }) => {
+  const [isSelected, setIsSelected] = useState(false)
+  console.log("here we are talking contactDetails ", contactDetails)
   const handleRadioPress = () => {
-    setIsSelected((prevIsSelected) => !prevIsSelected); // Use the functional form
-    onPress(name, !isSelected,contactDetails); 
-  };
+    setIsSelected((prevIsSelected) => !prevIsSelected) // Use the functional form
+    onPress(name, !isSelected, contactDetails)
+  }
   return (
-<TouchableOpacity onPress={handleRadioPress}>
-  <View style={styles.TransactionDetails}>
-    <Image source={Profile} style={styles.image} />
-    <View style={styles.textContainer}>
-      <Text style={styles.Username}>{name}</Text>
-      <Text style={styles.Date}>{date}</Text>
-    </View>
-    <View style={styles.radioButtonContainer}>
-      <View
-        style={[
-          styles.radioButton,
-          isSelected && styles.radioButtonSelected,
-        ]}
-      >
-        {isSelected && <AntDesign name="check" size={20} color="white" />}
+    <TouchableOpacity onPress={handleRadioPress}>
+      <View className='' style={styles.TransactionDetails}>
+        <Image source={Profile} style={styles.image} />
+        <View style={styles.textContainer}>
+          <Text style={styles.Username}>{name}</Text>
+          <Text style={styles.Date}>{date}</Text>
+        </View>
+        <View style={styles.radioButtonContainer}>
+          <View
+            style={[
+              styles.radioButton,
+              isSelected && styles.radioButtonSelected,
+            ]}>
+            {isSelected && <AntDesign name='check' size={20} color='white' />}
+          </View>
+        </View>
       </View>
-    </View>
-  </View>
-</TouchableOpacity>
-  );
-};
+    </TouchableOpacity>
+  )
+}
 const styles = StyleSheet.create({
   radioButtonContainer: {
     marginLeft: "auto",
@@ -82,8 +81,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "grey",
+    borderBottomWidth: 0.5,
+    borderBottomColor: "gray",
   },
   image: {
     // ... styles for image ...
@@ -101,5 +100,5 @@ const styles = StyleSheet.create({
   radioButtonSelected: {
     backgroundColor: "green",
   },
-});
-export default RecentTransactions;
+})
+export default RecentTransactions

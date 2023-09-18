@@ -1,4 +1,4 @@
-import Constants from 'expo-constants';
+import Constants from "expo-constants"
 
 const ENV = {
   dev: {
@@ -11,9 +11,9 @@ const ENV = {
 
 const getEnvVars = (env = Constants.manifest.releaseChannel) => {
   if (__DEV__) {
-    return ENV.dev;
+    return ENV.dev
   }
-  return ENV.prod;
-};
+  return ENV.prod
+}
 
-export default getEnvVars;
+export default getEnvVars

@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef  } from "react";
+import React, { useEffect, useState, useRef } from "react"
 import {
   StyleSheet,
   Text,
@@ -7,47 +7,46 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
-} from "react-native";
-import BackgroundImage from "../assets/background.png";
-import Topnav from "../components/Topnav/Topnav";
-import SendMoney from "../components/SendMoney/SendMoney";
-import Mycards from "../components/Mycards/Mycards";
-import Profile from "../assets/profile.png";
-import RecentTransactions from "../components/RecentTransactions/RecentTransactions";
-import { useSelector } from "react-redux";
-import axios from "axios";
-import { useNavigation } from "@react-navigation/native";
+} from "react-native"
+import BackgroundImage from "../assets/background.png"
+import Topnav from "../components/Topnav/Topnav"
+import SendMoney from "../components/SendMoney/SendMoney"
+import Mycards from "../components/Mycards/Mycards"
+import Profile from "../assets/profile.png"
+import RecentTransactions from "../components/RecentTransactions/RecentTransactions"
+import { useSelector } from "react-redux"
+import axios from "axios"
+import { useNavigation } from "@react-navigation/native"
 import getEnvVars from "../.env.js"
-import Modal from "react-native-modal";
-import Blemanager from 'react-native-ble-manager';
-import RSSI from "./RSSI";
-import { PermissionsAndroid } from 'react-native';
-import { Platform } from 'react-native';
-import Transactions from "../components/Transactions/Transactions";
-import { colors } from "../Colors";
+import Modal from "react-native-modal"
+import Blemanager from "react-native-ble-manager"
+import RSSI from "./RSSI"
+import { PermissionsAndroid } from "react-native"
+import { Platform } from "react-native"
+import Transactions from "../components/Transactions/Transactions"
+import { colors } from "../Colors"
 
 const Home = () => {
-  const navigation = useNavigation();
-  const [balance, setBalance] = useState(0);
-  const [currency, setCurrency] = useState("GBP");
-  const { API_URL } = getEnvVars();
-  const [getDiscoveredPeripherals, setDiscoveredPeripherals] = useState([]);
-  const api_level = Platform.Version;
-  console.log(api_level);
+  const navigation = useNavigation()
+  const [balance, setBalance] = useState(0)
+  const [currency, setCurrency] = useState("GBP")
+  const { API_URL } = getEnvVars()
+  const [getDiscoveredPeripherals, setDiscoveredPeripherals] = useState([])
+  const api_level = Platform.Version
+  console.log(api_level)
 
-  const authState = useSelector((state) => state.auth);
+  const authState = useSelector((state) => state.auth)
   const formatBalance = (balance) => {
     // Convert balance to a string
-    const balanceStr = balance.toString();
-    
+    const balanceStr = balance.toString()
+
     // Add commas when it passes three digits
     if (balanceStr.length > 3) {
-      return balanceStr.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return balanceStr.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
     }
 
-    return balanceStr;
-  };
-
+    return balanceStr
+  }
 
   const requestAndroid31Permissions = async () => {
     const bluetoothScanPermission = await PermissionsAndroid.request(
@@ -57,8 +56,8 @@ const Home = () => {
         message: "Bluetooth Low Energy requires Location",
         buttonPositive: "OK",
       }
-    );
-    // ask for advertise permission 
+    )
+    // ask for advertise permission
     const bluetoothAdvertisePermission = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADVERTISE,
       {
@@ -66,17 +65,16 @@ const Home = () => {
         message: "Bluetooth Low Energy requires advertise",
         buttonPositive: "OK",
       }
-    );
-
+    )
 
     const cameraPermission = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-            title: "Location Permission",
-            message: "Bluetooth Low Energy requires Location",
-            buttonPositive: "OK",
-        }
-    );
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        title: "Location Permission",
+        message: "Bluetooth Low Energy requires Location",
+        buttonPositive: "OK",
+      }
+    )
 
     const bluetoothConnectPermission = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.BLUETOOTH_CONNECT,
@@ -85,7 +83,7 @@ const Home = () => {
         message: "Bluetooth Low Energy requires Location",
         buttonPositive: "OK",
       }
-    );
+    )
     const fineLocationPermission = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       {
@@ -93,47 +91,44 @@ const Home = () => {
         message: "Bluetooth Low Energy requires Location",
         buttonPositive: "OK",
       }
-    );
- if (bluetoothScanPermission === "never_ask_again"){
-        Alert.alert(
-            "Bluetooth Scan needed Permission",
-            "Bluetooth Low Energy requires Connection Permission",
+    )
+    if (bluetoothScanPermission === "never_ask_again") {
+      Alert.alert(
+        "Bluetooth Scan needed Permission",
+        "Bluetooth Low Energy requires Connection Permission",
 
-            [
-                {
-                    text: "Cancel",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                },
-                { text: "Open Settings", onPress: () => Linking.openSettings() }
-            ]
-        );
-    }
-
-
-    else if (bluetoothConnectPermission === "never_ask_again"){
-        Alert.alert(
-            "bluetooth Connect Permission Permission",
-            "Bluetooth Low Energy requires Connection Permission",
-            [
-                {
-                    text: "Cancel",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                },
-                { text: "Open Settings", onPress: () => Linking.openSettings() }
-            ]
-        );
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+          { text: "Open Settings", onPress: () => Linking.openSettings() },
+        ]
+      )
+    } else if (bluetoothConnectPermission === "never_ask_again") {
+      Alert.alert(
+        "bluetooth Connect Permission Permission",
+        "Bluetooth Low Energy requires Connection Permission",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+          { text: "Open Settings", onPress: () => Linking.openSettings() },
+        ]
+      )
     }
     return (
       bluetoothScanPermission === "granted" &&
       bluetoothConnectPermission === "granted" &&
-      fineLocationPermission === "granted"&&
-      cameraPermission === "granted" && 
+      fineLocationPermission === "granted" &&
+      cameraPermission === "granted" &&
       bluetoothAdvertisePermission === "granted"
-    );
-  };
-  
+    )
+  }
+
   const requestPermissions = async () => {
     if (Platform.OS === "android") {
       if (api_level < 31) {
@@ -144,84 +139,70 @@ const Home = () => {
             message: "Bluetooth Low Energy requires Location",
             buttonPositive: "OK",
           }
-        );
-        return granted === PermissionsAndroid.RESULTS.GRANTED;
+        )
+        return granted === PermissionsAndroid.RESULTS.GRANTED
       } else {
-        console.log('Requesting Android 31 permissions')
-        const permissions = await requestAndroid31Permissions();
+        console.log("Requesting Android 31 permissions")
+        const permissions = await requestAndroid31Permissions()
         console.log(permissions)
-        
+
         const isAllPermissionsGranted = Object.values(permissions).every(
           (permission) => permission === PermissionsAndroid.RESULTS.GRANTED
-        );
+        )
         console.log(isAllPermissionsGranted)
-        
-        return isAllPermissionsGranted;
+
+        return isAllPermissionsGranted
       }
     } else {
-      return true;
+      return true
     }
-  };
+  }
 
   useEffect(() => {
     const checkAndRequestPermissions = async () => {
-      const granted = await requestPermissions();
+      const granted = await requestPermissions()
       if (granted) {
-        console.log('Permissions granted');
+        console.log("Permissions granted")
         // Start Bluetooth scanning or perform other actions here
-
       } else {
-        console.log('Permissions denied');
+        console.log("Permissions denied")
         // Handle the case where permissions are denied
       }
-    };
+    }
 
-    checkAndRequestPermissions();
-  }, []); 
-
-
-
-
-
+    checkAndRequestPermissions()
+  }, [])
 
   useEffect(() => {
     // Fetch balance and currency data here
-    fetchBalanceAndCurrency();
-    console.log("this is auth state", authState);
-  },  []);
-// use effect to see changes if balance changes
+    fetchBalanceAndCurrency()
+    console.log("this is auth state", authState)
+  }, [])
+  // use effect to see changes if balance changes
   React.useEffect(() => {
-    console.log("Balance: ", balance);
-  }, [balance]);
+    console.log("Balance: ", balance)
+  }, [balance])
 
   const fetchBalanceAndCurrency = async () => {
     try {
-      const response = await axios.get(
-        `${API_URL}/api/v1/user/wallet`,
-      );
+      const response = await axios.get(`${API_URL}/api/v1/user/wallet`)
 
-      
-      console.log("Response: ", response.data.data.wallet.balance);
+      console.log("Response: ", response.data.data.wallet.balance)
 
-    
-      setBalance(response.data.data.wallet.balance);
-      setCurrency(currency);
+      setBalance(response.data.data.wallet.balance)
+      setCurrency(currency)
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error:", error)
     }
-  };
+  }
 
   const navigateSomewhere = () => {
     // Implement your navigation logic here
     // For example, you can use React Navigation to navigate to a different screen
     // navigation.navigate('YourTargetScreen');
-    console.log('Navigating somewhere...');
-  };
+    console.log("Navigating somewhere...")
+  }
 
-
-
-
-  
   return (
     < ScrollView style={{ height: "100%" }}>
       <View className='bg-[#FEFAF4]' style={styles.currencyContainer}>
@@ -234,8 +215,7 @@ const Home = () => {
             </View>
           </View>
           <View style={styles.moneyButtons}>
-            
-            <SendMoney name={"Send money"} onPress={"SendMoney"}/>
+            <SendMoney name={"Send money"} onPress={"SendMoney"} />
             <SendMoney name={"Request money"} onPress={"Request"} />
           </View>
           <View style={styles.Mycards}>
@@ -255,10 +235,10 @@ const Home = () => {
             </View>
           </View>
       </View>
-      <RSSI/>
+      <RSSI />
     </ScrollView>
-  );
-};
+  )
+}
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
@@ -346,7 +326,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 2,
-    height:"100%"
+    height: "100%",
   },
   Transactiontitle: {
     fontSize: 24,
@@ -365,5 +345,5 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-});
-export default Home;
+})
+export default Home

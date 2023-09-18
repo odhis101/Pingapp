@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   StyleSheet,
   Text,
@@ -6,16 +6,16 @@ import {
   View,
   Image,
   TouchableOpacity,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import Icon from "react-native-vector-icons/Feather";
-import {useNavigation} from '@react-navigation/native';
+} from "react-native"
+import { LinearGradient } from "expo-linear-gradient"
+import Icon from "react-native-vector-icons/Feather"
+import { useNavigation } from "@react-navigation/native"
 
-const SendMoney = ({ name, onPress}) => {
-  const navigation = useNavigation();
+const SendMoney = ({ name, onPress }) => {
+  const navigation = useNavigation()
   const handleSendMoney = () => {
-    navigation.navigate(onPress);// we plan on sending a prop saying sending and requesting 
-  };
+    navigation.navigate(onPress) // we plan on sending a prop saying sending and requesting
+  }
 
   return (
     <TouchableOpacity 
@@ -27,8 +27,8 @@ const SendMoney = ({ name, onPress}) => {
         <Text className='font-light text-[#B1843D] pl-2'>{name}</Text>
       </View>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 
-export default SendMoney;
+export default SendMoney
