@@ -185,70 +185,24 @@ const Messages = () => {
     const newSocket = io(`${API_URL}`)
     setSocket(newSocket)
 
-      return (
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={keyboardVerticalOffset}
-            style={{ flex: 1 }}
-          >
-          <View style={styles.container}>
-            <View style={styles.topBar}>
-            <TouchableOpacity onPress={() => handleBackButtonPress()}>
-    <Icon name="arrow-back" size={24} color="black" /> 
-  </TouchableOpacity>
-              {/* Replace the comments with your image and name */}
-              <Image source={Profile} style={styles.image} />
-              <Text>{contact.firstName} {contact.lastName}</Text>
-            </View>
-            <ScrollView contentContainerStyle={styles.scrollContent}>
-            <View style={[styles.messageContainer, { flexGrow: 1 }]}>
-  {(mergedMessages).sort((a, b) => a.timestamp.localeCompare(b.timestamp)).map((message, index) => (
-    <View
-      key={index}
-      style={
-        message.sender === authState.user.id
-          ? styles.outgoingMessageContainer
-          : styles.incomingMessageContainer
+    newSocket.on("chat_message", (message) => {
+      // Add a timestamp to the incoming message
+      const messageWithTimestamp = {
+        ...message,
+        timestamp: new Date().toISOString(),
+        isOutgoing: authState.user.id === message.sender,
       }
-    >
-      {/* Check if the message contains a balance request */}
-      {message.message.includes('[BalanceRequest]') ? (
-        <TouchableOpacity onPress={() => handleBalanceRequestClick(message)}>
-          <Text style={styles.balanceRequestText}>
-            {message.message}
-          </Text>
-        </TouchableOpacity>
-      ) : (
-        <Text
-          style={
-            message.sender === authState.user.id
-              ? styles.outgoingMessageText
-              : styles.incomingMessageText
-          }
-        >
-          {message.message}
-        </Text>
-      )}
-    </View>
-  ))}
-</View>
+      setIncomingMessages((prevMessages) => [
+        ...prevMessages,
+        messageWithTimestamp,
+      ])
+      console.log("this is the messagesssssss", messageWithTimestamp)
+    })
 
-            </ScrollView>
-            <View style ={styles.writeMessage}>
-              {/* Input box */}
-              <TouchableOpacity style={styles.sendMoneyButton} onPress={handleSendMoneyPress}>
-    {/* Replace 'send-money-icon.png' with your send money icon image */}
-    <Icon name="ios-cash-outline" size={24} color="#000000" style={{marginLeft:5,marginRight:5}} />
-  </TouchableOpacity>
-              <TextInput
-                style={{ flex: 1, marginRight: 8, paddingVertical: 8, paddingHorizontal: 16, backgroundColor: '#F2F2F2' }}
-                placeholder="Type your message here..."
-                value={inputMessage} // Set the value of the input to the state
-                onChangeText={setInputMessage} // Handle changes to the input
-              />
-              {/* Send icon */}
-              <TouchableOpacity 
-                onPress={sendMessage} // Replace with the appropriate function
+    return () => {
+      newSocket.disconnect()
+    }
+  }, [])
 
   const sendMessage = () => {
     if (socket) {
@@ -292,7 +246,40 @@ const Messages = () => {
             {contact.firstName} {contact.lastName}
           </Text>
         </View>
-        <ScrollView contentContainerStyle={styles.scrollContent}></ScrollView>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <View style={[styles.messageContainer, { flexGrow: 1 }]}>
+            {mergedMessages
+              .sort((a, b) => a.timestamp.localeCompare(b.timestamp))
+              .map((message, index) => (
+                <View
+                  key={index}
+                  style={
+                    message.sender === authState.user.id
+                      ? styles.outgoingMessageContainer
+                      : styles.incomingMessageContainer
+                  }>
+                  {/* Check if the message contains a balance request */}
+                  {message.message.includes("[BalanceRequest]") ? (
+                    <TouchableOpacity
+                      onPress={() => handleBalanceRequestClick(message)}>
+                      <Text style={styles.balanceRequestText}>
+                        {message.message}
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <Text
+                      style={
+                        message.sender === authState.user.id
+                          ? styles.outgoingMessageText
+                          : styles.incomingMessageText
+                      }>
+                      {message.message}
+                    </Text>
+                  )}
+                </View>
+              ))}
+          </View>
+        </ScrollView>
 
         <View style={styles.writeMessage}>
           {/* Input box */}
