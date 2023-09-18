@@ -5,23 +5,26 @@ import {
   View,
   Image,
   TouchableOpacity,
-} from "react-native";
-import Profile from "../../assets/profile.png";
+} from "react-native"
+import Profile from "../../assets/Reject.png"
 
-const RecentTransactions = () => {
+const RecentTransactions = ({ name, date, amount, negative, image }) => {
+  console.log(name)
   return (
     <View className='flex flex-row items-center justify-between'>
       <View className='flex flex-row items-center my-2'>
-        <Image source={Profile} style={styles.image} />
+        <Image source={image} className='h-12 w-12 rounded-full' />
         <View style={styles.textContainer}>
-          <Text className='text-base'>Dan Bilzerian</Text>
-          <Text className='text-[#06672B] text-sm'>14/04/23</Text>
+          <Text className='text-base'>{name}</Text>
+          <Text className='text-[#06672B] text-sm'>{date}</Text>
         </View>
       </View>
-      <Text className='text-[#06672B] text-xl'>£ 20000</Text>
+      <Text className='text-[#06672B] text-xl'>
+        {negative ? "-" : ""} £ {amount}
+      </Text>
     </View>
-  );
-};
+  )
+}
 const styles = StyleSheet.create({
   MyTransactions: {
     backgroundColor: "#FFFFFF",
@@ -78,5 +81,5 @@ const styles = StyleSheet.create({
     color: "#00FF00",
     marginLeft: "auto",
   },
-});
-export default RecentTransactions;
+})
+export default RecentTransactions

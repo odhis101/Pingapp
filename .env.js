@@ -2,12 +2,12 @@ import Constants from "expo-constants"
 
 const ENV = {
   dev: {
-    API_URL: 'https://9bfa-196-207-134-81.ngrok-free.app',
+    API_URL: "https://9bfa-196-207-134-81.ngrok-free.app",
   },
   prod: {
-    API_URL: 'https://9bfa-196-207-134-81.ngrok-free.app',
+    API_URL: "https://9bfa-196-207-134-81.ngrok-free.app",
   },
-};
+}
 
 const getEnvVars = (env = Constants.manifest.releaseChannel) => {
   if (__DEV__) {

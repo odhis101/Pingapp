@@ -19,8 +19,8 @@ const RecentTransactions = ({ name, date, onPress, contactDetails }) => {
     onPress(name, !isSelected, contactDetails)
   }
   return (
-    <TouchableOpacity onPress={handleRadioPress}>
-      <View className='' style={styles.TransactionDetails}>
+    <TouchableOpacity onPress={handleRadioPress} className='mt-4'>
+      <View style={styles.TransactionDetails} className='border-b-0.5 pb-4'>
         <Image source={Profile} style={styles.image} />
         <View style={styles.textContainer}>
           <Text style={styles.Username}>{name}</Text>
@@ -81,8 +81,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 8,
-    borderBottomWidth: 0.5,
-    borderBottomColor: "gray",
   },
   image: {
     // ... styles for image ...
