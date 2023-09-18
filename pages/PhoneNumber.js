@@ -9,14 +9,19 @@ import RecentTransactions from '../components/RecentTransactions/RecentTransacti
 import TransactionsRadio from '../components/TransactionsRadio/TransactionsRadio';
 import { AntDesign } from '@expo/vector-icons';
 import {colors} from "../Colors"
+import { useNavigation } from "@react-navigation/native";
 
 const PhoneNumber = () => {
     const [showCountryCodes, setShowCountryCodes] = useState(false);
     const [selectedCountryCode, setSelectedCountryCode] = useState('+44');
-  
+    navigate = useNavigation()
+
     const handleCountryCodePress = (countryCode) => {
       setSelectedCountryCode(countryCode);
       setShowCountryCodes(!showCountryCodes);
+    };
+    const handleProceed = () => {
+      navigate.navigate("AmountToSend", { deposit: true }); // Pass phoneNumber as prop
     };
 
 return(
@@ -53,7 +58,7 @@ return(
         )}
 
       </View>
-      <TouchableOpacity style={styles.proceedBtn}>
+      <TouchableOpacity onPress={handleProceed} style={styles.proceedBtn}>
                 <Text style={{color:colors.textColor}}> Proceed</Text>
 
             </TouchableOpacity>

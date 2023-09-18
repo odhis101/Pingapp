@@ -203,9 +203,6 @@ const Topnav = () => {
           </TouchableOpacity>
         </View>
         <View className='flex flex-row items-center'>
-          <TouchableOpacity className='bg-white px-3 py-2 shadow-md flex items-center justify-center rounded-full ' onPress={handleConnectPress}>
-            <Icon name="person-add" size={20} color="#B1843D"  className='text-center ' />
-          </TouchableOpacity>
           <TouchableOpacity className='bg-white px-3 py-2 shadow-md mx-2 flex items-center justify-center rounded-full ' onPress={handlePress}>
             <Icon name="ios-create" size={20} color="#B1843D"  className='text-center ' />
           </TouchableOpacity>

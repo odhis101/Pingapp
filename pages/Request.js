@@ -79,11 +79,7 @@ const Sendmoney = () => {
               onPress={"Contacts"}
               request={true}
             />
-            <Mycards
-              title={"Request With QR  "}
-              iconImage={"smartphone"}
-              onPress={"BarcodeScanner"}
-            />
+    
           </View>
 <Transactions/>
       </View>

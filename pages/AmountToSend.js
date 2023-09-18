@@ -53,7 +53,7 @@ const AmountToSend = (maxDigits) => {
           setIsDropdownVisible(false);
         }}
       >
-        <Text>{item}</Text>
+        <Text style={styles.currencyDropdown} >{item}</Text>
       </TouchableOpacity>
     );
     console.log(selectedContacts);
@@ -289,10 +289,10 @@ const AmountToSend = (maxDigits) => {
       end={{ x: 1, y: 0 }}
       style={styles.gradientButton}
     >
-      <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
       <TouchableOpacity
         onPress={requestCash}
         >
+      <FontAwesome5 name="credit-card" size={24} color="white" style={styles.icon} />
         <Text style={styles.buttonText}>Request</Text>
       </TouchableOpacity>
     </LinearGradient>
@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
           },
           recentTransactions: {
             fontSize: 14,
-            color: "#FFFFFF",
+            color: colors.textColor,
             marginTop: 8,
           },
           moneyButtons:{
@@ -468,8 +468,8 @@ const styles = StyleSheet.create({
             elevation: 5, // You can adjust the elevation value for the desired shadow depth
             // Shadow properties for iOS
             shadowColor: 'rgba(0, 0, 0, 0.2)', // Shadow color
-            shadowOffset: { width: 0, height: 2 }, // Shadow offset
-            shadowOpacity: 0.5, // Shadow opacity
+            shadowOffset: { width: 0, height: 5 }, // Shadow offset
+            shadowOpacity: 1, // Shadow opacity
             shadowRadius: 2, // Shadow radius
           },
           

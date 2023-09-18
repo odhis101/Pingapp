@@ -75,11 +75,6 @@ const Sendmoney = () => {
           <View style={styles.Mycards}>
             <Text style={styles.heading}>Options</Text>
             <Mycards
-              title={"Send to Nearby devices "}
-              iconImage={"qrcode"}
-              onPress={"BluetoothScanner"}
-            />
-            <Mycards
               title={"Send To Contacts "}
               iconImage={"smartphone"}
               onPress={"Contacts"}

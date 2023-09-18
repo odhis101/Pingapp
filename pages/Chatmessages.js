@@ -52,25 +52,37 @@ const Messages = () => {
     ])
   }, [incomingMessages, outgoingMessages])
   console.log("this is the merged messages", mergedMessages)
-  useEffect(async () => {
-    try {
-      const response = await axios.get(
-        `${API_URL}/api/v1/conversations/get_conversation`,
-        {
-          params: {
-            sender: authState.user.id,
-            recepient: contact.id,
-          },
+  useEffect(() => {
+    async function fetchData() {
+      console.log("this is sendedrrrr ,", authState.user.id);
+      console.log("this is recepeint", contact.id);
+  
+      try {
+        if (authState?.user?.id &&contact?.id) {
+          const response = await axios.get(
+            `${API_URL}/api/v1/conversations/get_conversation`,
+            {
+              params: {
+                sender: authState?.user?.id,
+                recepient: contact?.id,
+              },
+            }
+          );
+  
+          const { data } = response;
+          console.log("This is data", data.data.messages);
+          setmergedMessages(data.data.messages);
+        } else {
+          console.log("something is wrong ");
         }
-      )
-
-      const { data } = response
-      console.log("This is data", data.data.messages)
-      setmergedMessages(data.data.messages)
-    } catch (error) {
-      console.error("Error fetching messages:", error)
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+      }
     }
-  }, [])
+  
+    fetchData();
+  }, [authState.user.id, contact.id]);
+  
 
   console.log(authState)
 
@@ -196,7 +208,6 @@ const Messages = () => {
         isOutgoing: authState.user.id === message.sender,
       }
       setIncomingMessages((prevMessages) => [
-        ...prevMessages,
         messageWithTimestamp,
       ])
       console.log("this is the messagesssssss", messageWithTimestamp)
@@ -219,7 +230,6 @@ const Messages = () => {
       console.log("checking neeeee", newOutgoingMessage)
       socket.emit("chat_message", newOutgoingMessage)
       setOutgoingMessages((prevMessages) => [
-        ...prevMessages,
         newOutgoingMessage,
       ])
 
