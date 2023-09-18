@@ -25,7 +25,6 @@ import backgroundImage from "../assets/chat.png"
 
 const Messages = () => {
   const { API_URL } = getEnvVars()
-  const scrollViewRef = useRef()
 
   const route = useRoute()
   const { contact, id } = route.params
@@ -115,6 +114,19 @@ const Messages = () => {
       hideModal()
     }
   }
+  const scrollViewRef = useRef(null);
+
+  // Function to scroll to the bottom of the ScrollView
+  const scrollToBottom = () => {
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollToEnd({ animated: true });
+    }
+  };
+
+  // Scroll to the bottom whenever messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
   const handleBalanceRequestClick = (message) => {
     // Extract the balance amount from the message
     const balanceRequestText = message.message.replace("[BalanceRequest]", "")
@@ -259,7 +271,10 @@ const Messages = () => {
             {contact.firstName} {contact.lastName}
           </Text>
         </View>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ScrollView 
+         ref={scrollViewRef}
+         onContentSizeChange={scrollToBottom} // Automatically scroll on content size change
+        contentContainerStyle={styles.scrollContent}>
           <ImageBackground source={backgroundImage}>
             <View style={[styles.messageContainer, { flexGrow: 1 }]}>
               {mergedMessages
