@@ -80,7 +80,7 @@ export default function RSSI() {
       Blemanager.getConnectedPeripherals([]).then((results) => {
         console.log('this is connected peripherals ',results);
       });
-    
+    /*
       useEffect(() => {
         const intervalId = setInterval(() => {
           Blemanager.getDiscoveredPeripherals([]).then((results) => {
@@ -107,15 +107,16 @@ export default function RSSI() {
             // Use state update to set discovered peripherals
             setDiscoveredPeripherals(results);
           });
-        }, 180000); // 5000 milliseconds = 5 seconds
+        }, ); // 5000 milliseconds = 5 seconds
       
         // Cleanup the interval when the component unmounts
         return () => {
           clearInterval(intervalId);
         };
       }, []); // Empty dependency array to run this effect once when the component mounts
+*/
 
-      
+
     
       Blemanager.scan([], 10, true).then((devices) => {
         console.log('checking devices found ');

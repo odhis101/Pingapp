@@ -27,7 +27,7 @@ const SendToBank = () => {
   navigate = useNavigation()
   const route = useRoute();
   const sendmoney = route.params?.sendmoney || false;
-
+console.log("currently send money issss ", sendmoney)
 
   const handleCountryCodePress = (countryCode) => {
     setSelectedCountryCode(countryCode)
@@ -53,7 +53,7 @@ const SendToBank = () => {
   return (
     <View style={styles.container}>
       <View style={styles.backgroundImage}>
-        <Text style={styles.sendToNumber}>Send To Bank</Text>
+      <Text style={styles.sendToNumber}>{sendmoney ? 'Deposit to Bank' : 'Send To Bank'}</Text>
         <View style={styles.inputContainer}>
           <Text style={styles.inputTitle}>Enter the Bank Details</Text>
           <View style={styles.phoneInputContainer}>

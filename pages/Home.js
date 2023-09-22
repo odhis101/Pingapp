@@ -198,6 +198,15 @@ const Home = () => {
       console.error("Error:", error)
     }
   }
+  useEffect(() => {
+    fetchBalanceAndCurrency();
+
+    // You can set up a timer to periodically fetch updates, or use any other mechanism
+    const updateInterval = setInterval(fetchBalanceAndCurrency, 1000); // Fetch every 60 seconds
+
+    // Clean up the timer when the component unmounts
+    return () => clearInterval(updateInterval);
+  }, []); // Empty dependency array ensures it runs only once on mount
 
   const navigateSomewhere = () => {
     // Implement your navigation logic here
@@ -213,7 +222,7 @@ const Home = () => {
         <View style={styles.infoContainer}>
           <Text className='text-[#B1843D] text-[12px] italic'>Balance</Text>
           <View style={styles.currentBalance}>
-            <Text className='text-[#B1843D] font-light text-[64px]'>£</Text>
+            <Text className='text-[#B1843D] font-light text-[64px]'>$</Text>
             <Text className='text-[#B1843D] font-light text-[64px]'>
               {formatBalance(balance)}
             </Text>
