@@ -40,7 +40,7 @@ const AmountToSend = (maxDigits) => {
 
     const sendMoney = route.params?.sendMoney || false;
     console.log(sendMoney)
-    const [selectedCurrency, setSelectedCurrency] = useState("GBP"); // Default currency
+    const [selectedCurrency, setSelectedCurrency] = useState("USD"); // Default currency
     const [selectedLanguage, setSelectedLanguage] = useState();
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const dropdownRef = useRef(null); // Ref to the triggering element
@@ -122,7 +122,7 @@ const AmountToSend = (maxDigits) => {
         }
       };
 
-      const currencyOptions = ["GBP", "USD", "EUR"]; // Add more currency options here
+      const currencyOptions = ["KES", "USD", "EUR"]; // Add more currency options here
       const calculateDropdownPosition = () => {
         if (dropdownRef.current) {
           dropdownRef.current.measureInWindow((x, y, width) => {
