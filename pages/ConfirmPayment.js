@@ -82,7 +82,7 @@ const sendCash = async () => {
     >
       <View style={styles.container}>
         <Text style={styles.whiteText}> Amount </Text>
-        <Text style={styles.amountText}> £ {balance} </Text>
+        <Text style={styles.amountText}> $ {balance} </Text>
         <Text style={styles.whiteText}> to </Text>
 
         <View style={styles.nameContainer}>

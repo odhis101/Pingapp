@@ -30,6 +30,7 @@ const Messages = () => {
   const { contact, id } = route.params
   console.log("this is the contact", contact)
   const [inputMessage, setInputMessage] = useState("")
+  const [requestBalance, setRequestBalance] = useState(0)
   const [messages, setMessages] = useState([])
   const [socket, setSocket] = useState(null)
   const [incomingMessages, setIncomingMessages] = useState([])
@@ -132,12 +133,21 @@ const Messages = () => {
     // Extract the balance amount from the message
     const balanceRequestText = message.message.replace("[BalanceRequest]", "")
 
-    console.log("this is balances ", message)
+    console.log("this is balances ", message.message)
+    // Define a regular expression pattern to match currency amounts (e.g., $20.00)
+  const regex = /\$\d+(\.\d{2})?/;
+
+// Use the regex pattern to find the currency amount in the text
+  const match = message.message.match(regex);
+  console.log("this is match", match[0])
+  const cashWithoutDollarSign = match[0].replace(/\$/, '');
+  console.log("this is cash without dollar sign", cashWithoutDollarSign)    
     // You can parse the balanceRequestText to extract the balance amount
 
     // Perform the navigation to the desired screen or action
     // For example, you can use navigation.navigate('YourScreenName')
     // Replace 'YourScreenName' with the actual name of the screen you want to navigate to
+    setRequestBalance(cashWithoutDollarSign)
     setShowModalTwo(true)
     SetTransactMessage(message)
   }
@@ -183,12 +193,12 @@ const Messages = () => {
   const hideModalTwo = () => {
     setShowModalTwo(false)
   }
-  const balance =
+  let balance =
     route.params && route.params.balance ? route.params.balance : null
 
   console.log("this is balance asked for ", balance)
 
-  console.log(id)
+  console.log("this is id ",id)
   //const keyboardVerticalOffset = Platform.OS === 'ios' ? 10 : 0; // Adjust the offset as needed
   const keyboardVerticalOffset = Platform.OS === "ios" ? 10 : 0
 
@@ -351,7 +361,7 @@ const Messages = () => {
       <Modal isVisible={showModalTwo} backdropOpacity={0.7}>
         <View style={styles.modalContent}>
           <Text style={styles.messageText}>
-            If you Click Yes you will send {balance} To {contact.firstName}{" "}
+            If you Click Yes you will send {requestBalance} To {contact.firstName}{" "}
             {contact.lastName}?
           </Text>
           <TouchableOpacity

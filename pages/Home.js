@@ -190,7 +190,7 @@ const Home = () => {
     try {
       const response = await axios.get(`${API_URL}/api/v1/user/wallet`)
 
-      console.log("Response: ", response.data.data.wallet.balance)
+     // console.log("Response: ", response.data.data.wallet.balance)
 
       setBalance(response.data.data.wallet.balance)
       setCurrency(currency)
